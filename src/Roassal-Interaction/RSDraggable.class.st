@@ -4,15 +4,17 @@ This interaction allows to the user move shapes. Just click over a shape, then d
 - `RSDraggable class >> #example`
 "
 Class {
-	#name : #RSDraggable,
-	#superclass : #RSInteraction,
+	#name : 'RSDraggable',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'shouldValidateChildrenEvents'
 	],
-	#category : #'Roassal-Interaction-Core'
+	#category : 'Roassal-Interaction-Core',
+	#package : 'Roassal-Interaction',
+	#tag : 'Core'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSDraggable >> checkChildrenActions: aShape [
 	| children |
 	self shouldValidateChildrenEvents ifFalse: [ ^ self ].
@@ -25,24 +27,24 @@ RSDraggable >> checkChildrenActions: aShape [
 		 ] ) description: 'Children shapes should not contains the same interaction'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDraggable >> initialize [
 	super initialize.
 	self withValidateChildrenEvents
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSDraggable >> noValidateChildrenEvents [
 	shouldValidateChildrenEvents := false
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDraggable >> onShape: aShape [
 	self checkChildrenActions: aShape.
 	aShape when: RSMouseDragging send: #processDrag: to: self
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSDraggable >> processDrag: evt [
 	| d |
 	d := evt camera distanceFromPixelToSpace: evt step.
@@ -50,12 +52,12 @@ RSDraggable >> processDrag: evt [
 	evt signalUpdate
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSDraggable >> shouldValidateChildrenEvents [
 	^ shouldValidateChildrenEvents ifNil: [ ^ false ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSDraggable >> withValidateChildrenEvents [
 	shouldValidateChildrenEvents := true
 ]

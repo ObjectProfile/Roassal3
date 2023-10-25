@@ -10,17 +10,19 @@ RSEasingInterpolator expInOut
 Symmetric exponential easing; scales expIn for t in [0, 0.5] and expOut for t in [0.5, 1].
 "
 Class {
-	#name : #RSExpInterpolator,
-	#superclass : #RSEasingInterpolator,
-	#category : #'Roassal-Animation-Easing'
+	#name : 'RSExpInterpolator',
+	#superclass : 'RSEasingInterpolator',
+	#category : 'Roassal-Animation-Easing',
+	#package : 'Roassal-Animation',
+	#tag : 'Easing'
 }
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSExpInterpolator >> interpolateIn: t [
 	^ 2 raisedTo: (10 * t - 10)
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSExpInterpolator >> interpolateInOut: i [
 	| t |
 	t := i * 2.
@@ -30,7 +32,7 @@ RSExpInterpolator >> interpolateInOut: i [
 		ifFalse: [ 2 - (2 raisedTo: 10 - (10 * t)) ])/2
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSExpInterpolator >> interpolateOut: t [
 	^ 1 - (2 raisedTo: -10 * t)
 ]

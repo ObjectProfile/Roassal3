@@ -2,48 +2,50 @@
 Used to created a box for the popup of roassal
 "
 Class {
-	#name : #RSSimpleBoxBuilder,
-	#superclass : #RSObject,
+	#name : 'RSSimpleBoxBuilder',
+	#superclass : 'RSObject',
 	#instVars : [
 		'color',
 		'cornerRadius',
 		'border',
 		'padding'
 	],
-	#category : #'Roassal-Interaction-Popup'
+	#category : 'Roassal-Interaction-Popup',
+	#package : 'Roassal-Interaction',
+	#tag : 'Popup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSimpleBoxBuilder >> border [
 	^ border
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSimpleBoxBuilder >> border: aRSBorder [
 	border := aRSBorder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSimpleBoxBuilder >> color [
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSimpleBoxBuilder >> color: aColor [
 	color := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSimpleBoxBuilder >> cornerRadius [
 	^ cornerRadius
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSimpleBoxBuilder >> cornerRadius: aCornerRadius [
 	cornerRadius := aCornerRadius
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSimpleBoxBuilder >> initialize [
 	super initialize.
 	self
@@ -53,17 +55,17 @@ RSSimpleBoxBuilder >> initialize [
 		padding: 10@7
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSimpleBoxBuilder >> padding [
 	^ padding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSimpleBoxBuilder >> padding: aPoint [
 	padding := aPoint
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSimpleBoxBuilder >> shapeFor: aRSLabel [
 	^ RSBox new
 		color: self color;

@@ -2,25 +2,27 @@
 I an an event for animations in Roassal
 "
 Class {
-	#name : #RSAnimationEvent,
-	#superclass : #RSEvent,
+	#name : 'RSAnimationEvent',
+	#superclass : 'RSEvent',
 	#instVars : [
 		'animation'
 	],
-	#category : #'Roassal-Animation-Events'
+	#category : 'Roassal-Animation-Events',
+	#package : 'Roassal-Animation',
+	#tag : 'Events'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAnimationEvent >> animation [
 	^ animation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAnimationEvent >> animation: anAnimation [
 	animation := anAnimation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAnimationEvent >> canvas [
 	^ self animation canvas
 ]

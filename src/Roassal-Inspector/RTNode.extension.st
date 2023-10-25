@@ -296,5 +296,6 @@ RTNode >> updateLog: log rectangle: aRect [
 	builder labelShape color: Color black.
 	log children do: #remove.
 	log add: (builder shapeFor: (self queryResult: aRect) ).
-	log adjustToChildren
+	log adjustToChildren.
+	log invalidate
 ]

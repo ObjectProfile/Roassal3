@@ -18,16 +18,18 @@ canvas @ controller.
 ```
 "
 Class {
-	#name : #RSCanvasController,
-	#superclass : #RSAbstractCanvasInteraction,
+	#name : 'RSCanvasController',
+	#superclass : 'RSAbstractCanvasInteraction',
 	#instVars : [
 		'interactions',
 		'configuration'
 	],
-	#category : #'Roassal-Interaction-Controls'
+	#category : 'Roassal-Interaction-Controls',
+	#package : 'Roassal-Interaction',
+	#tag : 'Controls'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSCanvasController class >> simple [
 	| inst |
 	inst := self new.
@@ -41,30 +43,30 @@ RSCanvasController class >> simple [
 	^ inst
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasController >> addInteraction: anInteractionObject [
 	interactions at: anInteractionObject class put: anInteractionObject.
 	anInteractionObject configuration: configuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasController >> addInteractionClass: anInteractionClass [
 	"This method is commanded for public use."
 	self addInteraction: anInteractionClass new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasController >> configuration [
 	^ configuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasController >> configuration: aRSControlLimits [
 	configuration := aRSControlLimits.
 	self interactions do: [ :i | i configuration: configuration ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCanvasController >> defaultInteractions [
 	"create a subclass of RSCanvasController and define your own custom interactions for your canvas"
 
@@ -78,29 +80,29 @@ RSCanvasController >> defaultInteractions [
 		  RSSearchInCanvasInteraction }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasController >> draggableCanvasInteraction [
 	^ interactions at: RSDraggableCanvasInteraction
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCanvasController >> initialize [
 	super initialize.
 	self interactionsFromArray: (self defaultInteractions collect: #new).
 	self configuration: RSControlConfiguration new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasController >> interactions [
 	^ interactions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasController >> interactions: aCollectionOfInteractions [
 	interactions := aCollectionOfInteractions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasController >> interactionsFromArray: anArray [
 	"{RSZoomableCanvasInteraction new. RSSearchInCanvasInteraction new}"
 	| collection |
@@ -110,17 +112,17 @@ RSCanvasController >> interactionsFromArray: anArray [
 	self interactions: collection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasController >> keyNavigationInteraction [
 	^ interactions at: RSKeyNavigationCanvasInteraction
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSCanvasController >> noLegend [
 	self configuration noLegend
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCanvasController >> onShape: aCanvas [
 	aCanvas controllerInteraction ifNotNil: [ ^ self ].
 	aCanvas controllerInteraction: self.
@@ -128,12 +130,12 @@ RSCanvasController >> onShape: aCanvas [
 	self renderLegendOn: aCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasController >> removeInteractionIfPresent: anInteractionClass [
 	interactions removeKey: anInteractionClass ifAbsent: [  ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCanvasController >> renderLegendOn: aCanvas [
 	| lb |
 	self shouldShowLegend ifFalse: [ ^ self ].
@@ -155,23 +157,23 @@ RSCanvasController >> renderLegendOn: aCanvas [
 	lb build
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSCanvasController >> shouldShowLegend [
 	^ self configuration shouldShowLegend
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSCanvasController >> withLegend [
 	self configuration withLegend
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasController >> withoutSelectionBox [
 
 	self removeInteractionIfPresent: RSSelectionInCanvasInteraction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasController >> zoomToFitInteraction [
 	^ interactions at: RSZoomToFitCanvasInteraction
 ]

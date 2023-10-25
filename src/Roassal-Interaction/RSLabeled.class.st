@@ -17,8 +17,8 @@
 
 "
 Class {
-	#name : #RSLabeled,
-	#superclass : #RSInteraction,
+	#name : 'RSLabeled',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'location',
 		'isHighlightable',
@@ -27,10 +27,12 @@ Class {
 		'modelBlock',
 		'shapeBuilder'
 	],
-	#category : #'Roassal-Interaction-Core'
+	#category : 'Roassal-Interaction-Core',
+	#package : 'Roassal-Interaction',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled class >> highlightable [
 	"Create a label interaction that is highligtable
 ```
@@ -53,18 +55,18 @@ canvas @ RSCanvasController
 	^ self new highlightable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled class >> middle [
 	^ self new middle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled class >> text: aText [
 	"Utility method to define a labeled interaction with a text"
 	^ self new text: aText
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSLabeled >> createLabel: aShape [
 	| label color set targetLabel |
 	label := self shapeBuilder shapeFor: (self modelFor: aShape).
@@ -85,7 +87,7 @@ RSLabeled >> createLabel: aShape [
 	^ label
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSLabeled >> fontSize: fontSizeAsNumber [
 	"Set the font size of the label
 
@@ -112,7 +114,7 @@ c @ RSCanvasController.
 	self shapeBuilder labelShape fontSize: fontSizeAsNumber
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSLabeled >> getOrCreateLabel: aShape [
 	| label parent |
 	label := aShape properties
@@ -125,7 +127,7 @@ RSLabeled >> getOrCreateLabel: aShape [
 	^ label
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSLabeled >> highlightable [
 	"Make the label highlightable.
 For example:
@@ -146,7 +148,7 @@ c
 		target: #yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLabeled >> initialize [
 	super initialize.
 	self shapeBuilder: RSMultilineLabelBuilder new.
@@ -155,47 +157,47 @@ RSLabeled >> initialize [
 	isHighlightable := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled >> location [
 	^ location
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled >> locationDo: aBlock [
 	aBlock value: location
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled >> lowColor [
 	^ lowColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled >> lowColor: aColor [
 	lowColor := aColor
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSLabeled >> middle [
 	self location middle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled >> model [
 	^ modelBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled >> model: aBlock [
 	modelBlock := aBlock
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSLabeled >> modelFor: aRSShape [
 	^ modelBlock rsValue: aRSShape
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSLabeled >> onShape: aShape [
 
 	aShape isInACanvas
@@ -204,27 +206,27 @@ RSLabeled >> onShape: aShape [
 			self getOrCreateLabel: evt shape ] for: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled >> shapeBuilder [
 	^ shapeBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled >> shapeBuilder: aShapeBuilder [
 	shapeBuilder := aShapeBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled >> target [
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLabeled >> target: aBlock [
 	target := aBlock
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSLabeled >> text: aBlockOrSymbol [
 	"Set the label on a shape. The argument is either a block or a symbol, and is used to compute the label to use from the shape model.
 For example:

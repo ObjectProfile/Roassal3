@@ -21,7 +21,9 @@ Class {
 		'matrix',
 		'canvasRect',
 		'showRectangles',
-		'originMatrix'
+		'originMatrix',
+		'surface',
+		'dirtyRectangle'
 	],
 	#category : 'Roassal-Rendering',
 	#package : 'Roassal',
@@ -442,6 +444,15 @@ RSAthensRenderer >> builder [
 ]
 
 { #category : 'utilities' }
+RSAthensRenderer >> clearRectangle: rectangle [
+	athensCanvas paintMode restoreAfter: [
+			athensCanvas paintMode source.
+			athensCanvas
+				setPaint: Color transparent;
+				drawShape: rectangle ]
+]
+
+{ #category : 'utilities' }
 RSAthensRenderer >> createStrokePaintFor: border [
 	| stroke style |
 	stroke := (border paint asAthensPaintOn: athensCanvas) asStrokePaintOn: athensCanvas.
@@ -550,6 +561,12 @@ RSAthensRenderer >> getOrCreatePathOf: shape [
 	^ path
 ]
 
+{ #category : 'utilities' }
+RSAthensRenderer >> inverseTransform: aRectangle [
+	^ Rectangle encompassing: (aRectangle corners 
+		collect: [:corner | matrix inverseTransform: corner])
+]
+
 { #category : 'paint' }
 RSAthensRenderer >> paintFor: shape form: form [
 	form isForm ifFalse: [ ^ form ].
@@ -563,6 +580,36 @@ RSAthensRenderer >> paintFor: shape form: form [
 				fromForm: form)).
 			paint origin: (form extent /2) negated asFloatPoint.
 			paint ]
+]
+
+{ #category : 'visiting - helpers' }
+RSAthensRenderer >> showEncompassingRectangleForLineIfNecessary: line [
+	showRectangles ifFalse: [ ^ self ].
+	self drawShadowRectangle: line encompassingRectangle
+]
+
+{ #category : 'visiting - helpers' }
+RSAthensRenderer >> showEncompassingRectangleIfNecessary: shape [
+	showRectangles ifFalse: [ ^ self ].
+	self drawShadowRectangle: shape baseRectangleWithBorder
+]
+
+{ #category : 'accessing' }
+RSAthensRenderer >> surface [
+	^ surface
+]
+
+{ #category : 'accessing' }
+RSAthensRenderer >> surface: anObject [
+	surface := anObject
+]
+
+{ #category : 'utilities' }
+RSAthensRenderer >> transform: aRectangle [
+	| r |
+	r  := (Rectangle encompassing: (aRectangle corners 
+		collect: [:corner | matrix transform: corner])).
+	^ r origin asIntegerPoint corner: r corner x ceiling @ r corner y ceiling
 ]
 
 { #category : 'visiting' }
@@ -593,8 +640,9 @@ RSAthensRenderer >> visitBoundingShape: shape [
 				setPaint: paint;
 				drawShape: path ].
 		self visitBorderIfNecessary: shape.
-		self visitShadowRectangleIfNecessary: shape.
+		self showEncompassingRectangleIfNecessary: shape.
 		self visitChildrenIfNecessary: shape.
+		shape isDirty: false
 	]
 ]
 
@@ -605,41 +653,59 @@ RSAthensRenderer >> visitCamera: camera [
 
 { #category : 'visiting' }
 RSAthensRenderer >> visitCanvas: aRSCanvas [
+
+	| transformeDirtyRectangle oldDirtyRectangle modifiedDirtyRectangle |
+	dirtyRectangle := aRSCanvas dirtyRectangle.
+	dirtyRectangle ifNil: [ ^ self ].
 	matrix := AthensAffineTransform new.
 	originMatrix := matrix copy.
 	canvasRect := aRSCanvas visibleRectangle.
-	showRectangles := aRSCanvas shouldShowRectangles.
+	oldDirtyRectangle := dirtyRectangle.
+	aRSCanvas shouldShowDirtyRectangle ifTrue: [
+		dirtyRectangle := canvasRect ].
+	showRectangles := aRSCanvas shouldShowEncompassingRectangles.
 	athensCanvas fillRuleEvenOdd.
 	athensCanvas setAA: aRSCanvas host antialiasing.
-
 	aRSCanvas camera accept: self.
-	(aRSCanvas shapeCollection entriesAtRectangle: canvasRect) do: [ :s | s accept: self].
-
-	"We display the elements that are _NOT_ subject to the camera"
+	transformeDirtyRectangle := self transform: dirtyRectangle.
+	aRSCanvas shouldClearBackground ifTrue: [
+		self clearRectangle: transformeDirtyRectangle ].
+	modifiedDirtyRectangle := self inverseTransform: transformeDirtyRectangle.
+	athensCanvas clipBy: transformeDirtyRectangle during: [
+		(aRSCanvas shapeCollection entriesAtRectangle: modifiedDirtyRectangle ) do: [ :each | each accept: self ] ].
+	dirtyRectangle := transformeDirtyRectangle.
 	matrix loadIdentity.
 	originMatrix loadIdentity.
-	canvasRect := 0@0 extent: aRSCanvas extent.
-	aRSCanvas fixedShapes accept: self
+	athensCanvas pathTransform loadIdentity.
+	athensCanvas clipBy: transformeDirtyRectangle during: [
+		(aRSCanvas fixedShapes entriesAtRectangle: dirtyRectangle) do: [ :each | each accept: self ] ].
+	aRSCanvas resetDirtyRectangle.
+
+	aRSCanvas shouldShowDirtyRectangle ifFalse: [ ^ self ].
+
+	athensCanvas pathTransform loadIdentity.
+	matrix loadIdentity.
+	originMatrix loadIdentity.
+	aRSCanvas camera accept: self.
+	athensCanvas
+		setPaint: (Color purple alpha: 0.3);
+		drawShape: (self transform: oldDirtyRectangle)
 ]
 
 { #category : 'visiting - helpers' }
 RSAthensRenderer >> visitChildrenIfNecessary: shape [
-	| draw visibleChildren rectangle |
+	| visibleChildren rectangle |
 	shape hasChildren ifFalse: [ ^ self ].
-	rectangle := shape computeInverseEncompassingRectangleFor: canvasRect matrix: originMatrix.
 	
-	"self flag: 'TODO: consider rotration on composites'."
-	shape clipChildren 
-		ifTrue: [ rectangle := 
-			(rectangle origin max: shape baseRectangle origin) 
-				corner: (rectangle corner min: shape baseRectangle corner) ].
-	visibleChildren := shape shapeCollection entriesAtRectangle: rectangle.
+	rectangle := shape computeInverseEncompassingRectangleFor: dirtyRectangle matrix: originMatrix.
+	
+	rectangle :=(rectangle origin max: shape baseRectangle origin) 
+		corner: (rectangle corner min: shape baseRectangle corner).
 
-	draw := [ visibleChildren do: [:s | s accept: self] ].
+	visibleChildren := shape shapeCollection entriesAtRectangle: rectangle.
 	
-	shape clipChildren
-		ifTrue: [ athensCanvas clipBy: shape path during: draw ]
-		ifFalse: [ draw value ]
+	athensCanvas clipBy: shape path during: [
+		visibleChildren do: [ :each | each accept: self ] ].
 ]
 
 { #category : 'visiting' }
@@ -661,7 +727,8 @@ RSAthensRenderer >> visitLabel: label [
 
 		self visitLabelDecoratorsIfNecessary: label.
 		athensCanvas pathTransform translateBy: lbtranslation negated.
-		self visitShadowRectangleIfNecessary: label
+		self showEncompassingRectangleIfNecessary: label.
+		label isDirty: false.
 	]
 ]
 
@@ -686,8 +753,8 @@ RSAthensRenderer >> visitLabelDecoratorsIfNecessary: label [
 { #category : 'visiting' }
 RSAthensRenderer >> visitLine: line [
 	| path paint |
-	(line intersects: canvasRect) ifFalse: [ ^ self ].
-	athensCanvas pathTransform loadAffineTransform: matrix .
+	(line intersects: dirtyRectangle) ifFalse: [ ^ self ].
+	athensCanvas pathTransform loadAffineTransform: matrix.
 	path := self getOrCreatePathOf: line.
 	paint := line paintOn: self.
 
@@ -696,20 +763,9 @@ RSAthensRenderer >> visitLine: line [
 			setPaint: paint;
 			drawShape: path ].
 	self visitBorderIfNecessary: line.
+	self showEncompassingRectangleForLineIfNecessary: line.
 	line markerShapesInPositionDo: [ :shape | shape accept: self ].
-	self visitShadowRectLineIfNecessary: line
-]
-
-{ #category : 'visiting - helpers' }
-RSAthensRenderer >> visitShadowRectLineIfNecessary: line [
-	showRectangles ifFalse: [ ^ self ].
-	self drawShadowRectangle: line encompassingRectangle
-]
-
-{ #category : 'visiting - helpers' }
-RSAthensRenderer >> visitShadowRectangleIfNecessary: shape [
-	showRectangles ifFalse: [ ^ self ].
-	self drawShadowRectangle: shape baseRectangle
+	line isDirty: false
 ]
 
 { #category : 'visiting - helpers' }
@@ -719,12 +775,7 @@ RSAthensRenderer >> visitShapeIfNecessary: shape block: aBlock [
 		shapeMatrix := shape matrix asFloatTransform.
 		matrix multiplyBy: shapeMatrix.
 		originMatrix restoreAfter: [
-			| rect |
 			originMatrix multiplyBy: shapeMatrix.
-			rect := shape
-				computeEncompassingRectangleFor: shape baseRectangle
-				matrix: originMatrix.
-			(rect intersects: canvasRect) ifFalse: [ ^ self ].
-				aBlock value ].
+			aBlock value ].
 	]
 ]

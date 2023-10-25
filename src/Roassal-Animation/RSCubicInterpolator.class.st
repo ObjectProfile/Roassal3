@@ -12,17 +12,19 @@ Also equivalent to RSEasingInterpolator poly exponent: 3.
 
 "
 Class {
-	#name : #RSCubicInterpolator,
-	#superclass : #RSEasingInterpolator,
-	#category : #'Roassal-Animation-Easing'
+	#name : 'RSCubicInterpolator',
+	#superclass : 'RSEasingInterpolator',
+	#category : 'Roassal-Animation-Easing',
+	#package : 'Roassal-Animation',
+	#tag : 'Easing'
 }
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSCubicInterpolator >> interpolateIn: t [
 	^ t * t * t
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSCubicInterpolator >> interpolateInOut: i [
 	| t |
 	t := i * 2.
@@ -33,7 +35,7 @@ RSCubicInterpolator >> interpolateInOut: i [
 			t * t * t + 2 ])/2
 ]
 
-{ #category : #interpolation }
+{ #category : 'interpolation' }
 RSCubicInterpolator >> interpolateOut: i [
 	| t |
 	t := i -1.

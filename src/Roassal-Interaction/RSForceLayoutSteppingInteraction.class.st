@@ -2,17 +2,19 @@
 Hi!, I can control the RSForceBaseLayout step method, in order to use it only when it needs
 "
 Class {
-	#name : #RSForceLayoutSteppingInteraction,
-	#superclass : #RSAbstractCanvasInteraction,
+	#name : 'RSForceLayoutSteppingInteraction',
+	#superclass : 'RSAbstractCanvasInteraction',
 	#instVars : [
 		'layout',
 		'animation',
 		'hasDraggable'
 	],
-	#category : #'Roassal-Interaction-Layouts'
+	#category : 'Roassal-Interaction-Layouts',
+	#package : 'Roassal-Interaction',
+	#tag : 'Layouts'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSForceLayoutSteppingInteraction >> addEventsTo: shape [
 	| mock |
 	shape
@@ -31,12 +33,12 @@ RSForceLayoutSteppingInteraction >> addEventsTo: shape [
 		for: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceLayoutSteppingInteraction >> alphaRange [
 	^ #(0 0.1)
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSForceLayoutSteppingInteraction >> configureLayoutOn: aCanvas [
 	self hasDraggable ifTrue: [
 		aCanvas nodes @ (RSDraggableForceInteraction new layout: self layout)].
@@ -46,38 +48,38 @@ RSForceLayoutSteppingInteraction >> configureLayoutOn: aCanvas [
 		start
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSForceLayoutSteppingInteraction >> draggable [
 	hasDraggable := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSForceLayoutSteppingInteraction >> hasDraggable [
 	^ hasDraggable
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSForceLayoutSteppingInteraction >> initialize [
 	super initialize.
 	self draggable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceLayoutSteppingInteraction >> layout [
 	^ layout ifNil: [ layout := RSForceBasedLayout new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceLayoutSteppingInteraction >> layout: aRSForceBasedLayout [
 	layout := aRSForceBasedLayout
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSForceLayoutSteppingInteraction >> noDraggable [
 	hasDraggable := false
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSForceLayoutSteppingInteraction >> onShape: aCanvas [
 	self configureLayoutOn: aCanvas.
 	aCanvas nodes do: [ :s | self addEventsTo: s ].
@@ -85,7 +87,7 @@ RSForceLayoutSteppingInteraction >> onShape: aCanvas [
 	aCanvas newAnimation onStepDo: [:t| aCanvas zoomToFit ]
 ]
 
-{ #category : #animation }
+{ #category : 'animation' }
 RSForceLayoutSteppingInteraction >> startFirstAnimation: aCanvas [
 	| alpha |
 	animation ifNotNil: #stop.
@@ -98,7 +100,7 @@ RSForceLayoutSteppingInteraction >> startFirstAnimation: aCanvas [
 		yourself
 ]
 
-{ #category : #animation }
+{ #category : 'animation' }
 RSForceLayoutSteppingInteraction >> startForceAnimation: aCanvas [
 	animation ifNotNil: #stop.
 	animation := aCanvas animationFrom: {
@@ -115,7 +117,7 @@ RSForceLayoutSteppingInteraction >> startForceAnimation: aCanvas [
 			onStepDo: [ :t | layout step ] }
 ]
 
-{ #category : #animation }
+{ #category : 'animation' }
 RSForceLayoutSteppingInteraction >> startSimpleAnimation: aCanvas [
 	animation ifNotNil: #stop.
 	animation := aCanvas newAnimation

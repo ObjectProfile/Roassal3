@@ -3,15 +3,17 @@ This interaction simulates the vertical scroll with mouse wheel.
 When used will creates animations to translate canvas camera position
 "
 Class {
-	#name : #RSScrollWheelCanvasInteraction,
-	#superclass : #RSAbstractControlCanvasInteraction,
+	#name : 'RSScrollWheelCanvasInteraction',
+	#superclass : 'RSAbstractControlCanvasInteraction',
 	#instVars : [
 		'animation'
 	],
-	#category : #'Roassal-Interaction-Controls'
+	#category : 'Roassal-Interaction-Controls',
+	#package : 'Roassal-Interaction',
+	#tag : 'Controls'
 }
 
-{ #category : #'events - processing' }
+{ #category : 'events - processing' }
 RSScrollWheelCanvasInteraction >> move: aCanvas delta: delta [
 
 	| correct p camera |
@@ -41,12 +43,12 @@ RSScrollWheelCanvasInteraction >> move: aCanvas delta: delta [
 			] for: self.
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSScrollWheelCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSMouseWheelEvent send: #processEvent: to: self
 ]
 
-{ #category : #'events - processing' }
+{ #category : 'events - processing' }
 RSScrollWheelCanvasInteraction >> processEvent: evt [
 	| delta |
 	delta := (evt isUp
@@ -55,6 +57,6 @@ RSScrollWheelCanvasInteraction >> processEvent: evt [
 	self move: evt canvas delta: delta.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSScrollWheelCanvasInteraction >> renderLegendOn: aLegendBuilder [
 ]

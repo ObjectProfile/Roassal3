@@ -4,26 +4,28 @@ I defined basic behaviors about popups in general, my subclasses needs to overri
 *
 "
 Class {
-	#name : #RSAbstractPopupInteraction,
-	#superclass : #RSInteraction,
+	#name : 'RSAbstractPopupInteraction',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'modelBlock',
 		'offset'
 	],
-	#category : #'Roassal-Interaction-Popup'
+	#category : 'Roassal-Interaction-Popup',
+	#package : 'Roassal-Interaction',
+	#tag : 'Popup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPopupInteraction class >> activationEvent [
 	^ RSMouseMove
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPopupInteraction class >> removeEvents [
 	^ { RSMouseClick. RSMouseEnter. RSMouseLeave. RSMouseDragging }
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractPopupInteraction >> activePopupWith: evt [
 	| popup |
 	popup := self createOrGetPopupOn: evt shape event: evt.
@@ -33,7 +35,7 @@ RSAbstractPopupInteraction >> activePopupWith: evt [
 	evt signalUpdate
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractPopupInteraction >> createOrGetPopupOn: aShape event: event [
 	"Create a popup and register it"
 	| prop popupShape key |
@@ -56,12 +58,12 @@ RSAbstractPopupInteraction >> createOrGetPopupOn: aShape event: event [
 	^ popupShape
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractPopupInteraction >> createPopupFor: aShape event: event [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractPopupInteraction >> initialize [
 	super initialize.
 	self model: #model.
@@ -70,7 +72,7 @@ RSAbstractPopupInteraction >> initialize [
 	offset := 0 @ 0
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractPopupInteraction >> makeLocateAboveMouseCursor [
 	"Make the popup located above the mouse cursor.
 ```
@@ -91,12 +93,12 @@ c @ RSCanvasController
 	self offset: [ :s | 0 @ (s height negated - 5) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPopupInteraction >> model [
 	^ modelBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPopupInteraction >> model: anObject [
 	"
 	- can be a one arg BlockClosure
@@ -105,12 +107,12 @@ RSAbstractPopupInteraction >> model: anObject [
 	modelBlock := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPopupInteraction >> modelFor: aRSShape [
 	^ modelBlock rsValue: aRSShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPopupInteraction >> offset: anOffsetAsPointOrBlock [
 	"Set the offset of the popup. The default behavior, is to have the popup at the location of the
 	mouse. Which could be cumbersome if the default mouse cursor from the OS is large
@@ -134,7 +136,7 @@ c @ RSCanvasController
 	offset := anOffsetAsPointOrBlock
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractPopupInteraction >> onShape: aShape [
 	aShape removeInteractionIfPresent: self class.
 
@@ -143,12 +145,12 @@ RSAbstractPopupInteraction >> onShape: aShape [
 		when: self class activationEvent send: #activePopupWith: to: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractPopupInteraction >> popupKey [
 	^ #popup
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractPopupInteraction >> registerRemoveEventsOn: aShape [
 	self class removeEvents do: [ :clsEvent | 
 		aShape 
@@ -158,12 +160,12 @@ RSAbstractPopupInteraction >> registerRemoveEventsOn: aShape [
 			for: self ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractPopupInteraction >> releasePopup: popup [
 	self subclassResponsibility
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractPopupInteraction >> removePopupOn: evt [
 	| att popup key |
 	"It may happen that the canvas is not set. This is the case when an element is not added to a view.
@@ -178,7 +180,7 @@ RSAbstractPopupInteraction >> removePopupOn: evt [
 	evt signalUpdate
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractPopupInteraction >> translatePopup: popup event: evt [
 	self subclassResponsibility
 ]

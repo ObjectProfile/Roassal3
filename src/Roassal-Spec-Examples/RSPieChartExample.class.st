@@ -2,8 +2,8 @@
 I am a basic example of roassal with spec
 "
 Class {
-	#name : #RSPieChartExample,
-	#superclass : #SpPresenter,
+	#name : 'RSPieChartExample',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'pie',
 		'chart',
@@ -11,10 +11,12 @@ Class {
 		'packages',
 		'totalSum'
 	],
-	#category : #'Roassal-Spec-Examples-Basic'
+	#category : 'Roassal-Spec-Examples-Basic',
+	#package : 'Roassal-Spec-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSPieChartExample class >> defaultLayout [
 	<spec: #default>
 	^ SpBoxLayout newVertical
@@ -26,7 +28,7 @@ RSPieChartExample class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSPieChartExample >> initializePresenters [
 
 	| org selectedItem |
@@ -60,7 +62,7 @@ RSPieChartExample >> initializePresenters [
 		pie refresh ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSPieChartExample >> initializeWindow: aWindow [
 	aWindow
 		title: 'Roassal packages';
@@ -68,12 +70,12 @@ RSPieChartExample >> initializeWindow: aWindow [
 		centered
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSPieChartExample >> run [
 	<script: 'self new asWindow open'>
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSPieChartExample >> visualizeChart: canvas package: pkg [
 	| generator result ticks scale bscale canvasRect box |
 	generator := NSNiceLinearTicksGenerator new.
@@ -110,7 +112,7 @@ RSPieChartExample >> visualizeChart: canvas package: pkg [
 		yourself)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSPieChartExample >> visualizePie: canvas package: pkg [
 
 	| b rect max |

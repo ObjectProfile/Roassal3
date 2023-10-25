@@ -4,30 +4,32 @@ ZoomLevel clean text to avoid a lot of drawing elements
 Please check class side for examples
 "
 Class {
-	#name : #RSZoomLevelText,
-	#superclass : #RSAbstractCanvasInteraction,
+	#name : 'RSZoomLevelText',
+	#superclass : 'RSAbstractCanvasInteraction',
 	#instVars : [
 		'labels'
 	],
-	#category : #'Roassal-Interaction-Extra'
+	#category : 'Roassal-Interaction-Extra',
+	#package : 'Roassal-Interaction',
+	#tag : 'Extra'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSZoomLevelText >> emptyLimit [
 	^ 1
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSZoomLevelText >> key [
 	^ #referenceLabel
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSZoomLevelText >> limitText [
 	^ 3
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSZoomLevelText >> newEmptyBox: shape [
 	| rect |
 	rect := shape encompassingRectangle.
@@ -37,7 +39,7 @@ RSZoomLevelText >> newEmptyBox: shape [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSZoomLevelText >> newLine: shape [
 	| rect |
 	rect := shape encompassingRectangle.
@@ -50,13 +52,13 @@ RSZoomLevelText >> newLine: shape [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSZoomLevelText >> onShape: aCanvas [
 	self prepareLabels: aCanvas.
 	aCanvas when: RSScaleChangedEvent send: #updateZoomLevel: to: self
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSZoomLevelText >> prepareLabels: aCanvas [
 	| key |
 	labels := aCanvas allChildren select: [ :shape | shape isLabel ].
@@ -64,7 +66,7 @@ RSZoomLevelText >> prepareLabels: aCanvas [
 	labels do: [ :each | each propertyAt: key put: each ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSZoomLevelText >> update: label withNewShape: shape [
 	| currentShape parent key |
 	key := self key.
@@ -75,7 +77,7 @@ RSZoomLevelText >> update: label withNewShape: shape [
 	label propertyAt: key put: shape
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSZoomLevelText >> updateZoomLevel: evt [
 	| key |
 	key := self key.

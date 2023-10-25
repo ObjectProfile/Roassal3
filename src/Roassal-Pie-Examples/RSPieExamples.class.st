@@ -2,12 +2,13 @@
 I have examples for RSPieBuilder load the package Roassal-Pie
 "
 Class {
-	#name : #RSPieExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-Pie-Examples'
+	#name : 'RSPieExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-Pie-Examples',
+	#package : 'Roassal-Pie-Examples'
 }
 
-{ #category : #data }
+{ #category : 'data' }
 RSPieExamples >> esportPrizepool [
 	"source https://www.esportsearnings.com/games"
 	| arr data |
@@ -35,7 +36,7 @@ RSPieExamples >> esportPrizepool [
 	^ data
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example01Basic [
 	<script: 'self new example01Basic open'>
 	| classes pie |
@@ -49,7 +50,7 @@ RSPieExamples >> example01Basic [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example02Emphasize [
 	<script: 'self new example02Emphasize open'>
 	| classes pie |
@@ -66,7 +67,7 @@ RSPieExamples >> example02Emphasize [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example03BasicColors [
 	<script: 'self new example03BasicColors open'>
 	| classes pie |
@@ -86,7 +87,7 @@ RSPieExamples >> example03BasicColors [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example04SegmentSpacingAnimation [
 	<script: 'self new example04SegmentSpacingAnimation open'>
 	| pie |
@@ -110,12 +111,13 @@ RSPieExamples >> example04SegmentSpacingAnimation [
 		onStepDo: [ :t |
 			pie canvas nodes do: [ :s | | op |
 				op := 125 - (t degreesToRadians sin abs * 125).
-				s segmentSpacing: op. ] ].
+				s segmentSpacing: op.
+				s invalidate ] ].
 	pie canvas zoomToFit.
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example05Smash [
 	<script: 'self new example05Smash open'>
 	| pie r |
@@ -152,7 +154,7 @@ RSPieExamples >> example05Smash [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example06SmashHSL [
 	<script: 'self new example06SmashHSL open'>
 	| pie |
@@ -189,7 +191,7 @@ RSPieExamples >> example06SmashHSL [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example07Dendi [
 	<script: 'self new example07Dendi open'>
 	| pie r |
@@ -224,7 +226,7 @@ RSPieExamples >> example07Dendi [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example08CornerRadii [
 	<script: 'self new example08CornerRadii open'>
 	| pie |
@@ -243,7 +245,7 @@ RSPieExamples >> example08CornerRadii [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example09TickAnimation [
 	<script: 'self new example09TickAnimation open'>
 	| pie |
@@ -268,7 +270,7 @@ RSPieExamples >> example09TickAnimation [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example10CornerRadiiAnimation [
 	<script: 'self new example10CornerRadiiAnimation open'>
 	| pie |
@@ -297,7 +299,7 @@ RSPieExamples >> example10CornerRadiiAnimation [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example11OpenningAnimation [
 
 	<script: 'self new example11OpenningAnimation open'>
@@ -388,7 +390,7 @@ RSPieExamples >> example11OpenningAnimation [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example12RainbowPie [
 
 	<script:
@@ -434,7 +436,7 @@ RSPieExamples >> example12RainbowPie [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example13BasicColorNormalize [
 	<script: 'self new example13BasicColorNormalize open'>
 	| classes pie  |
@@ -457,7 +459,7 @@ RSPieExamples >> example13BasicColorNormalize [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example14Pyramid [
 	<script: 'self new example14Pyramid open setLabel: ''Pyramid'''>
 	| b data |
@@ -478,7 +480,7 @@ RSPieExamples >> example14Pyramid [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example15Clockwise [
 	<script: 'self new example15Clockwise open'>
 	| b r  |
@@ -497,7 +499,7 @@ RSPieExamples >> example15Clockwise [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example16MyDay [
 	<script: 'self new example16MyDay open'>
 	| pie data color canvas pieLabel pieTitle |
@@ -543,7 +545,7 @@ RSPieExamples >> example16MyDay [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example17PieLabels [
 
 	<script:
@@ -579,7 +581,7 @@ RSPieExamples >> example17PieLabels [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example18ManyPies [
 
 	<script:
@@ -637,7 +639,7 @@ RSPieExamples >> example18ManyPies [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example19Buttons [
 
 	<script: 'self new example19Buttons open setLabel: ''Arc buttons'''>
@@ -724,7 +726,7 @@ RSPieExamples >> example19Buttons [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example20AddingRemoving [
 
 	<script:
@@ -819,7 +821,7 @@ RSPieExamples >> example20AddingRemoving [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example21ProgressLabel [
 	<script: 'self new example21ProgressLabel open setLabel: ''Roassal packages by linesOfCode'''>
 	| data org pie scale |
@@ -845,7 +847,7 @@ RSPieExamples >> example21ProgressLabel [
 	^ pie canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example22RotatedAnimation [
 
 	<script:
@@ -897,7 +899,7 @@ RSPieExamples >> example22RotatedAnimation [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example23RotatedAnimation [
 	<script: 'self new example23RotatedAnimation open setLabel: ''Roassal packages by size in the file system'''>
 	<noTest>
@@ -975,7 +977,7 @@ RSPieExamples >> example23RotatedAnimation [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example24ManyPies [
 	<script: 'self new example24ManyPies open setLabel: ''Usa population by State'''>
 	| data labels maxSum radius color canvas pie format |
@@ -1040,7 +1042,7 @@ RSPieExamples >> example24ManyPies [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSPieExamples >> example25Massiva [
 	<script: 'self new example25Massiva open'>
 	| pie canvas triangles icons |
@@ -1116,7 +1118,7 @@ RSPieExamples >> example25Massiva [
 	^ canvas
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 RSPieExamples >> usaPopulation [
 	| str |
 	str := 'State,Under 5 Years,5 to 13 Years,14 to 17 Years,18 to 24 Years,25 to 44 Years,45 to 64 Years,65 Years and Over

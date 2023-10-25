@@ -57,7 +57,8 @@ RSBasicShapeExamples >> example03BasicComposite [
 		color: (Color red alpha: 0.4);
 		extent: 100@100;
 		yourself).
-
+		
+	com adjustToChildren.
 	c addShape: com.
 	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.4);
@@ -87,9 +88,10 @@ RSBasicShapeExamples >> example04BasicComposite [
 		color: (Color red alpha: 0.5);
 		extent: 50@100;
 		yourself).
-
+	
+	com adjustToChildren.
 	com position: 100@100.
-
+	
 	c addShape: com.
 	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.5);
@@ -134,6 +136,7 @@ RSBasicShapeExamples >> example06BasicLabels [
 	<script: 'self new example06BasicLabels open'>
 	| c label |
 	c := RSCanvas new.
+	c showEncompassingRectangles.
 	1 to: 12 do: [ :m |
 		| angle theta p|
 		angle := (m * 360 / 12) degreesToRadians.
@@ -695,7 +698,7 @@ RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	com1 paint: Color blue translucent.
 	b1 := RSBox new size: 10.
 	com1 add: b1.
-	com1 adjustToChildren.
+	com1 size: 100.
 	b1 position: 20@20.
 	com1 position: 200@0.
 
@@ -703,7 +706,7 @@ RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	com2 paint: Color blue translucent.
 	b2 := RSBox new size: 10.
 	com2 add: b2.
-	com2 adjustToChildren.
+	com2 size: 120.
 	b2 position: 50@0.
 	com2 position: -100@0.
 
@@ -1107,18 +1110,20 @@ RSBasicShapeExamples >> example44AA [
 			canvas host hasAntialiasing
 				ifTrue: [ canvas host disableAntialiasing ]
 				ifFalse: [ canvas host enableAntialiasing ].
+			canvas camera invalidate.
 			canvas signalUpdate ]
 		for: self.
 	^ canvas
 ]
 
 { #category : 'lines' }
-RSBasicShapeExamples >> example45ExampleRTree [
+RSBasicShapeExamples >> example45RTree30KShapes [
 
-	<script: 'self new example45ExampleRTree open'>
+	<script: 'self new example45RTree30KShapes open'>
 	<noTest>
-	| canvas nodes |
+	| canvas nodes interaction |
 	canvas := RSCanvas new.
+	canvas host aaNone.
 	canvas useRTree.
 	nodes := ((1 to: 30000) collect: [ :i | | label |
 		label := RSLabel text: i.
@@ -1132,7 +1137,9 @@ RSBasicShapeExamples >> example45ExampleRTree [
 	RSGridLayout on: nodes.
 	nodes @ RSDraggable; @ RSPopup; @ RSHighlightable green.
 	canvas addAll: nodes.
-	canvas @ RSCanvasController.
+	interaction := RSCanvasController new.
+	interaction configuration shouldAnimateZoom: false.
+	canvas @ interaction.
 	^ canvas
 ]
 

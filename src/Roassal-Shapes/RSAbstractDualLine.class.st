@@ -44,6 +44,7 @@ RSAbstractDualLine >> endPoint [
 
 { #category : 'accessing' }
 RSAbstractDualLine >> endPoint: point [
+	endPoint = point ifTrue: [ ^ self ].
 	endPoint := point.
 	self resetPath.
 	self notifyExtentChanged
@@ -79,6 +80,7 @@ RSAbstractDualLine >> startPoint [
 
 { #category : 'accessing' }
 RSAbstractDualLine >> startPoint: point [
+	startPoint = point ifTrue: [ ^ self ].
 	startPoint := point.
 	self resetPath
 ]

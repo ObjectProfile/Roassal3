@@ -14,8 +14,8 @@ I interact with:
 
 "
 Class {
-	#name : #RSKeyNavigationCanvasInteraction,
-	#superclass : #RSAbstractControlCanvasInteraction,
+	#name : 'RSKeyNavigationCanvasInteraction',
+	#superclass : 'RSAbstractControlCanvasInteraction',
 	#instVars : [
 		'steps',
 		'speed',
@@ -24,10 +24,12 @@ Class {
 		'hasHorizontalScrolling',
 		'hasVerticalScrolling'
 	],
-	#category : #'Roassal-Interaction-Controls'
+	#category : 'Roassal-Interaction-Controls',
+	#package : 'Roassal-Interaction',
+	#tag : 'Controls'
 }
 
-{ #category : #events }
+{ #category : 'events' }
 RSKeyNavigationCanvasInteraction >> computeSteps: keyName [
 	self hasHorizontalScrolling ifTrue: [
 		keyName = #LEFT ifTrue: [ steps add: 1 @ 0 ].
@@ -37,32 +39,32 @@ RSKeyNavigationCanvasInteraction >> computeSteps: keyName [
 	keyName = #DOWN ifTrue: [ steps add: 0 @ -1 ]
 ]
 
-{ #category : #'events-processing' }
+{ #category : 'events-processing' }
 RSKeyNavigationCanvasInteraction >> expandCollapse: evt [
 	evt canvas morph window expandBoxHit
 ]
 
-{ #category : #'scrollbar managing' }
+{ #category : 'scrollbar managing' }
 RSKeyNavigationCanvasInteraction >> hasHorizontalScrolling [
 	^ hasHorizontalScrolling
 ]
 
-{ #category : #'scrollbar managing' }
+{ #category : 'scrollbar managing' }
 RSKeyNavigationCanvasInteraction >> hasHorizontalScrolling: aBool [
 	hasHorizontalScrolling := aBool
 ]
 
-{ #category : #'scrollbar managing' }
+{ #category : 'scrollbar managing' }
 RSKeyNavigationCanvasInteraction >> hasVerticalScrolling [
 	^ hasVerticalScrolling
 ]
 
-{ #category : #'scrollbar managing' }
+{ #category : 'scrollbar managing' }
 RSKeyNavigationCanvasInteraction >> hasVerticalScrolling: aBool [
 	hasVerticalScrolling := aBool
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSKeyNavigationCanvasInteraction >> initialize [
 	super initialize.
 	self
@@ -72,14 +74,14 @@ RSKeyNavigationCanvasInteraction >> initialize [
 	speed := 1
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSKeyNavigationCanvasInteraction >> onShape: aCanvas [
 	aCanvas
 		when: RSKeyDown send: #processKeyDown: to: self;
 		when: RSKeyUp send: #processKeyUp: to: self
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSKeyNavigationCanvasInteraction >> processKeyDown: evt [
 	| keyName |
 	keyName := evt keyName.
@@ -95,7 +97,7 @@ RSKeyNavigationCanvasInteraction >> processKeyDown: evt [
 	self processStepsOn: evt canvas
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSKeyNavigationCanvasInteraction >> processKeyUp: evt [
 	| keyName |
 	steps removeAll.
@@ -107,7 +109,7 @@ RSKeyNavigationCanvasInteraction >> processKeyUp: evt [
 	animation := nil
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSKeyNavigationCanvasInteraction >> processStepsOn: aCanvas [
 
 	| rect lastMS |
@@ -132,7 +134,7 @@ RSKeyNavigationCanvasInteraction >> processStepsOn: aCanvas [
 		].
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSKeyNavigationCanvasInteraction >> renderLegendOn: lb [
 	lb
 		text: '↑ ↓ → ←' description: 'Arrow keys to move the view';
@@ -142,19 +144,20 @@ RSKeyNavigationCanvasInteraction >> renderLegendOn: lb [
 		text: 'O' description: 'Zoom out'
 ]
 
-{ #category : #'events-processing' }
+{ #category : 'events-processing' }
 RSKeyNavigationCanvasInteraction >> zoomIn: aCanvas [
 	self zoomMove: aCanvas delta: 1.5
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSKeyNavigationCanvasInteraction >> zoomMove: aCanvas delta: delta [
 	RSZoomableCanvasInteraction 
 		zoomMove: aCanvas 
 		newScale: (self scaleFor: aCanvas camera scale * delta)
+		useAnimation: self configuration shouldAnimateZoom
 ]
 
-{ #category : #'events-processing' }
+{ #category : 'events-processing' }
 RSKeyNavigationCanvasInteraction >> zoomOut: aCanvas [
 	self zoomMove: aCanvas delta: 0.5
 ]

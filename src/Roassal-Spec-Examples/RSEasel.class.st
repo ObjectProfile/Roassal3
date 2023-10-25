@@ -9,18 +9,20 @@ Please check my methods:
 
 "
 Class {
-	#name : #RSEasel,
-	#superclass : #SpPresenter,
+	#name : 'RSEasel',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'diagram',
 		'label',
 		'text',
 		'button'
 	],
-	#category : #'Roassal-Spec-Examples-Menu'
+	#category : 'Roassal-Spec-Examples-Menu',
+	#package : 'Roassal-Spec-Examples',
+	#tag : 'Menu'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSEasel class >> defaultLayout [
 
 	<spec: #default>
@@ -36,19 +38,19 @@ RSEasel class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 RSEasel class >> open [
 	<script>
 	self new open
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSEasel >> configure: canvas [
 	canvas @ RSCanvasController.
 	canvas color: self theme backgroundColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSEasel >> connectPresenters [
 
 	label
@@ -70,7 +72,7 @@ RSEasel >> connectPresenters [
 		self textAsBlockClosure value: canvas ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSEasel >> initialCode [
 	^
 '"[:canvas | ...your code... ]"
@@ -93,7 +95,7 @@ RSVerticalLineLayout new
 '
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSEasel >> initializePresenters [
 	label := self newLabel.
 	text := self newCode.
@@ -101,24 +103,24 @@ RSEasel >> initializePresenters [
 	diagram := self newRoassal
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSEasel >> initializeWindow: w [
 	w
 		title: 'Roassal Spec';
 		initialExtent: 800@500
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 RSEasel >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RSEasel >> run [
 	<script: 'self new asWindow open'>
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEasel >> textAsBlockClosure [
 	"This could be made more clever with regard to compilation and runtime errors. But for this simple example it should suffice."
 

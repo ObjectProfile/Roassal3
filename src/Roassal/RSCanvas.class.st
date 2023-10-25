@@ -35,7 +35,10 @@ Class {
 		'animations',
 		'extent',
 		'color',
-		'host'
+		'host',
+		'shouldClearBackground',
+		'shouldShowDirtyRectangle',
+		'shouldShowEncompassingRectangles'
 	],
 	#category : 'Roassal-Core',
 	#package : 'Roassal',
@@ -124,6 +127,7 @@ c @ RSCanvasController.
 "
 	fixedShapes add: aShape.
 	aShape entryIndex: fixedShapes size.
+	aShape invalidate
 ]
 
 { #category : 'animations' }
@@ -266,6 +270,16 @@ RSCanvas >> defaultExtent [
 	^ 500@500
 ]
 
+{ #category : 'dirty areas' }
+RSCanvas >> dirtyRectangle [
+	^ host dirtyRectangle 
+]
+
+{ #category : 'dirty areas' }
+RSCanvas >> dirtyRectangle: rectangle [
+	host dirtyRectangle: rectangle
+]
+
 { #category : 'accessing - computed' }
 RSCanvas >> encompassingRectangle [
 	^ self encompassingRectangleOf: shapes
@@ -291,7 +305,8 @@ RSCanvas >> extent [
 RSCanvas >> extent: aPoint [
 	"Set the extent of the canvas. This method is called when a window is resized. An event is raised when the extension happens. "
 	extent = aPoint ifTrue: [ ^ self ].
-	self notifyExtentChanged: aPoint
+	self notifyExtentChanged: aPoint.
+	self camera invalidate.
 ]
 
 { #category : 'accessing' }
@@ -323,8 +338,13 @@ RSCanvas >> hasAnimation: anAnimation [
 ]
 
 { #category : 'debug support' }
+RSCanvas >> hideDirtyRectangle [
+	self shouldShowDirtyRectangle: false
+]
+
+{ #category : 'debug support' }
 RSCanvas >> hideEncompassingRectangles [
-	self shouldShowRectangles: false
+	self shouldShowEncompassingRectangles: false
 ]
 
 { #category : 'accessing' }
@@ -343,6 +363,10 @@ RSCanvas >> initialize [
 	shapes := RSGroup new.
 	fixedShapes := RSGroup new.
 	self shapeCollection: self defaultShapeCollection.
+	self
+		shouldClearBackground: true;
+		shouldShowDirtyRectangle: false;
+		shouldShowEncompassingRectangles: false.
 	nodes := RSGroup new.
 	edges := RSGroup new.
 	animations := OrderedCollection new.
@@ -523,6 +547,7 @@ RSCanvas >> removeFixedShape: aShape [
 { #category : 'adding - removing shapes' }
 RSCanvas >> removeShape: shape [
 	| evt collection |
+	shape invalidate.
 	collection := shape isFixed
 		ifTrue: [ fixedShapes ]
 		ifFalse: [ shapes ].
@@ -538,6 +563,11 @@ RSCanvas >> removeShape: shape [
 		       yourself.
 	self announce: evt.
 	shape announce: evt
+]
+
+{ #category : 'dirty areas' }
+RSCanvas >> resetDirtyRectangle [
+	host dirtyRectangle: nil
 ]
 
 { #category : 'adding - removing shapes' }
@@ -611,6 +641,11 @@ RSCanvas >> shapesFromModels: objects [
 	^ self nodes shapesFromModels: objects
 ]
 
+{ #category : 'accessing - computed' }
+RSCanvas >> shapesToRender [
+	^ shapes select: [ :s | s isDirty ]
+]
+
 { #category : 'event processing' }
 RSCanvas >> shapesWithActionForPosition: aPositionInSpace [
 	| result |
@@ -619,14 +654,14 @@ RSCanvas >> shapesWithActionForPosition: aPositionInSpace [
 	^ result
 ]
 
-{ #category : 'testing' }
+{ #category : 'accessing' }
 RSCanvas >> shouldClearBackground [
 	"Return whether the screen must be cleaned at each screen refresh"
-	^ self propertyAt: #shouldClearBackground ifAbsent: [ true ]
+	^ shouldClearBackground
 ]
 
 { #category : 'accessing' }
-RSCanvas >> shouldClearBackground: aBool [
+RSCanvas >> shouldClearBackground: aBoolean [
 	"Determine if the canvas must be cleaned at each screen refresh. Per default it is, which means that if some shapes are translated, a footprint is left. This is useful to realize interesting visual effects.
 
 For example, evaluate the following script:
@@ -641,22 +676,37 @@ c.
 And execute the expression `c camera translateBy: 1 @ 1.`
 
 "
-	self propertyAt: #shouldClearBackground put: aBool
+	shouldClearBackground := aBoolean
 ]
 
-{ #category : 'testing' }
-RSCanvas >> shouldShowRectangles [
-	^ self propertyAt: #shouldShowRectangles ifAbsent: [ false ]
+{ #category : 'accessing' }
+RSCanvas >> shouldShowDirtyRectangle [
+	^ shouldShowDirtyRectangle
+]
+
+{ #category : 'accessing' }
+RSCanvas >> shouldShowDirtyRectangle: aBoolean [
+	shouldShowDirtyRectangle := aBoolean
+]
+
+{ #category : 'accessing' }
+RSCanvas >> shouldShowEncompassingRectangles [
+	^ shouldShowEncompassingRectangles
+]
+
+{ #category : 'accessing' }
+RSCanvas >> shouldShowEncompassingRectangles: aBoolean [
+	shouldShowEncompassingRectangles := aBoolean
 ]
 
 { #category : 'debug support' }
-RSCanvas >> shouldShowRectangles: aBoolean [
-	self propertyAt: #shouldShowRectangles put: aBoolean
+RSCanvas >> showDirtyRectangle [
+	self shouldShowDirtyRectangle: true
 ]
 
 { #category : 'debug support' }
 RSCanvas >> showEncompassingRectangles [
-	self shouldShowRectangles: true
+	self shouldShowEncompassingRectangles: true
 ]
 
 { #category : 'updating' }
@@ -669,6 +719,11 @@ RSCanvas >> signalUpdate [
 { #category : 'accessing - computed' }
 RSCanvas >> transform: aPoint [
 	^ aPoint
+]
+
+{ #category : 'dirty areas' }
+RSCanvas >> updateDirtyRectangleWith: aRectangle [
+	host updateDirtyRectangleWith: aRectangle
 ]
 
 { #category : 'accessing' }

@@ -360,7 +360,8 @@ RSLabel >> resetCache [
 
 	textExtents := nil.
 	self resetCairoGlyphs.
-	self extent: self textWidth @ self textHeight
+	self extent: self textWidth @ self textHeight.
+	self invalidate
 ]
 
 { #category : 'initialization' }

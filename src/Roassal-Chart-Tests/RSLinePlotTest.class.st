@@ -56,7 +56,7 @@ RSLinePlotTest >> testMarkerSize [
 	p := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
 	p build.
 	"Is it correct that buildChart modify and return attributes of plot?"
-	self assert: p shape markerStart shape extent equals: 4@4
+	self assert: p shape markerStart shape baseRectangle extent equals: 4@4
 ]
 
 { #category : 'tests' }

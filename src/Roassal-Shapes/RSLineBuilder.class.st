@@ -326,8 +326,8 @@ RSLineBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
 	self resetCreatedEdges.
 	self fromShapes copy do: [ :e |
 		tfromElements := self fromShapes shapesFromModels: (aFromBlockOrSymbol rsValue: e model).
-		toElement := self toShapes shapeFromModel: (aBlockOrASymbol rsValue: e model).
-		tfromElements ifNotNil: [
+		(tfromElements notNil and: [tfromElements notEmpty]) ifTrue: [
+			toElement := self toShapes shapeFromModel: (aBlockOrASymbol rsValue: e model).
 			tfromElements do: [ :fromElement |
 				self createEdgeIfNecessaryFrom: fromElement to: toElement ] ] ].
 	self moveBehindIfNecessary: createdEdges.

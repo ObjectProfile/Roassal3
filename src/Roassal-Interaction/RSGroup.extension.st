@@ -1,6 +1,6 @@
-Extension { #name : #RSGroup }
+Extension { #name : 'RSGroup' }
 
-{ #category : #'*Roassal-Interaction' }
+{ #category : '*Roassal-Interaction' }
 RSGroup >> @ interaction [
 	"Apply an interaction on each shape contained in the group.
 
@@ -19,7 +19,7 @@ c
 	self do: [ :e | e @ interaction ]
 ]
 
-{ #category : #'*Roassal-Interaction' }
+{ #category : '*Roassal-Interaction' }
 RSGroup >> addInteraction: interaction [
 	self do: [ :e | e addInteraction: interaction ]
 ]

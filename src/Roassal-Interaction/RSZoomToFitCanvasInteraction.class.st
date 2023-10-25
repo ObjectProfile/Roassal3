@@ -8,16 +8,18 @@ Press `bar space key` in a canvas to zoom to fit
 Note: this interaction changes the RSCamera of the canvas for a custom camera.
 "
 Class {
-	#name : #RSZoomToFitCanvasInteraction,
-	#superclass : #RSAbstractControlCanvasInteraction,
+	#name : 'RSZoomToFitCanvasInteraction',
+	#superclass : 'RSAbstractControlCanvasInteraction',
 	#instVars : [
 		'zoomToFitOnStart',
 		'zoomToFitOnExtent'
 	],
-	#category : #'Roassal-Interaction-Controls'
+	#category : 'Roassal-Interaction-Controls',
+	#package : 'Roassal-Interaction',
+	#tag : 'Controls'
 }
 
-{ #category : #'zoom animation' }
+{ #category : 'zoom animation' }
 RSZoomToFitCanvasInteraction >> animatedZoomToFit: aCanvas [
 	| oldScale newPosition newScale camera oldPosition |
 	camera := aCanvas camera.
@@ -53,7 +55,7 @@ RSZoomToFitCanvasInteraction >> animatedZoomToFit: aCanvas [
 	
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSZoomToFitCanvasInteraction >> cameraFor: aCanvas [
 	^ RSConfigurableCamera new
 		canvas: aCanvas;
@@ -61,23 +63,23 @@ RSZoomToFitCanvasInteraction >> cameraFor: aCanvas [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSZoomToFitCanvasInteraction >> initialize [
 	super initialize.
 	self useZoomToFitOnStart; noZoomToFitOnExtendChanged
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSZoomToFitCanvasInteraction >> noZoomToFitOnExtendChanged [
 	zoomToFitOnExtent := false
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSZoomToFitCanvasInteraction >> noZoomToFitOnStart [
 	zoomToFitOnStart := false
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSZoomToFitCanvasInteraction >> onShape: aCanvas [
 	aCanvas when: RSKeyUp send: #processKeyUp: to: self.
 	aCanvas when: RSExtentChangedEvent send: #zoomToFitIfNecessary: to: self.
@@ -86,44 +88,44 @@ RSZoomToFitCanvasInteraction >> onShape: aCanvas [
 	self zoomToFitOnStart: aCanvas
 ]
 
-{ #category : #'private - events' }
+{ #category : 'private - events' }
 RSZoomToFitCanvasInteraction >> processKeyUp: evt [
 	evt keyName = #SPACE ifFalse:  [ ^ self ].
 	self animatedZoomToFit: evt canvas
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSZoomToFitCanvasInteraction >> renderLegendOn: lb [
 	lb text: 'Space' description: 'To zoom to fit the view'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSZoomToFitCanvasInteraction >> shouldZoomToFitOnExtendChanged [
 	^ zoomToFitOnExtent
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSZoomToFitCanvasInteraction >> shouldZoomToFitOnStart [
 	^ zoomToFitOnStart
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSZoomToFitCanvasInteraction >> useZoomToFitOnExtentChanged [
 	zoomToFitOnExtent := true
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSZoomToFitCanvasInteraction >> useZoomToFitOnStart [
 	zoomToFitOnStart := true
 ]
 
-{ #category : #'zoom animation' }
+{ #category : 'zoom animation' }
 RSZoomToFitCanvasInteraction >> zoomToFitIfNecessary: evt [
 	self shouldZoomToFitOnExtendChanged ifFalse: [ ^ self ].
 	evt canvas zoomToFit
 ]
 
-{ #category : #'zoom animation' }
+{ #category : 'zoom animation' }
 RSZoomToFitCanvasInteraction >> zoomToFitOnStart: aCanvas [
 	aCanvas newAnimation
 		duration: 60 milliSeconds;

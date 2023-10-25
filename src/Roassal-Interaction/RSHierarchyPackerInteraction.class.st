@@ -54,22 +54,24 @@ builder canvas open
 -=-=-=-=-=-=-=-=-=
 "
 Class {
-	#name : #RSHierarchyPackerInteraction,
-	#superclass : #RSAbstractCanvasInteraction,
+	#name : 'RSHierarchyPackerInteraction',
+	#superclass : 'RSAbstractCanvasInteraction',
 	#instVars : [
 		'rectanglePackLayout'
 	],
-	#category : #'Roassal-Interaction-Layouts'
+	#category : 'Roassal-Interaction-Layouts',
+	#package : 'Roassal-Interaction',
+	#tag : 'Layouts'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RSHierarchyPackerInteraction >> fill: group with: aShape [
 	group add: aShape.
 	aShape outgoingLines do: [ :ed |
 		self fill: group with: ed to ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSHierarchyPackerInteraction >> initialize [
 	super initialize.
 
@@ -78,7 +80,7 @@ RSHierarchyPackerInteraction >> initialize [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSHierarchyPackerInteraction >> onShape: aCanvas [
 	| layout connectedAsGroups connected isolated all |
 	layout := RSTreeLayout new
@@ -103,12 +105,12 @@ RSHierarchyPackerInteraction >> onShape: aCanvas [
 	for: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHierarchyPackerInteraction >> rectanglePackLayout [
 	^ rectanglePackLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHierarchyPackerInteraction >> rectanglePackLayout: anObject [
 	rectanglePackLayout := anObject
 ]
