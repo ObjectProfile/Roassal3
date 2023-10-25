@@ -24,7 +24,7 @@ RSInteraction class >> canvasExample [
 	canvas := RSCanvas new.
 	canvas background: 'veryVeryLightGray'.
 	canvas originCenterMiddle.
-		
+
 	canvas add: (RSEllipse new
 		position: 0@0;
 		extent: 10@10;
@@ -32,7 +32,7 @@ RSInteraction class >> canvasExample [
 		model: 'origin';
 		color: 'red';
 		yourself).
-		
+
 	canvas add: (RSBox new
 		position: 200@200;
 		extent: 200@200;

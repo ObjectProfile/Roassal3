@@ -108,7 +108,7 @@ RSExamplesBrowser >> connectPresenters [
 	showDirtyRectangleButton whenChangedDo: [ :state |
 		roassalCanvas canvas shouldShowDirtyRectangle: state.
 		roassalCanvas canvas camera invalidate.
-		roassalCanvas canvas signalUpdate  ].
+		roassalCanvas canvas signalUpdate  ]
 ]
 
 { #category : 'private' }
@@ -133,7 +133,7 @@ RSExamplesBrowser >> initializePresenters [
 	leftButton := self newButton
 		label: '<';
 		yourself.
-	
+
 	showDirtyRectangleButton := self newCheckBox
 		label: 'Show Dirty Rectangle';
 		yourself.
@@ -219,10 +219,10 @@ RSExamplesBrowser >> updateCanvas [
 		canvas := current selector value: selectedClass new.
 		canvas class = RSCanvas
 			ifFalse: [ canvas := canvas build; canvas ].
-		canvas 
+		canvas
 			shouldShowEncompassingRectangles: showEncompassingRectanglesButton state;
 			shouldShowDirtyRectangle: showDirtyRectangleButton state.
-		
+
 		roassalCanvas canvas: canvas.
 	] onErrorDo: [ :ex | ex traceCr ]
 ]

@@ -2,35 +2,37 @@
 For drag view tests
 "
 Class {
-	#name : #RSDraggableCanvasTest,
-	#superclass : #RSTest,
+	#name : 'RSDraggableCanvasTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'canvas',
 		'camera'
 	],
-	#category : #'Roassal-Interaction-Tests-Core'
+	#category : 'Roassal-Interaction-Tests-Core',
+	#package : 'Roassal-Interaction-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSDraggableCanvasTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new.
 	canvas add: (RSEllipse new width: 40; height: 20; yourself).
-	camera := canvas camera.
+	camera := canvas camera
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSDraggableCanvasTest >> testDefault [
 	self assert: canvas canvas camera position equals: 0@0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSDraggableCanvasTest >> testDraggingModeLeft [
 	| class |
 	class := RSDraggableCanvasInteraction.
 	{#left. RSMouseLeftDragStart.
 	#right. RSMouseRightDragStart.
-	#middle. RSMouseMiddleDragStart} pairsDo: [ :selector :eventClass| 
+	#middle. RSMouseMiddleDragStart} pairsDo: [ :selector :eventClass|
 		canvas @ (selector value: class).
 		canvas canvas announce: (RSMouseDragging new step: 10 @ 5).
 		self assert: camera position closeTo: 0 @ 0.
@@ -50,10 +52,9 @@ RSDraggableCanvasTest >> testDraggingModeLeft [
 		canvas removeInteractionIfPresent: class.
 		camera position: 0@0.
 		]
-	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSDraggableCanvasTest >> testDraggingOnDraggable [
 	canvas @ RSDraggableCanvasInteraction.
 	canvas announce: RSMouseDragStart new.
@@ -62,7 +63,7 @@ RSDraggableCanvasTest >> testDraggingOnDraggable [
 	self assert: camera position closeTo: 10 @ 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSDraggableCanvasTest >> testDraggingOnNotDraggable [
 	canvas announce: (RSMouseDragging step: 10 @ 5).
 	self assert: camera position equals: (0 @ 0)

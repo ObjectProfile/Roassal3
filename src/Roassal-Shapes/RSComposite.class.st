@@ -445,7 +445,7 @@ RSComposite >> removeShape: shape [
 { #category : 'composite' }
 RSComposite >> resetChildren [
 	children := RSGroup new: 0.
-	shapeCollection := self shapeCollection class new.
+	shapeCollection := self shapeCollection class new
 ]
 
 { #category : 'path' }
@@ -571,5 +571,5 @@ RSComposite >> updateDirtyRectangleWith: aRectangle [
 	"nothing to see; then we skip"
 	newRectangle isZero ifTrue: [ ^ self ].
 	newRectangle := self computeEncompassingRectangleFor: newRectangle matrix: matrix.
-	parent updateDirtyRectangleWith: newRectangle.
+	parent updateDirtyRectangleWith: newRectangle
 ]

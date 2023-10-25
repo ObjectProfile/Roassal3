@@ -2,34 +2,34 @@
 Used to validate numbers or block that returns a number
 "
 Class {
-	#name : #RSLayoutNumberOrBlockField,
-	#superclass : #RSLayoutField,
+	#name : 'RSLayoutNumberOrBlockField',
+	#superclass : 'RSLayoutField',
 	#instVars : [
 		'currentWidget'
 	],
-	#category : #'Roassal-LayoutStudio-Fields'
+	#category : 'Roassal-LayoutStudio-Fields',
+	#package : 'Roassal-LayoutStudio',
+	#tag : 'Fields'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutNumberOrBlockField >> createWidget [
 	widget := layoutStudio newMorph.
 	self updateTextField: self dropListItems first.
 	^ widget
-	
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSLayoutNumberOrBlockField >> currentWidget [
 	^ currentWidget
-	
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutNumberOrBlockField >> dropListItems [
 	^ { 'Block'. 'Number' }
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutNumberOrBlockField >> layoutValueAsNumber [
 	| result value |
 	value := self layoutValue.
@@ -38,7 +38,7 @@ RSLayoutNumberOrBlockField >> layoutValueAsNumber [
 	^ result
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutNumberOrBlockField >> newCode [
 	^ layoutStudio newCode
 		text: self layoutValue;
@@ -46,7 +46,7 @@ RSLayoutNumberOrBlockField >> newCode [
 		yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutNumberOrBlockField >> newNumberInput [
 	^ layoutStudio newNumberInput
 		text: self layoutValueAsNumber asString;
@@ -54,24 +54,23 @@ RSLayoutNumberOrBlockField >> newNumberInput [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutNumberOrBlockField >> transform: aString [
-	
+
 	^ currentWidget class = SpCodePresenter
 		ifTrue: [ self class compiler evaluate: aString ]
 		ifFalse: [ aString asNumber ]
-	
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RSLayoutNumberOrBlockField >> update [
 	self currentWidget text: self layoutValue asString
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSLayoutNumberOrBlockField >> updateTextField: aString [
 	| choose isTextField |
-	choose := layoutStudio newDropList 
+	choose := layoutStudio newDropList
 		items: self dropListItems;
 		selectItem: aString;
 		whenSelectedItemChangedDo: [ :item | self updateTextField: item ].
@@ -90,17 +89,16 @@ RSLayoutNumberOrBlockField >> updateTextField: aString [
 			add: ' ' asString withConstraints: [ :c | c width: 10; expand: false] ;
 			add: currentWidget;
 			yourself) withConstraints: [:c |
-				c height: (isTextField 
+				c height: (isTextField
 					ifTrue: [ 25 ]
 					ifFalse: [ 100 ]) ];
 		yourself).
-	layoutStudio update.
+	layoutStudio update
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSLayoutNumberOrBlockField >> updateWidget: aString [
-	[ self layoutValue: (self transform: aString) ] 
+	[ self layoutValue: (self transform: aString) ]
 		onErrorDo: [ :ex | self inform: ex printString ].
-	self currentWidget text: self layoutValue asString.
-	
+	self currentWidget text: self layoutValue asString
 ]

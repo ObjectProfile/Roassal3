@@ -26,5 +26,5 @@ RSScatterPlotTest >> testCreateScatterPlot [
 	self assert: scatterPlot xScale equals: yScale.
 	self assert: scatterPlot yScale equals: xScale.
 	self assert: scatterPlot x equals: y.
-	self assert: scatterPlot y equals: x.
+	self assert: scatterPlot y equals: x
 ]

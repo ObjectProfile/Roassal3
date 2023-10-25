@@ -39,20 +39,21 @@ RSShapeTest >> testAllConnectedShapes [
 
 { #category : 'tests' }
 RSShapeTest >> testBorderDoUpdatesInvalidateShape [
-	| box |
-	box := RSBox new
-		       size: 20;
-		       yourself.
+
+	| tmp1 tmp3 |
+	tmp3 := RSBox new.
+	tmp3 size: 20.
+	tmp1 := tmp3 yourself.
 	self
-		assert: box encompassingRectangle
-		equals: (-10 asPoint corner: 10 asPoint).
-	box borderDo: [ :border |
-		border
+		assert: tmp1 encompassingRectangle
+		equals: ( -10 asPoint corner: 10 asPoint).
+	tmp1 borderDo: [ :arg1 |
+		arg1
 			width: 12;
 			dashArray: #( 3 1 2 ) ].
 	self
-		assert: box encompassingRectangle
-		equals: (-16 asPoint corner: 16 asPoint)
+		assert: tmp1 encompassingRectangle
+		equals: ( -16 asPoint corner: 16 asPoint)
 ]
 
 { #category : 'tests' }
@@ -152,7 +153,7 @@ RSShapeTest >> testIndexesArray [
 	box := RSBox new.
 	canvas := RSCanvas new.
 	canvas add: box.
-	
+
 	self assert: box indexesFromRoot size equals: 1.
 	self assert: box indexesFromRoot first equals: 1
 ]
@@ -173,7 +174,7 @@ RSShapeTest >> testIndexesArrayWithComposites [
 	self assert: box indexesFromRoot size equals: 2.
 	self assert: box indexesFromRoot first equals: 1.
 	self assert: box indexesFromRoot second equals: 1.
-	
+
 	self assert: box1 indexesFromRoot size equals: 2.
 	self assert: box1 indexesFromRoot first equals: 2.
 	self assert: box1 indexesFromRoot second equals: 1
@@ -191,7 +192,7 @@ RSShapeTest >> testInvert [
 	canvas add: rectangle.
 	rectangle invert.
 	self assert: rectangle points equals: {-4@(-2). 4@(-2). 4@2. -4@2.}.
-	self assert: rectangle position equals: (positionBefore y @ positionBefore x).
+	self assert: rectangle position equals: (positionBefore y @ positionBefore x)
 ]
 
 { #category : 'tests' }

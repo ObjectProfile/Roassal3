@@ -1,6 +1,6 @@
-Extension { #name : #RSRectanglePackLayout }
+Extension { #name : 'RSRectanglePackLayout' }
 
-{ #category : #'*Roassal-LayoutStudio' }
+{ #category : '*Roassal-LayoutStudio' }
 RSRectanglePackLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
 		add: (RSLayoutNumberField new

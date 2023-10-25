@@ -24,7 +24,7 @@ RSMonitorEventsTest >> testBasic [
 	self assert: eventClass equals: RSMouseLeftClick.
 	self assert: timeStamp isNumber.
 
-	monitor unRegister.
+	monitor unRegister
 ]
 
 { #category : 'tests' }

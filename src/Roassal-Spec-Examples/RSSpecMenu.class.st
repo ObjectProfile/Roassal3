@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'menu' }
-RSSpecMenu class >> menu07Examples: aBuilder [	
+RSSpecMenu class >> menu07Examples: aBuilder [
 	<worldMenu>
 	| icon |
 	icon := RSWorldMenu roassalIcon.

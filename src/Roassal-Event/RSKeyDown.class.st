@@ -16,7 +16,8 @@ c open
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
-	#name : #RSKeyDown,
-	#superclass : #RSKeyboardEvent,
-	#category : #'Roassal-Event'
+	#name : 'RSKeyDown',
+	#superclass : 'RSKeyboardEvent',
+	#category : 'Roassal-Event',
+	#package : 'Roassal-Event'
 }

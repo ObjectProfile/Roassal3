@@ -132,7 +132,7 @@ RSTickConfiguration >> numberOfTicks [
 
 { #category : 'accessing' }
 RSTickConfiguration >> numberOfTicks: aNumber [
-	numberOfTicks := aNumber.
+	numberOfTicks := aNumber
 ]
 
 { #category : 'accessing' }
@@ -159,5 +159,5 @@ RSTickConfiguration >> tickSize: aNumber [
 RSTickConfiguration >> updateTickConfiguration: anEvent [
 	| canvas |
 	canvas := anEvent canvas.
-	self fontSize: (canvas extent) / (canvas defaultExtent).
+	self fontSize: (canvas extent) / (canvas defaultExtent)
 ]

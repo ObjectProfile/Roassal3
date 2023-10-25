@@ -16,7 +16,7 @@ RSTest class >> isAbstract [
 
 { #category : 'asserting' }
 RSTest >> assertIntegerPosition: shapes equals: anArray [
-	self 
+	self
 		assert: (shapes collect: [ :each | each position asIntegerPoint ] as: Array)
 		equals: anArray
 ]

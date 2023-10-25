@@ -5,5 +5,5 @@ RSBitmap class >> example [
 	| image |
 	image := self new.
 	image form: (self iconNamed: #pharo).
-	^ (Smalltalk tools inspector inspect: image) window.
+	^ (Smalltalk tools inspector inspect: image) window
 ]

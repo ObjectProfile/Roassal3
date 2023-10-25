@@ -10,7 +10,7 @@ Class {
 RSCameraTest >> testMatrix [
 	| canvas |
 	canvas := RSCanvas new.
-	self assert: canvas camera matrix isIdentity.
+	self assert: canvas camera matrix isIdentity
 ]
 
 { #category : 'tests' }
@@ -56,6 +56,6 @@ RSCameraTest >> testVisibleAreaWithScale [
 	canvas := RSCanvas new.
 	canvas extent: 100 asPoint.
 	canvas camera scale: 2.
-	
+
 	self assert: canvas visibleRectangle equals: (-25 asPoint corner: 25 asPoint)
 ]

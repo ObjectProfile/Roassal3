@@ -1,6 +1,6 @@
-Extension { #name : #RSLayout }
+Extension { #name : 'RSLayout' }
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSLayout class >> basicExample [
 	| canvas |
 	canvas := self canvasExample.
@@ -8,7 +8,7 @@ RSLayout class >> basicExample [
 	^ canvas open
 ]
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSLayout class >> canvasExample [
 	| canvas |
 	canvas := RSCanvas new.
@@ -17,12 +17,12 @@ RSLayout class >> canvasExample [
 	^ canvas
 ]
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSLayout class >> canvasExampleIn: canvas [
 	self canvasExampleIn: canvas models: Collection withAllSubclasses
 ]
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSLayout class >> canvasExampleIn: canvas models: aCollection [
 	| shapes colorPalette |
 	self cartensianLinesIn: canvas.
@@ -44,7 +44,7 @@ RSLayout class >> canvasExampleIn: canvas models: aCollection [
 		normalize: #linesOfCode
 ]
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSLayout class >> cartensianLinesIn: canvas [
 	| lineX lineY zeroLabel |
 	lineX := RSArrowedLine new

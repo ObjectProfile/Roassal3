@@ -1,6 +1,6 @@
-Extension { #name : #RSNoLayout }
+Extension { #name : 'RSNoLayout' }
 
-{ #category : #'*Roassal-LayoutStudio' }
+{ #category : '*Roassal-LayoutStudio' }
 RSNoLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
 ]

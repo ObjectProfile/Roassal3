@@ -17,11 +17,11 @@ RSZoomableCanvasInteraction class >> autoZoomMove: aCanvas newScale: newScale [
 	| scale camera position morphPosition |
 	camera := aCanvas camera.
 	scale := camera scale.
-	
+
 	morphPosition := aCanvas morph bounds floatCenter - aCanvas morph bounds origin.
 	position := camera fromPixelToSpace: morphPosition.
-	self 
-		zoomMove: aCanvas 
+	self
+		zoomMove: aCanvas
 		pixelPosition: morphPosition
 		spacePosition: position
 		newScale: newScale
@@ -29,16 +29,16 @@ RSZoomableCanvasInteraction class >> autoZoomMove: aCanvas newScale: newScale [
 ]
 
 { #category : 'events' }
-RSZoomableCanvasInteraction class >> zoomMove: aCanvas newScale: newScale useAnimation: aBoolean [ 
+RSZoomableCanvasInteraction class >> zoomMove: aCanvas newScale: newScale useAnimation: aBoolean [
 	| scale camera position morphPosition |
 	camera := aCanvas camera.
 	scale := camera scale.
-	
+
 	morphPosition := aCanvas lastMousePosition.
 	position := camera fromPixelToSpace: morphPosition.
 
-	self 
-		zoomMove: aCanvas 
+	self
+		zoomMove: aCanvas
 		pixelPosition: morphPosition
 		spacePosition: position
 		newScale: newScale
@@ -55,21 +55,21 @@ RSZoomableCanvasInteraction class >> zoomMove: aCanvas pixelPosition: morphPosit
 		newPosition := camera fromSpaceToPixel: position.
 		zero := camera fromSpaceToPixel: 0@0.
 		camera matrix translation: morphPosition - (newPosition - zero)-(camera originMode gapDistance: camera).
-			
+
 		camera invalidate.
 		aCanvas signalUpdate.
 		^ self ].
-	aCanvas newAnimation 
+	aCanvas newAnimation
 		easing: RSEasingInterpolator backOut;
 		duration: 200 milliSeconds;
 		onStepDo: [ :t | | newPosition zero |
 			"this method call a loadIdentity in the camera matrix"
-			
+
 			camera scale: (scale interpolateTo: newScale at: t).
 			newPosition := camera fromSpaceToPixel: position.
 			zero := camera fromSpaceToPixel: 0@0.
 			camera matrix translation: morphPosition - (newPosition - zero)-(camera originMode gapDistance: camera).
-			
+
 			camera invalidate.
 			aCanvas signalUpdate ]
 ]

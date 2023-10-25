@@ -1,10 +1,12 @@
 Class {
-	#name : #RSHighlightableTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Interaction-Tests-Core'
+	#name : 'RSHighlightableTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Interaction-Tests-Core',
+	#package : 'Roassal-Interaction-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHighlightableTest >> testBasic [
 
 	| c shapes previousColor highlight |
@@ -25,7 +27,7 @@ RSHighlightableTest >> testBasic [
 	self assert: shapes fifth color equals: previousColor
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHighlightableTest >> testHighlightAllShapes [
 
 	| h c |
@@ -41,7 +43,7 @@ RSHighlightableTest >> testHighlightAllShapes [
 		(c nodes allSatisfy: [ :shape | shape color = Color red ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHighlightableTest >> testHighlightAllShapesThenHighlightNothing [
 
 	| h c defaultColor |
@@ -58,7 +60,7 @@ RSHighlightableTest >> testHighlightAllShapesThenHighlightNothing [
 		(c nodes allSatisfy: [ :shape | shape color = defaultColor ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHighlightableTest >> testHighlightShapes [
 
 	| interaction canvas defaultColor |
@@ -74,7 +76,7 @@ RSHighlightableTest >> testHighlightShapes [
 			 shape color = defaultColor ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHighlightableTest >> testSameModel [
 
 	| values c boxes |
@@ -90,7 +92,7 @@ RSHighlightableTest >> testSameModel [
 	c nodes first announce: RSMouseEnter
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHighlightableTest >> testWithEdges [
 	| canvas shapes interaction |
 	canvas := RSCanvas new.
@@ -126,7 +128,7 @@ RSHighlightableTest >> testWithEdges [
 	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHighlightableTest >> testWithEdges2 [
 	| canvas shapes interaction |
 	canvas := RSCanvas new.
@@ -161,7 +163,7 @@ RSHighlightableTest >> testWithEdges2 [
 	self assert: (shapes second outgoingLines collect: #color) anyOne equals: Color gray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSHighlightableTest >> testWithOutgoingLines [
 	| h c shapes |
 	c := RSCanvas new.

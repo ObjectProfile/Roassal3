@@ -31,7 +31,7 @@ RSConditionalLayout class >> exampleCollection [
 { #category : '*Roassal-Examples' }
 RSConditionalLayout class >> exampleCollection2 [
 	| c |
-	c := self createCanvas.	
+	c := self createCanvas.
 
 	self new
 		ifConnectedThen: RSTreeLayout new;

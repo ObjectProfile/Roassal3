@@ -1,6 +1,6 @@
-Extension { #name : #RSHorizontalLineLayout }
+Extension { #name : 'RSHorizontalLineLayout' }
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSHorizontalLineLayout class >> example1 [
 	| c |
 	c := self canvasExample.
@@ -11,7 +11,7 @@ RSHorizontalLineLayout class >> example1 [
 	^ c open
 ]
 
-{ #category : #'*Roassal-Class-Examples' }
+{ #category : '*Roassal-Class-Examples' }
 RSHorizontalLineLayout class >> exampleLabel [
 	| c |
 	c := RSCanvas new.

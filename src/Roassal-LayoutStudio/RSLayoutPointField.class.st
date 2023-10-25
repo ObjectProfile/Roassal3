@@ -2,12 +2,14 @@
 Similar to number field but I can handle points
 "
 Class {
-	#name : #RSLayoutPointField,
-	#superclass : #RSLayoutEvalField,
-	#category : #'Roassal-LayoutStudio-Fields'
+	#name : 'RSLayoutPointField',
+	#superclass : 'RSLayoutEvalField',
+	#category : 'Roassal-LayoutStudio-Fields',
+	#package : 'Roassal-LayoutStudio',
+	#tag : 'Fields'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutPointField >> layoutValue [
 	| value |
 	value := super layoutValue.
@@ -15,7 +17,7 @@ RSLayoutPointField >> layoutValue [
 	^ value x asString , ' @ ', value y asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutPointField >> transform: aString [
 	| point |
 	point := super transform: aString.

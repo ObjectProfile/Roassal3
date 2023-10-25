@@ -106,7 +106,7 @@ RSAbstractBarPlot >> initialize [
 	super initialize.
 	self
 		gapRatio: 0.1;
-		barOffset: 0.
+		barOffset: 0
 ]
 
 { #category : 'testing' }

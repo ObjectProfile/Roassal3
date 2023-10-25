@@ -2,12 +2,14 @@
 Similar to number field but I can handle rectangles
 "
 Class {
-	#name : #RSLayoutRectangleField,
-	#superclass : #RSLayoutEvalField,
-	#category : #'Roassal-LayoutStudio-Fields'
+	#name : 'RSLayoutRectangleField',
+	#superclass : 'RSLayoutEvalField',
+	#category : 'Roassal-LayoutStudio-Fields',
+	#package : 'Roassal-LayoutStudio',
+	#tag : 'Fields'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutRectangleField >> layoutValue [
 	| value |
 	value := super layoutValue.
@@ -15,7 +17,7 @@ RSLayoutRectangleField >> layoutValue [
 	^ value asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayoutRectangleField >> transform: aString [
 	| rect |
 	rect := super transform: aString.

@@ -70,8 +70,6 @@ RSHorizontalTopTick >> min [
 
 { #category : 'rendering' }
 RSHorizontalTopTick >> updateChartMaxAndMinValues: aChart [
-
-	
 ]
 
 { #category : 'accessing' }

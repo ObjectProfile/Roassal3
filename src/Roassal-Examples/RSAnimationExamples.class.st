@@ -3235,7 +3235,7 @@ RSAnimationExamples >> example47FractalTree [
 	colorScale := NSScale log
 		domain: { max. 1 };
 		range: { Color white. Color green }.
-	drawTree := [ :depth :angle :p1  |  
+	drawTree := [ :depth :angle :p1  |
 		depth isZero ifFalse: [ | p2 rad |
 			rad := angle degreesToRadians.
 			p2 := p1 + (rad cos @ rad sin * depth * depth*size).
@@ -3244,7 +3244,7 @@ RSAnimationExamples >> example47FractalTree [
 				width: depth*0.75;
 				capRound;
 				controlPoints: { p1. p2 }.
-			drawTree 
+			drawTree
 				value: depth - 1
 				value: angle - angleGap
 				value: p2.
@@ -3262,11 +3262,11 @@ RSAnimationExamples >> example47FractalTree [
 			domain: {0. 0.5. 1};
 			range: { 180. 0. 180 }
 			);
-		onStepDo: [ :t | 
+		onStepDo: [ :t |
 			canvas clear.
 			angleGap:= t.
 			drawTree value: max value: -90 value: 0@100.
-			
+
 			canvas signalUpdate.
 			 ].
 	^ canvas

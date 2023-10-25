@@ -13,7 +13,7 @@ Class {
 RSCircleVennDiagramTest >> setUp [
 	super setUp.
 
-	vennDiagram := RSCircleVennDiagram new.
+	vennDiagram := RSCircleVennDiagram new
 ]
 
 { #category : 'tests' }
@@ -26,18 +26,16 @@ RSCircleVennDiagramTest >> testBasicVennDiagramOpen [
 
 { #category : 'tests' }
 RSCircleVennDiagramTest >> testVennDiagramConvertsBigSetInputToSet [
-	
+
 	vennDiagram bigSet: { 1 . 2 }.
-	self assert: vennDiagram bigSet class equals: Set.
-	
+	self assert: vennDiagram bigSet class equals: Set
 ]
 
 { #category : 'tests' }
 RSCircleVennDiagramTest >> testVennDiagramConvertsSmallSetInputToSet [
-	
+
 	vennDiagram smallSet: { 1 . 2 }.
-	self assert: vennDiagram smallSet class equals: Set.
-	
+	self assert: vennDiagram smallSet class equals: Set
 ]
 
 { #category : 'tests' }
@@ -45,8 +43,7 @@ RSCircleVennDiagramTest >> testVennDiagramOneSet [
 
 	vennDiagram bigSet:  { 3 . 2 }.
 	vennDiagram build.
-	self assert: vennDiagram canvas shapes size equals: 0.
-
+	self assert: vennDiagram canvas shapes size equals: 0
 ]
 
 { #category : 'tests' }
@@ -55,6 +52,5 @@ RSCircleVennDiagramTest >> testVennDiagramTwoSets [
 	vennDiagram bigSet:  { 3 . 2 }.
 	vennDiagram smallSet:  { 1. 3 . 2 }.
 	vennDiagram build.
-	self assert: vennDiagram canvas shapes size equals: 2.
-
+	self assert: vennDiagram canvas shapes size equals: 2
 ]

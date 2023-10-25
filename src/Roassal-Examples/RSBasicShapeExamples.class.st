@@ -57,7 +57,7 @@ RSBasicShapeExamples >> example03BasicComposite [
 		color: (Color red alpha: 0.4);
 		extent: 100@100;
 		yourself).
-		
+
 	com adjustToChildren.
 	c addShape: com.
 	c addShape: (RSEllipse new
@@ -88,10 +88,10 @@ RSBasicShapeExamples >> example04BasicComposite [
 		color: (Color red alpha: 0.5);
 		extent: 50@100;
 		yourself).
-	
+
 	com adjustToChildren.
 	com position: 100@100.
-	
+
 	c addShape: com.
 	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.5);
@@ -767,10 +767,10 @@ RSBasicShapeExamples >> example35KeyEvents [
 		      model: 'UP';
 		      text: '';
 		      position: 0 @ 30.
-	c addAll: { 
+	c addAll: {
 			down.
 			up }.
-	print := [ :evt :s | 
+	print := [ :evt :s |
 	         s text: evt asString.
 	         evt signalUpdate ].
 	c
@@ -1130,7 +1130,7 @@ RSBasicShapeExamples >> example45RTree30KShapes [
 		{ label } asShape
 			model: i;
 			padding: 5;
-			color: (i even 
+			color: (i even
 				ifTrue: [Color blue translucent ]
 				ifFalse: [Color red translucent ]);
 			yourself] as: RSGroup).
@@ -1155,9 +1155,9 @@ RSBasicShapeExamples >> example46ExampleRTreeInComposites [
 		innerNodes := (1 to: 3000) collect: [ :each | | label |
 			label:= RSLabel text: each.
 			{ label } asShape
-				model: each; 
+				model: each;
 				padding: 5;
-				color: (each even 
+				color: (each even
 					ifTrue: [Color green translucent ]
 					ifFalse: [Color gray translucent ]);
 				yourself
@@ -1168,7 +1168,7 @@ RSBasicShapeExamples >> example46ExampleRTreeInComposites [
 			useRTree;
 			model: i;
 			padding: 20;
-			color: (i even 
+			color: (i even
 				ifTrue: [Color blue translucent ]
 				ifFalse: [Color red translucent ]);
 			yourself

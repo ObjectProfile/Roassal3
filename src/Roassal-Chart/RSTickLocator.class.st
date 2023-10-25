@@ -11,6 +11,6 @@ Class {
 
 { #category : 'generate' }
 RSTickLocator >> generateTicks: aScale with: numberOfTicks [
-	
+
 	^ self subclassResponsibility
 ]

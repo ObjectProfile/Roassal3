@@ -350,7 +350,7 @@ RSLayoutExamples >> example13VisualizeQuatree [
 			createBoxes value: subQuad value: lvl + 1 ].
 		boxes add: box.
 		boxes add: label ].
-	
+
 	canvas newAnimation
 		repeat;
 		duration: 500 milliSeconds;

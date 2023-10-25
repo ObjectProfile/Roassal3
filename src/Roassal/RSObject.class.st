@@ -18,8 +18,8 @@ RSObject class >> addDocumentSection: aBuilder label: label methods: methods [
 	aBuilder header: [ :builder | builder text: label ] withLevel: 2.
 	aBuilder unorderedListDuring: [
 		(methods sorted: #selector ascending) do: [ :each |
-			aBuilder item: [ 
-				aBuilder monospace: (String streamContents:[:s | 
+			aBuilder item: [
+				aBuilder monospace: (String streamContents:[:s |
 					s << each methodClass name << '>>#' <<  each selector
 					] ) ] ] ]
 ]
@@ -28,7 +28,7 @@ RSObject class >> addDocumentSection: aBuilder label: label methods: methods [
 RSObject class >> buildMicroDownUsing: aBuilder withComment: aString [
 	super buildMicroDownUsing: aBuilder withComment: aString.
 	self documentSections keysAndValuesDo: [ :label :methods |
-		self addDocumentSection: aBuilder label: label methods: methods ].
+		self addDocumentSection: aBuilder label: label methods: methods ]
 ]
 
 { #category : 'documentation' }

@@ -13,8 +13,7 @@ Class {
 RSTranscriptCanvasMonitor >> initialize [
 
 	canvasIdString := 'RSCanvas#{1}' format: { canvas identityHash }.
-	super initialize.
-
+	super initialize
 ]
 
 { #category : 'initialization' }

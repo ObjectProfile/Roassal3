@@ -13,75 +13,76 @@
   
 "
 Class {
-	#name : #RSEvent,
-	#superclass : #Announcement,
+	#name : 'RSEvent',
+	#superclass : 'Announcement',
 	#instVars : [
 		'canvas',
 		'morph',
 		'shape',
 		'timeStamp'
 	],
-	#category : #'Roassal-Event'
+	#category : 'Roassal-Event',
+	#package : 'Roassal-Event'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEvent >> camera [
 	^ self canvas camera
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEvent >> canvas [
 
-	^ canvas ifNil: [ 
+	^ canvas ifNil: [
 		  canvas := shape ifNil: [ nil ] ifNotNil: [ shape canvas ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEvent >> canvas: aRSCanvas [
 	canvas := aRSCanvas
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSEvent >> initialize [
 	super initialize.
 	self timeStamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEvent >> morph [
 	^ morph ifNil: [ ^ morph := self canvas morph ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEvent >> morph: aMorph [
 	morph := aMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEvent >> shape [
 	^ shape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEvent >> shape: aRSShape [
 	"An event should now the shape to which it is related to.
 	The shape has to be set before emitting the event."
 	shape := aRSShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEvent >> signalUpdate [
 	"Trigger a refresh of the morph. The method signalUpdate has to be called when some visual properties are changed (e.g., color, position)"
 	morph notNil ifTrue: [ morph changed ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEvent >> timeStamp [
 	"Return the millisecond clock value at which the event was generated"
 	^ timeStamp ifNil:[ timeStamp := Time millisecondClockValue ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSEvent >> timeStamp: stamp [
 	timeStamp := stamp
 ]

@@ -210,7 +210,7 @@ RSCanvas >> canvas [
 RSCanvas >> clear [
 	self shapes copy do: #remove.
 	self announcer: nil.
-	self signalUpdate.
+	self signalUpdate
 ]
 
 { #category : 'accessing' }
@@ -239,7 +239,7 @@ c
 RSCanvas >> createMorph [
 	"Create a Morph that contains myself. This is a private method"
 	<deprecated: 'This only works when the host is a RSMorphicHost'>
-	
+
 	^ host	 createMorph
 ]
 
@@ -272,7 +272,7 @@ RSCanvas >> defaultExtent [
 
 { #category : 'dirty areas' }
 RSCanvas >> dirtyRectangle [
-	^ host dirtyRectangle 
+	^ host dirtyRectangle
 ]
 
 { #category : 'dirty areas' }
@@ -306,7 +306,7 @@ RSCanvas >> extent: aPoint [
 	"Set the extent of the canvas. This method is called when a window is resized. An event is raised when the extension happens. "
 	extent = aPoint ifTrue: [ ^ self ].
 	self notifyExtentChanged: aPoint.
-	self camera invalidate.
+	self camera invalidate
 ]
 
 { #category : 'accessing' }
@@ -387,7 +387,7 @@ RSCanvas >> lastMousePosition [
 RSCanvas >> morph [
 	"Return the Athens morph used by the canvas to render the visualization"
 	<deprecated: 'This only works when the host is a RSMorphicHost'>
-	
+
 	^ host morph
 ]
 
@@ -554,7 +554,7 @@ RSCanvas >> removeShape: shape [
 	shape isFixed
 		ifFalse: [ self shapeCollection remove: shape ].
 	collection remove: shape.
-	shape entryIndex to: collection size 
+	shape entryIndex to: collection size
 		do: [ :i | (collection at: i) entryIndex: i ].
 	shape parent: nil.
 	evt := RSShapeRemovedEvent new
@@ -580,7 +580,7 @@ RSCanvas >> setAsFixed: aShape [
 { #category : 'accessing' }
 RSCanvas >> shapeCollection: anRSShapeCollection [
 	shapeCollection := anRSShapeCollection.
-	shapeCollection bulkLoad: shapes.
+	shapeCollection bulkLoad: shapes
 ]
 
 { #category : 'event processing' }
@@ -589,7 +589,7 @@ RSCanvas >> shapeWithAction: eventClass forPositionInPixels: position [
 	fixedShapes reverseDo: [ :s | | shapeWithAction |
 		shapeWithAction := s shapeWithAction: eventClass forPosition: position.
 		shapeWithAction ifNotNil: [ ^ shapeWithAction ] ].
-	
+
 	result := self shapeWithActionForPosition: (self camera fromPixelToSpace: position).
 	result ifNil: [ ^ self ].
 	(result announcer handleEventClass: eventClass)
@@ -611,12 +611,11 @@ RSCanvas >> shapeWithActionForPositionInPixels: position [
 	| aShape |
 	fixedShapes reverseDo: [ :s | | shapeWithAction |
 		shapeWithAction := s shapeWithActionForPosition: position.
-		shapeWithAction ifNotNil: [^ shapeWithAction ] 
+		shapeWithAction ifNotNil: [^ shapeWithAction ]
 	].
 	aShape := self shapeWithActionForPosition: (self camera fromPixelToSpace: position).
 	aShape ifNil: [ aShape := self ].
 	^ aShape
-	
 ]
 
 { #category : 'accessing' }

@@ -12,7 +12,7 @@ RSViolinPlotShapeTest >> testCreateInstanceWithDataset [
 	data := { 5. 1. 2. 3. 4. }.
 	violinShape := RSViolinPlotShape data: data.
 	self assert: violinShape data equals: data.
-	self assert: violinShape dataSorted equals: { 1. 2. 3. 4. 5. }.
+	self assert: violinShape dataSorted equals: { 1. 2. 3. 4. 5. }
 ]
 
 { #category : 'tests' }
@@ -29,5 +29,5 @@ RSViolinPlotShapeTest >> testDensityArea [
 	violinShape scales: {xScale. yScale}.
 	violinShape bandWidth: xScale rangeBand.
 	violinShape bandOffset: (xScale scale: 1).
-	self assert: violinShape densityArea class equals: RSPolygon.
+	self assert: violinShape densityArea class equals: RSPolygon
 ]

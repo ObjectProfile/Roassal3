@@ -12,8 +12,8 @@ RTNode class >> example [
 	left contents: (RSBox model: 'A'); rectangle: (0 asPoint corner: 20 asPoint); height: 1.
 	right contents: (RSBox model: 'B'); rectangle: (30 asPoint corner: 50 asPoint); height: 1.
 	root rectangle: (5 asPoint corner: 45 asPoint); height: 2.
-	
-	^ StInspectorPresenter openOn: root.
+
+	^ StInspectorPresenter openOn: root
 ]
 
 { #category : '*Roassal-Global-Tests' }

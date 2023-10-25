@@ -35,27 +35,27 @@ RSAbstractPlot class >> isAbstract [
 
 { #category : 'instance creation' }
 RSAbstractPlot class >> points: aCollectionOfPoints [
-	^ self new 
+	^ self new
 		x: (aCollectionOfPoints collect: #x) y: (aCollectionOfPoints collect: #y);
-		yourself.
+		yourself
 ]
 
 { #category : 'instance creation' }
 RSAbstractPlot class >> x: collectionX y: collectionY [
-	^ self new 
+	^ self new
 		x: collectionX y: collectionY;
-		yourself.
+		yourself
 ]
 
 { #category : 'accessing' }
 RSAbstractPlot >> + aRSPlot [
 	| newChart |
-	newChart := (aRSPlot canHandleCluster and: [ self canHandleCluster ]) 
+	newChart := (aRSPlot canHandleCluster and: [ self canHandleCluster ])
 		ifTrue: [ RSClusterChart new ]
 		ifFalse: [ RSCompositeChart new ].
 	newChart add: self.
 	newChart add: aRSPlot.
-	^ newChart.
+	^ newChart
 ]
 
 { #category : 'rendering' }
@@ -152,7 +152,7 @@ RSAbstractPlot >> invertCoordinates [
 	auxScale := self yScale.
 	self yScale: self xScale.
 	self xScale: auxScale.
-	self x: self y y: self x.
+	self x: self y y: self x
 ]
 
 { #category : 'testing' }

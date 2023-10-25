@@ -37,7 +37,7 @@ RSSelectionInCanvasInteraction class >> withoutNilModels [
 { #category : 'interactions' }
 RSSelectionInCanvasInteraction >> addInteractionToShape: aShape [
 
-	((aShape hasInteraction: self class) or: [ aShape isLine ]) ifTrue: [ 
+	((aShape hasInteraction: self class) or: [ aShape isLine ]) ifTrue: [
 		^ self ].
 	aShape when: RSMouseLeftClick send: #processClick: to: self
 ]
@@ -119,7 +119,7 @@ RSSelectionInCanvasInteraction >> processClick: evt [
 RSSelectionInCanvasInteraction >> processKeyDown: evt [
 
 	| canvas |
-	((evt commandKeyPressed or: [ evt controlKeyPressed ]) and: [ 
+	((evt commandKeyPressed or: [ evt controlKeyPressed ]) and: [
 		 evt keyName = self keyToSelect ]) ifFalse: [ ^ self ].
 	canvas := evt canvas.
 	canvas setSelectedShapes: canvas nodes.
@@ -157,13 +157,13 @@ RSSelectionInCanvasInteraction >> setSelectedShapes: aGroupOfShapes on: aRSCanva
 
 	| filteredShapes selectedShapes shapesToRemoveShadow shapesToPutShadow |
 	filteredShapes := self withoutNilModels
-		                  ifTrue: [ 
-		                  aGroupOfShapes select: [ :shape | 
+		                  ifTrue: [
+		                  aGroupOfShapes select: [ :shape |
 			                  shape model isNotNil ] ]
 		                  ifFalse: [ aGroupOfShapes ].
-		
+
 	selectedShapes := aRSCanvas selectedShapes.
-	
+
 	shapesToRemoveShadow := selectedShapes difference: filteredShapes.
 	self unselectShapes: shapesToRemoveShadow in: aRSCanvas.
 
@@ -184,7 +184,7 @@ RSSelectionInCanvasInteraction >> shadowColor [
 ]
 
 { #category : 'accessing' }
-RSSelectionInCanvasInteraction >> shadowColor: aColor [ 
+RSSelectionInCanvasInteraction >> shadowColor: aColor [
 	shadowInteraction shadowColor: aColor
 ]
 
@@ -209,5 +209,5 @@ RSSelectionInCanvasInteraction >> withoutNilModels [
 { #category : 'accessing' }
 RSSelectionInCanvasInteraction >> withoutNilModels: aBoolean [
 
-	withoutNilModels := aBoolean 
+	withoutNilModels := aBoolean
 ]

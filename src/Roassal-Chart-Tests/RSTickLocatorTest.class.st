@@ -238,7 +238,7 @@ RSTickLocatorTest >> testLogLocatorDataIsOkWithReversedDomain [
 	self assert: (data at: 4) equals: 1.
 	self assert: (data at: 5) equals: 10.
 	self assert: (data at: 6) equals: 100.
-	self assert: (data at: 7) equals: 1000.
+	self assert: (data at: 7) equals: 1000
 ]
 
 { #category : 'tests' }
@@ -316,7 +316,7 @@ RSTickLocatorTest >> testLogLocatorSmallestIndexIsCorrect [
 
 	| locator |
 	locator := RSLogLocator new.
-	
+
 	self assert: locator smallestIndex equals: 10**(-3)
 ]
 
@@ -325,7 +325,7 @@ RSTickLocatorTest >> testLogLocatorSmallestIndexIsCorrectAfterChangingBase [
 
 	| locator |
 	locator := RSLogLocator new base: 2.
-	
+
 	self assert: locator smallestIndex equals: 2**(-3)
 ]
 
@@ -334,7 +334,7 @@ RSTickLocatorTest >> testLogLocatorSmallestIndexIsCorrectAfterChangingSmallestPo
 
 	| locator |
 	locator := RSLogLocator new smallestPower: -2.
-	
+
 	self assert: locator smallestIndex equals: 10**(-2)
 ]
 

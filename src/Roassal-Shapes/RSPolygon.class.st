@@ -198,7 +198,7 @@ RSPolygon >> invert [
 	| positionPrevInverting |
 	positionPrevInverting := self position.
 	self points: (self points collect: [ :p | p y @ p x ]).
-	self position: (positionPrevInverting y@positionPrevInverting x).
+	self position: (positionPrevInverting y@positionPrevInverting x)
 ]
 
 { #category : 'accessing' }

@@ -42,9 +42,9 @@ RSSearchInCanvasInteraction class >> exampleCollection2 [
 		on: elements.
 
 	con := RSCanvasController new.
-	
+
 	c @ con.
-	
+
 	c searchInteraction useExactMatch.
 	c selectionInteraction shadowColor: Color green translucent.
 	^ c open

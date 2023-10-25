@@ -17,7 +17,7 @@ Class {
 { #category : 'adding' }
 RSClusterChart >> + aRSPlot [
 	self add: aRSPlot.
-	^ self.
+	^ self
 ]
 
 { #category : 'adding' }
@@ -41,7 +41,7 @@ RSClusterChart >> bandsMargin: floatBetween0And1 [
 { #category : 'adding' }
 RSClusterChart >> beforeRenderingIn: aChart [
 	yScale := clustersScale.
-	aChart yScale: aChart.
+	aChart yScale: aChart
 ]
 
 { #category : 'private' }
@@ -57,13 +57,13 @@ RSClusterChart >> clusterBandValues [
 
 { #category : 'accessing' }
 RSClusterChart >> clustersMargin [
-	^ clustersMargin 
+	^ clustersMargin
 ]
 
 { #category : 'accessing' }
 RSClusterChart >> clustersMargin: floatBetween0And1 [
 	clustersMargin := floatBetween0And1.
-	self computePlotsBands.
+	self computePlotsBands
 ]
 
 { #category : 'accessing' }
@@ -75,7 +75,7 @@ RSClusterChart >> clustersScale [
 RSClusterChart >> computeClustersScale [
 	| range |
 	range := { self padding x. self extent x - self padding x}.
-	horizontal ifTrue: [ 
+	horizontal ifTrue: [
 		range := { self padding y negated. (self extent y - self padding y) negated} ].
 	clustersScale := NSScale ordinal
 		domain: (self clusterBandValues);
@@ -107,17 +107,17 @@ RSClusterChart >> computePlotsBands [
 { #category : 'rendering' }
 RSClusterChart >> computeTicks [
 	| horizontalTick verticalTick |
-	horizontal 
+	horizontal
 		ifFalse: [
 			horizontalTick := self horizontalTick.
-			horizontalTick ifNotNil: [ 
+			horizontalTick ifNotNil: [
 				horizontalTick isTicksDataNil ifTrue: [ self xTicks: positions labels: positions ] ].
 		 ]
-		ifTrue: [ 
+		ifTrue: [
 			verticalTick := self verticalTick.
 			verticalTick ifNotNil: [
 				verticalTick isTicksDataNil ifTrue: [ self yTicks: positions labels: positions ] ].
-		 ].
+		 ]
 ]
 
 { #category : 'defaults' }
@@ -133,7 +133,7 @@ RSClusterChart >> defaultClustersMargin [
 { #category : 'adding' }
 RSClusterChart >> horizontal [
 	self plots do: [ :plot | plot horizontal ].
-	horizontal := true.
+	horizontal := true
 ]
 
 { #category : 'initialization' }
@@ -141,7 +141,7 @@ RSClusterChart >> initialize [
 	super initialize.
 	clustersMargin := self defaultClustersMargin.
 	bandsMargin := self defaultBandsMargin.
-	horizontal := false.
+	horizontal := false
 ]
 
 { #category : 'accessing' }
@@ -151,15 +151,15 @@ RSClusterChart >> innerClusterScale [
 
 { #category : 'accessing' }
 RSClusterChart >> maxNumberOfBandsPerPlot [
-	^ (self plots collect: [ :plot | plot numberOfBands ]) max.
+	^ (self plots collect: [ :plot | plot numberOfBands ]) max
 ]
 
 { #category : 'rendering' }
 RSClusterChart >> renderIn: aCanvas [
-	horizontal 
+	horizontal
 		ifTrue: [ self extent: (self extent x)@(self extent y * (1+(self plots size * 0.1))). ]
-		ifFalse: [ self extent: (self extent x * (1+(self plots size * 0.1)))@(self extent y). ].	
+		ifFalse: [ self extent: (self extent x * (1+(self plots size * 0.1)))@(self extent y). ].
 	self computePlotsBands.
 	self computeTicks.
-	^ super renderIn: aCanvas.
+	^ super renderIn: aCanvas
 ]

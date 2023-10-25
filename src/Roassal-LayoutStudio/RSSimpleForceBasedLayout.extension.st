@@ -1,6 +1,6 @@
-Extension { #name : #RSSimpleForceBasedLayout }
+Extension { #name : 'RSSimpleForceBasedLayout' }
 
-{ #category : #'*Roassal-LayoutStudio' }
+{ #category : '*Roassal-LayoutStudio' }
 RSSimpleForceBasedLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
 ]

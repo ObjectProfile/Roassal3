@@ -51,7 +51,7 @@ RSSelectionPresentationInteraction >> noPushFront [
 { #category : 'hooks' }
 RSSelectionPresentationInteraction >> onShape: aShape [
 
-	
+
 	aShape model ifNil: [ ^ self ].
 	self addInteractionToCanvas: aShape canvas.
 	aShape removeInteractionIfPresent: self class.
@@ -67,7 +67,7 @@ RSSelectionPresentationInteraction >> padding [
 { #category : 'accessing' }
 RSSelectionPresentationInteraction >> padding: aNumber [
 
-	shadowInteraction padding: aNumber 
+	shadowInteraction padding: aNumber
 ]
 
 { #category : 'accessing' }
@@ -98,7 +98,7 @@ RSSelectionPresentationInteraction >> selection: evt [
 
 	| aShape |
 	aShape := evt shape.
-	self presentation ifNotNil: [ 
+	self presentation ifNotNil: [
 		self presentation value:
 			(SpWrappedItem new selectedItem: aShape model) ].
 	shadowInteraction removeShadowsOn: evt canvas.

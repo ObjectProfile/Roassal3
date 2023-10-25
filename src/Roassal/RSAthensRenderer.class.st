@@ -563,7 +563,7 @@ RSAthensRenderer >> getOrCreatePathOf: shape [
 
 { #category : 'utilities' }
 RSAthensRenderer >> inverseTransform: aRectangle [
-	^ Rectangle encompassing: (aRectangle corners 
+	^ Rectangle encompassing: (aRectangle corners
 		collect: [:corner | matrix inverseTransform: corner])
 ]
 
@@ -607,7 +607,7 @@ RSAthensRenderer >> surface: anObject [
 { #category : 'utilities' }
 RSAthensRenderer >> transform: aRectangle [
 	| r |
-	r  := (Rectangle encompassing: (aRectangle corners 
+	r  := (Rectangle encompassing: (aRectangle corners
 		collect: [:corner | matrix transform: corner])).
 	^ r origin asIntegerPoint corner: r corner x ceiling @ r corner y ceiling
 ]
@@ -696,16 +696,16 @@ RSAthensRenderer >> visitCanvas: aRSCanvas [
 RSAthensRenderer >> visitChildrenIfNecessary: shape [
 	| visibleChildren rectangle |
 	shape hasChildren ifFalse: [ ^ self ].
-	
+
 	rectangle := shape computeInverseEncompassingRectangleFor: dirtyRectangle matrix: originMatrix.
-	
-	rectangle :=(rectangle origin max: shape baseRectangle origin) 
+
+	rectangle :=(rectangle origin max: shape baseRectangle origin)
 		corner: (rectangle corner min: shape baseRectangle corner).
 
 	visibleChildren := shape shapeCollection entriesAtRectangle: rectangle.
-	
+
 	athensCanvas clipBy: shape path during: [
-		visibleChildren do: [ :each | each accept: self ] ].
+		visibleChildren do: [ :each | each accept: self ] ]
 ]
 
 { #category : 'visiting' }

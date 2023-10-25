@@ -57,7 +57,7 @@ RSHorizontalTick >> min [
 
 { #category : 'rendering' }
 RSHorizontalTick >> updateChartMaxAndMinValues: aChart [
-	
+
 	aChart
 		minChartValueX: self ticksData first;
 		maxChartValueX: self ticksData last

@@ -91,7 +91,7 @@ RSLinesTest >> testEmcompassingRectangleForDiagonalLine [
 		endPoint: 100@100;
 		width: 1;
 		yourself.
-	self assert: line encompassingRectangle extent > (100@100).
+	self assert: line encompassingRectangle extent > (100@100)
 ]
 
 { #category : 'tests - geometry' }
@@ -120,7 +120,7 @@ RSLinesTest >> testEmcompassingRectangleForVerticalLineWidth10 [
 		endPoint: 0@100;
 		width: 10;
 		yourself.
-	self assert: line encompassingRectangle equals: (-5@0 corner: 5@100).
+	self assert: line encompassingRectangle equals: (-5@0 corner: 5@100)
 ]
 
 { #category : 'tests' }
@@ -132,7 +132,7 @@ RSLinesTest >> testEmptyFormat [
 		yourself.
 	line format: ''.
 	self assert: line color equals: Color gray.
-	self assert: line markerStart isNil.
+	self assert: line markerStart isNil
 ]
 
 { #category : 'tests' }
@@ -191,7 +191,7 @@ RSLinesTest >> testInvert [
 	positionBefore := line position.
 	line invert.
 	self assert: line controlPoints equals: {2@0.5. 2@1.5}.
-	self assert: line position equals: positionBefore y @ positionBefore x.
+	self assert: line position equals: positionBefore y @ positionBefore x
 ]
 
 { #category : 'tests' }
@@ -277,5 +277,5 @@ RSLinesTest >> testStroke [
 	line format: '-.'.
 	self assert: line border dashArray equals: #(4 1 1 1).
 	line format: '.'.
-	self assert: line border dashArray equals: #(1).
+	self assert: line border dashArray equals: #(1)
 ]

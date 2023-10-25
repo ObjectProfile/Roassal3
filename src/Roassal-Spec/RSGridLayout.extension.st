@@ -1,6 +1,6 @@
-Extension { #name : #RSGridLayout }
+Extension { #name : 'RSGridLayout' }
 
-{ #category : #'*Roassal-Spec' }
+{ #category : '*Roassal-Spec' }
 RSGridLayout class >> horizontalAlignmentOptions [
 	^ #(left center right)
 ]

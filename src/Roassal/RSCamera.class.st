@@ -132,7 +132,7 @@ RSCamera >> initialize [
 	super initialize.
 	matrix := AthensAffineTransform new.
 	scale := 1.000000.
-	originMode := RSCoordinates originCenterMiddle.
+	originMode := RSCoordinates originCenterMiddle
 ]
 
 { #category : 'public' }

@@ -2,7 +2,8 @@
 middle button
 "
 Class {
-	#name : #RSMouseMiddleDragStart,
-	#superclass : #RSMouseDragStart,
-	#category : #'Roassal-Event'
+	#name : 'RSMouseMiddleDragStart',
+	#superclass : 'RSMouseDragStart',
+	#category : 'Roassal-Event',
+	#package : 'Roassal-Event'
 }

@@ -123,14 +123,13 @@ SpRSTransitionInspectorPresenter >> initializePresenters [
 	self disableDebuggingControls
 ]
 
-{ #category : 'controls' }
+{ #category : 'stepping' }
 SpRSTransitionInspectorPresenter >> step [
 
 	|progress|
 	progress := sliderMorph value + sliderMorph quantum.
 	animation stepWithNumber: progress.
-		sliderMorph value: progress.
-
+		sliderMorph value: progress
 ]
 
 { #category : 'controls' }

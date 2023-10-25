@@ -1,6 +1,6 @@
-Extension { #name : #RSClusteringLayout }
+Extension { #name : 'RSClusteringLayout' }
 
-{ #category : #'*Roassal-LayoutStudio' }
+{ #category : '*Roassal-LayoutStudio' }
 RSClusteringLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
 		add: (RSLayoutPickerField new

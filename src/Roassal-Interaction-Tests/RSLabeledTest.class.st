@@ -2,12 +2,14 @@
 A RSLabeledTest is a test class for testing the behavior of RSLabeled
 "
 Class {
-	#name : #RSLabeledTest,
-	#superclass : #TestCase,
-	#category : #'Roassal-Interaction-Tests-Core'
+	#name : 'RSLabeledTest',
+	#superclass : 'TestCase',
+	#category : 'Roassal-Interaction-Tests-Core',
+	#package : 'Roassal-Interaction-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLabeledTest >> testFontSize [
 
 	| c shapes labels |

@@ -1,16 +1,18 @@
 Class {
-	#name : #RSSearchInCanvasInteractionTest,
-	#superclass : #RSTest,
+	#name : 'RSSearchInCanvasInteractionTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'shapes',
 		'con',
 		'search',
 		'canvas'
 	],
-	#category : #'Roassal-Interaction-Tests-Core'
+	#category : 'Roassal-Interaction-Tests-Core',
+	#package : 'Roassal-Interaction-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSSearchInCanvasInteractionTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new.
@@ -31,7 +33,7 @@ RSSearchInCanvasInteractionTest >> setUp [
 	canvas @ con
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> setUpWithCollection [
 
 	shapes := RSBox models: Collection withAllSubclasses.
@@ -42,7 +44,7 @@ RSSearchInCanvasInteractionTest >> setUpWithCollection [
 	RSGridLayout on: shapes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testBasic [
 
 	search useExactMatch.
@@ -59,11 +61,11 @@ RSSearchInCanvasInteractionTest >> testBasic [
 	self deny: shapes fifth hasShadow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testCustomSearchBlock [
 
 	self setUpWithCollection.
-	search searchBlock: [ :shape :regExp | 
+	search searchBlock: [ :shape :regExp |
 		| cls |
 		cls := shape model.
 		(regExp match: cls name) or: [ regExp match: cls package name ] ].
@@ -73,7 +75,7 @@ RSSearchInCanvasInteractionTest >> testCustomSearchBlock [
 	self assert: canvas selectedShapes notEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testExactMatch [
 	search useExactMatch.
 	search searchForShapes: '4'.
@@ -84,13 +86,13 @@ RSSearchInCanvasInteractionTest >> testExactMatch [
 	self assert: (shapes fourth hasShadow)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testIsRegExpValid [
 	self deny: (search isRegExpValid: '').
 	self deny: (search isRegExpValid: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testKeyCombinationOpensSearchWindow [
 
 	| keyEvent |
@@ -107,7 +109,7 @@ RSSearchInCanvasInteractionTest >> testKeyCombinationOpensSearchWindow [
 	self assert: search searchField isNotNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testMinimumSizeOfSearchString [
 
 	search minimumSearchSize: 3.
@@ -119,13 +121,13 @@ RSSearchInCanvasInteractionTest >> testMinimumSizeOfSearchString [
 	self assert: canvas selectedShapes isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testNoSearch [
 
 	self assert: (canvas shapes allSatisfy: [ :s | s color = Color gray ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testSearchStringUpdateShadow [
 
 	search searchForShapes: '1'.
@@ -134,18 +136,16 @@ RSSearchInCanvasInteractionTest >> testSearchStringUpdateShadow [
 	self assert: canvas selectedShapes isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testSearchTextChangeSelectedShapes [
 	self assert: canvas selectedShapes size equals: 0.
 	search searchForShapes: '1'.
 	self assert: (canvas selectedShapes collect: #model) asArray equals: #(100 1000).
 	search searchForShapes: '1000'.
-	self assert: (canvas selectedShapes collect: #model) asArray equals: #(1000).
-	
-	
+	self assert: (canvas selectedShapes collect: #model) asArray equals: #(1000)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testShadow [
 
 	search useExactMatch.
@@ -162,7 +162,7 @@ RSSearchInCanvasInteractionTest >> testShadow [
 	self deny: shapes fifth hasShadow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testUpdateShadowSize [
 
 	| shadow extent |
@@ -175,7 +175,7 @@ RSSearchInCanvasInteractionTest >> testUpdateShadowSize [
 	self assert: shapes fourth shadow extent < extent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testWithEdge [
 
 	| l |
@@ -196,7 +196,7 @@ RSSearchInCanvasInteractionTest >> testWithEdge [
 	self assert: l color equals: Color black
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSearchInCanvasInteractionTest >> testWithEdgeAndhighlightable [
 
 	| l interaction |

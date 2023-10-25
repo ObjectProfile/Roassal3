@@ -5,6 +5,6 @@ RSTransitionAnimation >> inspectorControls [
 
 	<inspectorPresentationOrder: 0 title: 'Controls'>
 	^ SpRSTransitionInspectorPresenter new
-		  animation: self; 
+		  animation: self;
 		  yourself
 ]

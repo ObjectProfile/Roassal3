@@ -8,7 +8,7 @@ RSEasingInterpolator class >> canvas [
 	theme := Smalltalk ui theme.
 	c color: theme backgroundColor.
 	selectors := #(in out inOut).
-	masterLabel := RSLabel new 
+	masterLabel := RSLabel new
 		color: theme textColor;
 		fontSize: 30.
 	radScale := NSScale linear
@@ -53,16 +53,16 @@ RSEasingInterpolator class >> canvas [
 	RSHorizontalLineLayout on: shapes.
 	c addAll: shapes.
 	masterLabel fontSize: 40.
-	selectors := selectors collect: [ :sel | 
-		masterLabel copy 
+	selectors := selectors collect: [ :sel |
+		masterLabel copy
 			text: sel;
 			rotateByDegrees: -90;
 			yourself ].
-	selectors with: shapes first children allButFirst do: [ :lbl :box | 
+	selectors with: shapes first children allButFirst do: [ :lbl :box |
 		RSLocation new outer; middle; left; offset: -20@0; move: lbl on: box globalEncompassingRectangle ].
 	c addAll: selectors.
 	c @ RSCanvasController.
-	c open.
+	c open
 ]
 
 { #category : '*Roassal-Inspector' }
@@ -70,9 +70,9 @@ RSEasingInterpolator >> inspectorWithTools: selectors [
 	| inspectorCanvas presenter numberField tools |
 	inspectorCanvas := super inspectorCanvas.
 	presenter := SpPresenter new.
-	
+
 	tools := SpBoxLayout newVertical.
-	selectors do: [ :sel | 
+	selectors do: [ :sel |
 		numberField := SpNumberInputFieldPresenter new.
 		numberField text: (sel value: self) asString.
 		numberField whenNumberChangedDo: [ :newValue |

@@ -63,7 +63,7 @@ RSSearchInCanvasInteraction >> initialize [
 	super initialize.
 	self doNotUseExactMatch.
 	self minimumSearchSize: 1.
-	self searchBlock: [ :shape :regExp | 
+	self searchBlock: [ :shape :regExp |
 		regExp match: shape model asString ]
 ]
 
@@ -121,13 +121,13 @@ RSSearchInCanvasInteraction >> openSearchField [
 
 	ed := RubFloatingEditorBuilder new
 		      autoAccept: true;
-		      customizeEditorWith: [ :editor | 
+		      customizeEditorWith: [ :editor |
 			      editor scrollbarsShowNever.
 			      editor extent: 200 @ 30.
 			      editor position:
 					      canvasMorph positionInWorld
 					      + (canvasMorph width - editor width @ 0) ];
-		      withEditedContentsDo: [ :editedContents | 
+		      withEditedContentsDo: [ :editedContents |
 			      self searchForShapes: editedContents ];
 		      whenEditorEscapedDo: [  ].
 
@@ -137,7 +137,7 @@ RSSearchInCanvasInteraction >> openSearchField [
 
 { #category : 'private - events' }
 RSSearchInCanvasInteraction >> processKeyUp: evt [
-	
+
 	(self isKeyForSearch: evt) ifTrue: [ self openSearchField ].
 	(self isKeyForReset: evt) ifTrue: [ self resetAllHighlightedShapes ]
 ]
@@ -159,8 +159,8 @@ RSSearchInCanvasInteraction >> resetAllHighlightedShapes [
 ]
 
 { #category : 'accessing' }
-RSSearchInCanvasInteraction >> searchBlock: aBlock [ 
-	
+RSSearchInCanvasInteraction >> searchBlock: aBlock [
+
 	searchBlock := aBlock
 ]
 
@@ -177,7 +177,7 @@ RSSearchInCanvasInteraction >> searchForShapes: regExp [
 	| shapesToHighlight |
 	shapesToHighlight := self minimumSearchSize > regExp size
 		                     ifTrue: [ RSGroup new ]
-		                     ifFalse: [ 
+		                     ifFalse: [
 			                     self shapesToHighlightUsingRegExp:
 				                     (self adjustRegExpIfNecessary: regExp) ].
 
@@ -194,7 +194,7 @@ RSSearchInCanvasInteraction >> shapesToHighlightUsingRegExp: regExp [
 	| candidateShapes shapesToHighlight matcher |
 	candidateShapes := self candidateShapes.
 	matcher := regExp asString.
-	shapesToHighlight := candidateShapes select: [ :s | 
+	shapesToHighlight := candidateShapes select: [ :s |
 		                     searchBlock value: s value: matcher ].
 
 	^ shapesToHighlight

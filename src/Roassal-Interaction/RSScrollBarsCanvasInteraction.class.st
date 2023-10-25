@@ -34,7 +34,7 @@ Class {
 RSScrollBarsCanvasInteraction >> addScrollBars: aCanvas [
 	vertical := self barShapeCopy.
 	horizontal := self barShapeCopy.
-	
+
 	aCanvas addShape: vertical; addShape: horizontal
 ]
 
@@ -114,10 +114,10 @@ RSScrollBarsCanvasInteraction >> mouseEnter: evt [
 	self removeRectanglesFor: evt canvas.
 	self updateScrollbars.
 	shape := evt shape.
-	shape color isTransparent 
+	shape color isTransparent
 		ifFalse: [ shape color: (self scrollColor alpha: 1) ].
 	animation stop.
-	hideAnimation stop 
+	hideAnimation stop
 ]
 
 { #category : 'events' }
@@ -125,7 +125,7 @@ RSScrollBarsCanvasInteraction >> mouseLeave: evt [
 	"used when the mouse leave the on bar shape"
 	| shape |
 	shape := evt shape.
-	shape color isTransparent 
+	shape color isTransparent
 		ifFalse: [ shape color: self scrollColor ].
 	self removeRectanglesFor: evt canvas.
 	vertical parent addAnimation: animation
@@ -142,16 +142,16 @@ RSScrollBarsCanvasInteraction >> moveScroll: evt [
 	delta := shape = vertical
 		ifTrue: [ 0 @ delta y ]
 		ifFalse: [ delta x @ 0 ].
-	
+
 	shape translateBy: delta.
-	
+
 	position := horizontal position x @ vertical position y.
 	position := position * shapesRect extent / canvasExtent.
 	target := (position + shapesRect origin) * camera scale negated + (camera originMode gapToCenter: camera).
 	correct := self
 		correctCamera: camera
 		matrixDo: [ :mat | mat translation: target ].
-	
+
 	camera translateTo: correct.
 	correct = target ifFalse: [ self updateBasicScrollbars ].
 	evt signalUpdate
@@ -160,7 +160,7 @@ RSScrollBarsCanvasInteraction >> moveScroll: evt [
 { #category : 'hooks' }
 RSScrollBarsCanvasInteraction >> onShape: aCanvas [
 	self addScrollBars: aCanvas.
-	aCanvas 
+	aCanvas
 		when: RSPositionChangedEvent send: #updateScrollbars to: self;
 		when: RSScaleChangedEvent send: #updateScrollbars to: self;
 		when: RSExtentChangedEvent send: #updateScrollbars to: self
@@ -190,16 +190,16 @@ RSScrollBarsCanvasInteraction >> shape [
 RSScrollBarsCanvasInteraction >> updateAnimation [
 	| canvas |
 	canvas := vertical canvas.
-	hideAnimation 
+	hideAnimation
 		ifNil: [ self initializeHideAnimation ].
-	animation ifNotNil: [ 
+	animation ifNotNil: [
 		animation stop.
 		hideAnimation stop.
 		^ canvas addAnimation: animation ].
 	animation := canvas newAnimation
 		duration: 700 milliSeconds;
 		onStepDo: [ :t | canvas signalUpdate ];
-		when: RSAnimationLoopEvent do: [ 
+		when: RSAnimationLoopEvent do: [
 			canvas addAnimation: hideAnimation ]
 		for: self
 ]
@@ -210,17 +210,16 @@ RSScrollBarsCanvasInteraction >> updateBasicScrollbars [
 	canvas := vertical canvas.
 	canvasRect := canvas visibleRectangle.
 	shapesRect := self encompassingRectangleFor: canvas.
-	
+
 	scrollExtent := vertical width @ horizontal height.
 	p := canvas extent - (scrollExtent / 2).
 	size := 10.
-	
+
 	pd := canvas extent * (canvasRect floatCenter - shapesRect origin) / shapesRect extent.
 	ext := canvasRect extent * canvas extent / shapesRect extent.
-	
+
 	vertical position: p x @ pd y ; extent: size @ (ext y max: self minBarSize).
-	horizontal position: pd x @ p y; extent: (ext x max: self minBarSize) @ size.
-	
+	horizontal position: pd x @ p y; extent: (ext x max: self minBarSize) @ size
 ]
 
 { #category : 'hooks' }

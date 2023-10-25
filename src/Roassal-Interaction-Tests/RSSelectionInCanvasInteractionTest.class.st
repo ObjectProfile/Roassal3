@@ -1,14 +1,16 @@
 Class {
-	#name : #RSSelectionInCanvasInteractionTest,
-	#superclass : #RSTest,
+	#name : 'RSSelectionInCanvasInteractionTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'canvas',
 		'shapes'
 	],
-	#category : #'Roassal-Interaction-Tests-Core'
+	#category : 'Roassal-Interaction-Tests-Core',
+	#package : 'Roassal-Interaction-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSSelectionInCanvasInteractionTest >> setUp [
 
 	super setUp.
@@ -17,7 +19,7 @@ RSSelectionInCanvasInteractionTest >> setUp [
 	canvas addAll: shapes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionInCanvasInteractionTest >> testAnnounceWhenSelectionStart [
 
 	| selectionFrom |
@@ -35,7 +37,7 @@ RSSelectionInCanvasInteractionTest >> testAnnounceWhenSelectionStart [
 	self assert: selectionFrom notNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionInCanvasInteractionTest >> testAnnounceWhenShapesAreSelected [
 
 	| selectionFrom |
@@ -50,7 +52,7 @@ RSSelectionInCanvasInteractionTest >> testAnnounceWhenShapesAreSelected [
 	self assert: selectionFrom notNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionInCanvasInteractionTest >> testClickOnCanvasUnselectsAllShapes [
 
 	canvas @ RSSelectionInCanvasInteraction.
@@ -59,7 +61,7 @@ RSSelectionInCanvasInteractionTest >> testClickOnCanvasUnselectsAllShapes [
 	self assert: canvas selectedShapes isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionInCanvasInteractionTest >> testSelectAllShapesWithCommandA [
 
 	canvas @ RSSelectionInCanvasInteraction.
@@ -71,7 +73,7 @@ RSSelectionInCanvasInteractionTest >> testSelectAllShapesWithCommandA [
 	self assert: canvas selectedShapes size equals: shapes size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionInCanvasInteractionTest >> testSelectNewAddedShapeWithShiftClick [
 
 	| newShape |
@@ -82,18 +84,18 @@ RSSelectionInCanvasInteractionTest >> testSelectNewAddedShapeWithShiftClick [
 	self assert: newShape hasShadow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionInCanvasInteractionTest >> testSelectSeveralShapesWithShiftClick [
 
 	| shapesToSelect |
 	canvas @ RSSelectionInCanvasInteraction.
 	shapesToSelect := canvas shapes copyFrom: 1 to: 5.
-	shapesToSelect do: [ :shape | 
+	shapesToSelect do: [ :shape |
 		shape shiftLeftClick ].
 	self assert: (shapesToSelect allSatisfy: [ :s | s hasShadow ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionInCanvasInteractionTest >> testSelectShapeWithShiftClick [
 
 	canvas @ RSSelectionInCanvasInteraction.
@@ -102,7 +104,7 @@ RSSelectionInCanvasInteractionTest >> testSelectShapeWithShiftClick [
 	self assert: shapes first hasShadow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionInCanvasInteractionTest >> testSelectShapes [
 
 	self assert: canvas selectedShapes isEmpty.
@@ -110,7 +112,7 @@ RSSelectionInCanvasInteractionTest >> testSelectShapes [
 	self assert: canvas selectedShapes size equals: shapes size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionInCanvasInteractionTest >> testSelectShapesHaveShadow [
 
 	self should: [ canvas setSelectedShapes: shapes ] raise: Exception.
@@ -121,7 +123,7 @@ RSSelectionInCanvasInteractionTest >> testSelectShapesHaveShadow [
 	self assert: (shapes allSatisfy: [ :each | each shadow notNil ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionInCanvasInteractionTest >> testSelectShapesWhenThereAreAlreadySelectedShapes [
 
 	| elasticBoxInteraction |
@@ -130,10 +132,10 @@ RSSelectionInCanvasInteractionTest >> testSelectShapesWhenThereAreAlreadySelecte
 	self assert: canvas selectedShapes size equals: shapes size.
 	elasticBoxInteraction := canvas selectionInteraction elasticBoxInteraction.
 	elasticBoxInteraction announce: (RSSelectionStartEvent new canvas: canvas).
-	self assert: canvas selectedShapes isEmpty.
+	self assert: canvas selectedShapes isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionInCanvasInteractionTest >> testSelectShapesWithModelOnlyUsingCommandA [
 
 	canvas @ RSSelectionInCanvasInteraction withoutNilModels.
@@ -146,10 +148,10 @@ RSSelectionInCanvasInteractionTest >> testSelectShapesWithModelOnlyUsingCommandA
 	self assert: canvas selectedShapes size equals: shapes size - 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSSelectionInCanvasInteractionTest >> testUnselectShapeWithShiftClick [
 
-	
+
 	canvas @ RSSelectionInCanvasInteraction.
 	canvas setSelectedShapes: shapes.
 	canvas shapes first shiftLeftClick.

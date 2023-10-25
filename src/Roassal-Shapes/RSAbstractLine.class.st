@@ -147,7 +147,7 @@ RSAbstractLine >> color: aColor [
 RSAbstractLine >> colorFromString: aString [
 	| colorList |
 	colorList := {
-		#r. Color red. 
+		#r. Color red.
 		#g. Color green.
 		#b. Color blue.
 		#c. Color cyan.
@@ -156,7 +156,7 @@ RSAbstractLine >> colorFromString: aString [
 		#k. Color black.
 		#w. Color white.
 	}.
-	colorList pairsDo: [ 
+	colorList pairsDo: [
 		:colorSymbol :colorValue |
 		(aString includesSubstring: colorSymbol) ifTrue: [ ^colorValue  ]].
 	^ self color. "Default case, when it isn't found the color in the list"

@@ -128,10 +128,10 @@ RSKeyNavigationCanvasInteraction >> processStepsOn: aCanvas [
 		camera translateBy: step / (aCanvas camera scale / (speed * speedMult * deltaMS)).
 		position := camera position.
 		correct := self correctCamera: camera.
-		correct = position 
+		correct = position
 			ifFalse: [ camera position: correct ].
 		aCanvas signalUpdate.
-		].
+		]
 ]
 
 { #category : 'rendering' }
@@ -151,8 +151,8 @@ RSKeyNavigationCanvasInteraction >> zoomIn: aCanvas [
 
 { #category : 'events' }
 RSKeyNavigationCanvasInteraction >> zoomMove: aCanvas delta: delta [
-	RSZoomableCanvasInteraction 
-		zoomMove: aCanvas 
+	RSZoomableCanvasInteraction
+		zoomMove: aCanvas
 		newScale: (self scaleFor: aCanvas camera scale * delta)
 		useAnimation: self configuration shouldAnimateZoom
 ]

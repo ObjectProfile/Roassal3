@@ -21,11 +21,11 @@ RSConfigurableCamera >> computeScaleFor: anExtent rectangle: rect [
 	| sc int canvasRect |
 	sc := super computeScaleFor: anExtent rectangle: rect.
 	int := self zoomInteraction.
-	sc := int scaleFor: sc. 
+	sc := int scaleFor: sc.
 	canvasRect := Rectangle
 		floatCenter: rect floatCenter
 		extent: canvas extent.
-	sc := int configuration shouldUseBasicZoom ifTrue: [ 
+	sc := int configuration shouldUseBasicZoom ifTrue: [
 		(canvasRect containsRect: rect)
 			ifTrue: [ 1 ]
 			ifFalse: [
@@ -59,10 +59,9 @@ RSConfigurableCamera >> zoomRatio: aNumber [
 RSConfigurableCamera >> zoomToFit [
 	| int |
 	int := self zoomInteraction.
-	self 
+	self
 		zoomToFit: canvas extent * self zoomRatio
 		rectangle: (int encompassingRectangleFor: canvas).
 	int removeRectanglesFor: canvas.
 	canvas signalUpdate
-	
 ]

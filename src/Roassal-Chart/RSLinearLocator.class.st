@@ -16,6 +16,6 @@ Class {
 
 { #category : 'generate' }
 RSLinearLocator >> generateTicks: aScale with: numberOfTicks [
-	
-	^ aScale ticks: numberOfTicks 
+
+	^ aScale ticks: numberOfTicks
 ]

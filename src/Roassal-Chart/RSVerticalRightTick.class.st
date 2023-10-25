@@ -69,8 +69,6 @@ RSVerticalRightTick >> min [
 
 { #category : 'rendering' }
 RSVerticalRightTick >> updateChartMaxAndMinValues: aChart [
-
-	
 ]
 
 { #category : 'accessing' }

@@ -1,6 +1,6 @@
-Extension { #name : #RSHorizontalFlowLayout }
+Extension { #name : 'RSHorizontalFlowLayout' }
 
-{ #category : #'*Roassal-LayoutStudio' }
+{ #category : '*Roassal-LayoutStudio' }
 RSHorizontalFlowLayout class >> alignmentOptions [
 	^ #(center left right)
 ]

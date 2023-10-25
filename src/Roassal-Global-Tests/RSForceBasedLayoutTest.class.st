@@ -33,7 +33,7 @@ RSForceBasedLayoutTest >> testAddNodesAndEdges [
 		addLines: canvas edges;
 		step.
 	groups := boxes groupedBy: [ :box | box position ].
-	self assert: boxes size equals: groups size.
+	self assert: boxes size equals: groups size
 ]
 
 { #category : 'tests' }

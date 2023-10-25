@@ -40,14 +40,14 @@ RSAbstractPlotTest >> testBasic [
 RSAbstractPlotTest >> testExtentIsCorrect [
 
 	plot build.
-	
+
 	self assert: plot extent equals: 250 @ 200
 ]
 
 { #category : 'tests' }
 RSAbstractPlotTest >> testInvert [
 	| xScale yScale |
-	
+
 	plot yLinear.
 	plot xLog.
 	xScale := plot xScale.
@@ -57,7 +57,7 @@ RSAbstractPlotTest >> testInvert [
 	self assert: plot xScale equals: yScale.
 	self assert: plot yScale equals: xScale.
 	self assert: plot x equals: y.
-	self assert: plot y equals: x.
+	self assert: plot y equals: x
 ]
 
 { #category : 'tests' }
@@ -65,7 +65,7 @@ RSAbstractPlotTest >> testMinMaxValue2 [
 
 	plot := self classToTest new x: #( 4 6 9 ) y: #( -10 -13 -15 ).
 	plot build.
-	
+
 	self assert: plot minChartValueX equals: 4.
 	self assert: plot maxChartValueX equals: 9.
 	self assert: plot minChartValueY equals: -15.
@@ -139,7 +139,7 @@ RSAbstractPlotTest >> testMustInclude05 [
 RSAbstractPlotTest >> testPaddingIsCorrect [
 
 	plot build.
-	
+
 	self assert: plot padding equals: 5 @ 5
 ]
 

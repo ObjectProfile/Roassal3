@@ -1,6 +1,6 @@
-Extension { #name : #RSConditionalLayout }
+Extension { #name : 'RSConditionalLayout' }
 
-{ #category : #'*Roassal-LayoutStudio' }
+{ #category : '*Roassal-LayoutStudio' }
 RSConditionalLayout class >> layoutDefinition [
 	^ RSLayoutDefinition new
 		add: (RSLayoutEvalField new

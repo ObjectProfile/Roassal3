@@ -40,6 +40,19 @@ RSLineBuilderTest >> testAllowRepetitionAndUseAssociations [
 	self assert: canvas numberOfEdges equals: 2
 ]
 
+{ #category : 'as yet unclassified' }
+RSLineBuilderTest >> testBorder [
+
+	| tmp1 |
+	b
+		canvas: canvas;
+		connectFrom: [ :arg1 | arg1 // 2 ].
+	tmp1 := canvas lines size.
+	self
+		assert: tmp1 > 0;
+		assert: (canvas edges collect: #border) asSet size equals: 1
+]
+
 { #category : 'tests' }
 RSLineBuilderTest >> testConnectFrom [
 	| e |

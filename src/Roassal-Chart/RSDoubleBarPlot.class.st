@@ -78,7 +78,7 @@ RSDoubleBarPlot >> horizontalTopTick [
 
 { #category : 'initialization' }
 RSDoubleBarPlot >> initializeDecorations [
-	
+
 	super initializeDecorations.
 	horizontalTopTick := RSHorizontalTopTick new.
 	self addDecoration: horizontalTopTick

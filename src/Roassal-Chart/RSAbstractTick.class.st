@@ -144,7 +144,7 @@ c
 RSAbstractTick >> fromNames: aCollectionOfStrings [
 	| size |
 	size := aCollectionOfStrings size.
-	self ticks: (1 to: size) labels: aCollectionOfStrings.
+	self ticks: (1 to: size) labels: aCollectionOfStrings
 ]
 
 { #category : 'initialization' }
@@ -168,7 +168,7 @@ RSAbstractTick >> integerWithCommas [
 
 { #category : 'testing' }
 RSAbstractTick >> isTicksDataNil [
-	^ ticksData isNil.
+	^ ticksData isNil
 ]
 
 { #category : 'public' }
@@ -218,13 +218,13 @@ RSAbstractTick >> labels [
 { #category : 'accessing' }
 RSAbstractTick >> locator [
 
-	^ tickLocator 
+	^ tickLocator
 ]
 
 { #category : 'accessing' }
 RSAbstractTick >> locator: aLocator [
 
-	tickLocator := aLocator 
+	tickLocator := aLocator
 ]
 
 { #category : 'accessing' }
@@ -298,20 +298,20 @@ RSAbstractTick >> ticks [
 
 { #category : 'public' }
 RSAbstractTick >> ticks: collectionOfNumbers labels: collectionOfStrings [
-	self 
-		assert: collectionOfNumbers size = collectionOfStrings size 
+	self
+		assert: collectionOfNumbers size = collectionOfStrings size
 		description: 'Both collections should have same size'.
-	self 
-		assert: collectionOfStrings isNotEmpty 
+	self
+		assert: collectionOfStrings isNotEmpty
 		description: 'collectionOfStrings should not be empty'.
 	self ticksData: collectionOfNumbers.
-	self labelConversion: [ :number | 
+	self labelConversion: [ :number |
 		| index |
 		index := collectionOfNumbers indexOf: number.
-		(index between: 1 and: collectionOfStrings size) 
+		(index between: 1 and: collectionOfStrings size)
 			ifTrue: [ collectionOfStrings at: index ]
 			ifFalse: [ '' ]
-	].
+	]
 ]
 
 { #category : 'public' }

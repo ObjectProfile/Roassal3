@@ -21,7 +21,7 @@ RSEventsMonitor class >> example [
 	canvas := RSCanvas new.
 	monitor := self new.
 	monitor target: canvas.
-	monitor onNewEventDo: [ :evt | 
+	monitor onNewEventDo: [ :evt |
 		evt class trace.
 		' ' trace.
 		evt timeStamp traceCr.
