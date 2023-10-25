@@ -317,8 +317,10 @@ c @ RSCanvasController
 ```
 	"
 	self
-		when: RSHighlightEvent do: [ :evt | self record: evt shape selector: #color value: aColor ] for: self;
-		when: RSUnHighlightEvent do: [ :evt | self restore: evt shape selector: #color ] for: self
+		when: RSHighlightEvent do: [ :evt | 
+			self record: evt shape selector: #color value: aColor ] for: self;
+		when: RSUnHighlightEvent do: [ :evt | 
+			self restore: evt shape selector: #color ] for: self
 ]
 
 { #category : 'accessing' }
@@ -438,7 +440,7 @@ For example:
 	savedValues := aShape properties
 		at: self copyKey , selector
 		ifAbsentPut: [ OrderedCollection new ].
-	savedValues add: (aShape perform: selector).
+	savedValues add: (selector value: aShape).
 
 	aShape
 		perform: selector asMutator

@@ -2,12 +2,13 @@
 I have basic examples for sunburst
 "
 Class {
-	#name : #RSSunburstExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-Sunburst-Examples'
+	#name : 'RSSunburstExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-Sunburst-Examples',
+	#package : 'Roassal-Sunburst-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSunburstExamples >> example01Basic [
 	<script: 'self new example01Basic open'>
 	| sb |
@@ -17,7 +18,7 @@ RSSunburstExamples >> example01Basic [
 	^ sb
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSunburstExamples >> example02MultipleRoots [
 	<script: 'self new example02MultipleRoots open'>
 	| sb |
@@ -33,7 +34,7 @@ RSSunburstExamples >> example02MultipleRoots [
 	^ sb canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSunburstExamples >> example03ConstantStrategy [
 	<script: 'self new example03ConstantStrategy open'>
 	| sb |
@@ -46,7 +47,7 @@ RSSunburstExamples >> example03ConstantStrategy [
 	^ sb canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSunburstExamples >> example04Edges [
 	<script: 'self new example04Edges open'>
 	| sb |
@@ -63,7 +64,7 @@ RSSunburstExamples >> example04Edges [
 	^ sb canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSunburstExamples >> example05BezierEdges [
 	<script: 'self new example05BezierEdges open'>
 	| sb |
@@ -90,7 +91,7 @@ RSSunburstExamples >> example05BezierEdges [
 	^ sb canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSunburstExamples >> example06Rotation [
 	<script: 'self new example06Rotation open'>
 	| sb composite canvas controller |
@@ -132,7 +133,7 @@ RSSunburstExamples >> example06Rotation [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSunburstExamples >> example07FadeInteraction [
 
 	<script: 'self new example07FadeInteraction open'>
@@ -166,7 +167,7 @@ RSSunburstExamples >> example07FadeInteraction [
 	^ sb canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSunburstExamples >> example08SunburstExplorer [
 
 	<script: 'self new example08SunburstExplorer open'>
@@ -180,8 +181,7 @@ RSSunburstExamples >> example08SunburstExplorer [
 		                easing: RSEasingInterpolator bounceOut;
 		                from: from;
 		                to: to;
-		                yourself
-	                "duration: 500 milliSeconds;" ].
+		                "duration: 500 milliSeconds;"yourself ].
 
 	interpolate := [ :oldShape :newShape :target |
 	               (newAnimation
@@ -257,7 +257,8 @@ RSSunburstExamples >> example08SunburstExplorer [
 						           betaAngle: 360 ].
 				           (interpolate value: old value: new value: old)
 					           when: RSAnimationLoopEvent
-					           do: [ old remove ] ] ]
+					           do: [ old remove ]
+					           for: self ] ]
 		           ifFalse: [
 			           oshape := lastShapes
 				                     ifEmpty: [ RSPieSlice new ]

@@ -56,8 +56,7 @@ RSZoomableCanvasInteraction class >> zoomMove: aCanvas pixelPosition: morphPosit
 		zero := camera fromSpaceToPixel: 0@0.
 		camera matrix translation: morphPosition - (newPosition - zero)-(camera originMode gapDistance: camera).
 
-		camera invalidate.
-		aCanvas signalUpdate.
+		aCanvas invalidate.
 		^ self ].
 	aCanvas newAnimation
 		easing: RSEasingInterpolator backOut;
@@ -70,8 +69,7 @@ RSZoomableCanvasInteraction class >> zoomMove: aCanvas pixelPosition: morphPosit
 			zero := camera fromSpaceToPixel: 0@0.
 			camera matrix translation: morphPosition - (newPosition - zero)-(camera originMode gapDistance: camera).
 
-			camera invalidate.
-			aCanvas signalUpdate ]
+			aCanvas invalidate ]
 ]
 
 { #category : 'configuration' }

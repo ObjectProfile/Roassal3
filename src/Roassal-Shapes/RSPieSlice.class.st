@@ -30,7 +30,8 @@ RSPieSlice >> alphaAngle: stAngle [
 	old := alphaAngle.
 	alphaAngle := stAngle.
 	old = alphaAngle ifTrue: [ ^ self ].
-	self resetPath
+	self resetPath.
+	self invalidate.
 ]
 
 { #category : 'public' }
@@ -53,7 +54,8 @@ RSPieSlice >> betaAngle: ndAngle [
 	old := betaAngle.
 	betaAngle := ndAngle.
 	old = betaAngle ifTrue: [ ^ self ].
-	self resetPath
+	self resetPath.
+	self invalidate
 ]
 
 { #category : 'visiting' }
@@ -84,7 +86,8 @@ RSPieSlice >> cornerRadii: aNumber [
 	old := cornerRadii.
 	cornerRadii := aNumber.
 	old = cornerRadii ifTrue: [ ^ self ].
-	self resetPath
+	self resetPath.
+	self invalidate
 ]
 
 { #category : 'utilities' }
@@ -127,7 +130,8 @@ RSPieSlice >> innerRadius: iR [
 	old := innerRadius.
 	innerRadius := iR asFloat.
 	old = innerRadius ifTrue: [ ^ self ].
-	self resetPath
+	self resetPath.
+	self invalidate
 ]
 
 { #category : 'accessing' }
@@ -173,7 +177,8 @@ RSPieSlice >> segmentSpacing: anAngleInDegrees [
 	old := segmentSpacing.
 	segmentSpacing := anAngleInDegrees.
 	old = segmentSpacing ifTrue: [ ^self ].
-	self resetPath
+	self resetPath.
+	self invalidate
 ]
 
 { #category : 'accessing' }

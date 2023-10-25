@@ -85,7 +85,7 @@ RSSVGPathLine >> computeEncompassingRectangle [
 	"
 	^ self isInACanvas
 		ifTrue: [ self canvas visibleRectangle ]
-		ifFalse: [ 0 asPoint corner: 0 asPoint ]
+		ifFalse: [ startPoint corner: endPoint ]
 ]
 
 { #category : 'initialization' }
