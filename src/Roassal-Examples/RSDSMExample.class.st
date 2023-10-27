@@ -370,7 +370,7 @@ RSDSMExample >> example04Token [
 	dsm objectsX: top10Keywords.
 	dsm objectsY: packages.
 	dsm setShouldFeedY.
-	dsm labelShapeY textBlock: #packageName.
+	dsm labelShapeY textBlock: #name.
 	dsm dependency: [ :pak |
 		pak definedClasses flatCollect: getKeywordsFromClass ].
 	^ dsm
