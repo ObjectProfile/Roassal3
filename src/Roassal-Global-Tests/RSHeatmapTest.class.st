@@ -12,7 +12,6 @@ Class {
 { #category : 'running' }
 RSHeatmapTest >> setUp [
 	super setUp.
-
 	builder := RSHeatmap new
 ]
 

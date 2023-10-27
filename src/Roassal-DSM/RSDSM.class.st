@@ -63,7 +63,10 @@ RSDSM >> color: aBlock [
 
 { #category : 'accessing - computed' }
 RSDSM >> columnAt: aNumber [
-	^ matrix atRow: aNumber
+	^ ((matrix keys 
+		select: [ :point| point x = aNumber ])
+		asSortedCollection: [ :a :b | a y < b y ] )
+		collect: [ :point | matrix at: point ] as: RSGroup
 ]
 
 { #category : 'hooks' }
@@ -132,16 +135,16 @@ RSDSM >> createShapeX: anObjectX y: anObjectY position: position list: list [
 RSDSM >> createShapes [
 	| group |
 	group := RSGroup new.
-	matrix := Array2D rows: objectsX size columns: objectsY size.
+	matrix := Dictionary new.
 	objectsY doWithIndex: [ :anObjectY :k |
-		objectsX doWithIndex: [ :anObjectX :j |
+		objectsX doWithIndex: [ :anObjectX :j | | point |
+			point := j@k.
 			matrix
-				at: j
-				at: k
+				at: point
 				put: (self
 					createShapeX: anObjectX
 					y: anObjectY
-					position: j@k
+					position: point
 					list: group)
 		]
 	].
@@ -271,8 +274,18 @@ RSDSM >> matrixKey [
 ]
 
 { #category : 'accessing' }
+RSDSM >> numberOfColumns [
+	^ matrix keys inject: 0 into: [ :max :p | max max: p x ]
+]
+
+{ #category : 'accessing' }
 RSDSM >> numberOfObjects [
 	^ self objects size
+]
+
+{ #category : 'accessing' }
+RSDSM >> numberOfRows [
+	^ matrix keys inject: 0 into: [ :max :p | max max: p y ]
 ]
 
 { #category : 'accessing' }
@@ -327,7 +340,10 @@ RSDSM >> rotation: aNumberInDegrees [
 
 { #category : 'accessing - computed' }
 RSDSM >> rowAt: aNumber [
-	^ matrix atColumn: aNumber
+	^ ((matrix keys 
+		select: [ :point| point y = aNumber ])
+		asSortedCollection: [ :a :b | a x < b x ] )
+		collect: [ :point | matrix at: point ] as: RSGroup
 ]
 
 { #category : 'accessing' }
@@ -357,7 +373,7 @@ RSDSM >> shape [
 
 { #category : 'accessing - computed' }
 RSDSM >> shapeAt: aPoint [
-	^ matrix at: aPoint y at: aPoint x
+	^ matrix at: aPoint y @ aPoint x
 ]
 
 { #category : 'configuration' }

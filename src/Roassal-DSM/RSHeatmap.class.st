@@ -62,7 +62,7 @@ RSHeatmap >> createGradientLegend [
 	group := { minLabel. box. maxLabel }.
 	RSHorizontalLineLayout new alignMiddle; on: group.
 	legend := group asShape.
-	lastRow := (self rowAt: matrix numberOfColumns) asGroup.
+	lastRow := (self rowAt: self numberOfRows) asGroup.
 	RSLocation new
 		outer;
 		bottom;
