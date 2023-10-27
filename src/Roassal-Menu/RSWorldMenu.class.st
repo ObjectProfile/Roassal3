@@ -26,7 +26,7 @@ RSWorldMenu class >> discordPNGByteArray [
 RSWorldMenu class >> loadExporters [
 	Metacello new
 		baseline: 'RoassalExporters';
-		repository: 'github://pharo-graphics/RoassalExporters';
+		repository: 'github://pharo-graphics/RoassalExporters:v1.02';
 		onConflictUseIncoming;
 		load
 ]
