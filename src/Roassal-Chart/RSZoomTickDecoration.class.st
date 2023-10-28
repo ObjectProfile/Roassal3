@@ -105,7 +105,6 @@ RSZoomTickDecoration >> renderPlots [
 	but more important we can clip the selected shapes"
 	visibleShapes := RSComposite new
 		fromRectangle: visibleRectangle;
-		clipChildren: true;
 		addAll: (visibleShapes collect: [:s | | copy |
 			"it is necessary to create a copy of the current shape because we will modify its position"
 			copy := s copy.
@@ -183,7 +182,7 @@ RSZoomTickDecoration >> resetZoom: evt [
 	canvas := evt canvas.
 	visibleRectangle := self chart spine encompassingRectangle.
 	currentShapes do: #remove.
-	currentShapes := self chartElements flatCollect: [ :element | element createdShapes ].
+	currentShapes := self chartElements flatCollect: [ :element | element createdShapes ifNil: [#()] ].
 	canvas addAll: currentShapes.
 	resetLabel pushFront.
 	evt signalUpdate
