@@ -172,24 +172,7 @@ BaselineOfRoassal >> extraPackagesNames [
 { #category : 'dependencies' }
 BaselineOfRoassal >> geometry: spec [
 	spec baseline: 'Geometry' with: [ 
-		spec repository: 'github://pharo-contributions/Geometry/src' ].
-	spec baseline: 'NumericScales'with: [ 
-		spec repository: 'github://pharo-graphics/NumericScales:v1.02/src' ].
-	spec 
-		baseline: 'OSSubprocess'
-		with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
-	spec 
-		baseline: 'DataFrame'
-		with: [ spec repository: 'github://PolyMathOrg/DataFrame/src' ].
-	spec 
-   		baseline: 'AIDatasets' 
-   		with: [ spec repository: 'github://pharo-ai/datasets' ].
-	spec
-		baseline: 'RoassalLayouts'
-		with: [ spec repository: 'github://pharo-graphics/RoassalLayouts:v1.00/src' ].
-	spec
-		baseline: 'RTree'
-		with: [ spec repository: 'github://pharo-graphics/RTree:v1.00/src' ]
+		spec repository: 'github://pharo-contributions/Geometry/src' ]
 ]
 
 { #category : 'dependencies' }
