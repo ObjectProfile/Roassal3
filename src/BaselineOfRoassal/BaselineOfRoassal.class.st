@@ -129,8 +129,8 @@ BaselineOfRoassal >> corePackagesNames [
 { #category : 'dependencies' }
 BaselineOfRoassal >> dataFrame: spec [
 	spec 
-   		baseline: 'AIDatasets' 
-   		with: [ spec repository: 'github://pharo-ai/datasets' ]
+		baseline: 'DataFrame'
+		with: [ spec repository: 'github://PolyMathOrg/DataFrame/src' ]
 ]
 
 { #category : 'dependencies' }
