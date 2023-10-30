@@ -379,7 +379,7 @@ RSSVGAnimationExamples >> example06AnimatedSVG [
 	c newAnimation repeat
 		duration: 0.1 seconds;
 		when: RSAnimationLoopEvent
-		do: [ :evt | monster rotateByDegrees: 5 ]
+		do: [ :evt | monster rotateByDegrees: 5. ]
 		for: self.
 	c @ RSCanvasController.
 	^ c

@@ -2,12 +2,13 @@
 I have examples for RSTreeMap
 "
 Class {
-	#name : #RSTreeMapExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-TreeMap-Examples'
+	#name : 'RSTreeMapExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-TreeMap-Examples',
+	#package : 'Roassal-TreeMap-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSTreeMapExamples >> example01Numbers [
 	<script: 'self new example01Numbers open'>
 	| b |
@@ -18,7 +19,7 @@ RSTreeMapExamples >> example01Numbers [
 	^ b
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSTreeMapExamples >> example02Numbers [
 	<script: 'self new example02Numbers open'>
 	| b |
@@ -37,7 +38,7 @@ RSTreeMapExamples >> example02Numbers [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSTreeMapExamples >> example03Labels [
 	<script: 'self new example03Labels open'>
 	| b labels |
@@ -53,7 +54,7 @@ RSTreeMapExamples >> example03Labels [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSTreeMapExamples >> example04CollectionSubclasses [
 	<script: 'self new example04CollectionSubclasses open'>
 	| b |
@@ -74,7 +75,7 @@ RSTreeMapExamples >> example04CollectionSubclasses [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSTreeMapExamples >> example05FileSystem [
 	<script: 'self new example05FileSystem open'>
 	| b color max |
@@ -102,7 +103,7 @@ RSTreeMapExamples >> example05FileSystem [
 	^ b canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSTreeMapExamples >> example06FitText [
 	<script: 'self new example06FitText open'>
 	| b canvas color |
@@ -142,9 +143,10 @@ RSTreeMapExamples >> example06FitText [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSTreeMapExamples >> example07Roassal [
 	<script: 'self new example07Roassal open'>
+	<noTest>
 	| b palette lb bag title |
 	b := RSTreeMap new.
 	b inset: 1 asPoint.
@@ -155,8 +157,8 @@ RSTreeMapExamples >> example07Roassal [
 		leafWeight: [ :f | f size sqrt ];
 		explore: (IceRepository registry
 				detect: [ :each | each name = 'Roassal' ]) location
-			nesting: [:file | file directories
-				reject: [ :dir | dir basename beginsWith: '.' ] ]
+			nesting: [:file | 
+				file directories reject: [ :dir | dir basename beginsWith: '.' ] ]
 			leaves: #files.
 	b build.
 	palette := RSColorPalette qualitative flatui120.
