@@ -163,10 +163,12 @@ BaselineOfRoassal >> examplePackagesNames [
 { #category : 'API-packages' }
 BaselineOfRoassal >> extraPackagesNames [
 	^ #(
-	'Roassal-Mondrian'
 	'Roassal-Experimental'
 	'Roassal-LayoutStudio'
-	'Roassal-LayoutStudio-Tests')
+	'Roassal-LayoutStudio-Tests'
+	'Rpassal-UML-Calypso'
+	'Roassal-TreeMap'
+	'Roassal-TreeMap-Examples')
 ]
 
 { #category : 'dependencies' }
