@@ -454,7 +454,8 @@ c @ RSCanvasController.
 c open
 ```
 	"
-	matrix rotateByDegrees: angle
+	matrix rotateByDegrees: angle.
+	self resetBBox.
 ]
 
 { #category : 'matrix' }

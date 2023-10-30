@@ -2,12 +2,13 @@
 Just examples
 "
 Class {
-	#name : #RSCircularTreeMapExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-TreeMap-Examples'
+	#name : 'RSCircularTreeMapExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-TreeMap-Examples',
+	#package : 'Roassal-TreeMap-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSCircularTreeMapExamples >> example01Morph [
 	<script: 'self new example01Morph open'>
 	| b |
@@ -16,7 +17,7 @@ RSCircularTreeMapExamples >> example01Morph [
 	^ b
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSCircularTreeMapExamples >> example02Morph [
 	<script: 'self new example02Morph open'>
 	| b palette canvas |
@@ -57,7 +58,7 @@ RSCircularTreeMapExamples >> example02Morph [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSCircularTreeMapExamples >> example03Evolving [
 	"original example created by Alexandre Bergel for Roassal1 ;)"
 

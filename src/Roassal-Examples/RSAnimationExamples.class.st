@@ -1322,10 +1322,13 @@ RSAnimationExamples >> example20CircleWaves [
 					          | t |
 					          t := frame.
 					          200 + ((a * 8 - (index * 2 * Float pi / 3) + t) cos
-					           * (1 + (a - t) cos / 2 raisedTo: 3) * 32) ].
+					           * (1 + (a - t) cos / 2 raisedTo: 2) * 32) ].
 			poly
-				privatePoints: points;
-				resetPath ] ].
+				points: points;
+				resetPath;
+				resetBBox ].
+		canvas signalUpdate
+	].
 	canvas
 		when: RSExtentChangedEvent
 		do: [ canvas camera zoomToFit: canvas extent extent: 500 @ 500 ]
@@ -1364,6 +1367,7 @@ RSAnimationExamples >> example21Lines [
 		         com add: line.
 		         com translateTo: ang cos @ ang sin * radius * mult.
 		         com matrix rotateByRadians: a.
+					com extent: radius * 2 asPoint.
 		         com ] ].
 
 	soffset := 0.
@@ -1405,7 +1409,7 @@ RSAnimationExamples >> example21Lines [
 			pos := (angleSp negated + (s propertyAt: #offset)) cos * 30.
 			line := s shapes first.
 			line color: (Color h: s model + hueOffset s: 0.6 v: 1).
-			line endPoint: 0 @ pos ] ].
+			line endPoint: 0 @ pos. ] ].
 	canvas
 		when: RSExtentChangedEvent
 		do: [ canvas camera zoomToFit: canvas extent extent: 500 asPoint ]
@@ -1430,6 +1434,7 @@ RSAnimationExamples >> example22Lines [
 	canvas addAll: ((0 to: 360 by: 0.5) collect: [ :i |
 			 RSComposite new
 				 model: i;
+				 size: radius asPoint;
 				 add: (RSLine new
 						  border: border;
 						  startPoint: bar negated / 2 @ 0;
@@ -1445,7 +1450,8 @@ RSAnimationExamples >> example22Lines [
 				loadIdentity;
 				translation: radius * (radian cos @ radian sin);
 				rotateByRadians:
-					radian + (frame * (radian * step * 0.5) sin * 0.05) ] ].
+					radian + (frame * (radian * step * 0.5) sin * 0.05).
+			s resetBBox ] ].
 	label := RSLabel new
 		         text: 'Pharo';
 		         fontName: 'Brushcrazy DEMO';
@@ -1501,6 +1507,7 @@ RSAnimationExamples >> example23PerlinNoise [
 			add: (newcircle value: c1);
 			add: (newcircle value: c2);
 			add: (newcircle value: c3);
+			extent: rec extent;
 			yourself.
 			 ] ).
 	canvas newAnimation repeat onStepDo: [ :t | | speed |
@@ -1762,6 +1769,7 @@ RSAnimationExamples >> example26Bezier [
 					  offset: -10;
 					  yourself).
 			 com add: line.
+			 com size: 500.
 			 com ]).
 	canvas newAnimation repeat onStepDo: [ :t |
 		theta := theta + 0.0523.
@@ -1997,6 +2005,7 @@ RSAnimationExamples >> example29Tick [
 			             c nodes first matrix
 				             loadIdentity;
 				             rotateByRadians: t.
+			             c nodes first resetBBox.
 			             s := c nodes first shapes.
 			             (s at: k key) color: Color lightGray.
 			             (s at: k value) color: Color white ] ].
@@ -2092,11 +2101,11 @@ RSAnimationExamples >> example30Perlin [
 ]
 
 { #category : 'examples' }
-RSAnimationExamples >> example31RoundRectagles [
+RSAnimationExamples >> example31RoundRectangles [
 	"example inspired in paper.js"
 
 	<script:
-	'self new example31RoundRectagles open setLabel: ''Round Rectangles'''>
+	'self new example31RoundRectangles open setLabel: ''Round Rectangles'''>
 	| canvas mouse extent frame scale color |
 	canvas := RSCanvas new.
 	extent := 500 @ 500.
@@ -2129,7 +2138,8 @@ RSAnimationExamples >> example31RoundRectagles [
 			e matrix
 				loadIdentity;
 				translation: pos;
-				rotateByDegrees: angle ] ].
+				rotateByDegrees: angle.
+			e resetBBox ] ].
 	^ canvas
 ]
 
@@ -2464,7 +2474,9 @@ for Pharo 8 and Pharo 9.'.
 	             c newAnimation
 		             from: 0;
 		             to: (sum value: line);
-		             onStepDo: [ :t | array at: 1 put: t ].
+		             onStepDo: [ :t |
+			             array at: 1 put: t.
+			             line invalidate ].
 	             c newAnimation
 		             duration: 1 second;
 		             when: RSAnimationEndEvent do: [ c add: lbl ] for: self.
@@ -2477,7 +2489,8 @@ for Pharo 8 and Pharo 9.'.
 			             lbl matrix
 				             loadIdentity;
 				             translation: (pscale scale: t);
-				             scaleBy: t @ 1 ] ].
+				             scaleBy: t @ 1.
+			             lbl resetBBox ] ].
 	p := title position.
 	lineAnime
 		value: line1
@@ -2499,7 +2512,7 @@ for Pharo 8 and Pharo 9.'.
 		duration: 1 second;
 		from: 0;
 		to: 360;
-		onStepDo: [ :t | marker betaAngle: t - 90 ].
+		onStepDo: [ :t | marker betaAngle: t - 90. c lines do: #resetBBox. c invalidate ].
 	^ c
 	"TODO add animation to line3 and line4, hide and remove with animation these elements"
 ]
