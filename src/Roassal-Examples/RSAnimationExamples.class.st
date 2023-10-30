@@ -189,7 +189,8 @@ RSAnimationExamples >> example03Atom [
 			shape matrix
 				loadIdentity;
 				rotateByRadians: index * Float pi / 4;
-				translateBy: extent / 2 * (ang cos @ ang sin) ] ].
+				translateBy: extent / 2 * (ang cos @ ang sin).
+			shape resetBBox ] ].
 	canvas
 		when: RSExtentChangedEvent
 		do: [ :evt | canvas zoomToFit ]
