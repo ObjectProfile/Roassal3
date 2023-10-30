@@ -166,7 +166,7 @@ BaselineOfRoassal >> extraPackagesNames [
 	'Roassal-Experimental'
 	'Roassal-LayoutStudio'
 	'Roassal-LayoutStudio-Tests'
-	'Rpassal-UML-Calypso'
+	'Roassal-UML-Calypso'
 	'Roassal-TreeMap'
 	'Roassal-TreeMap-Examples')
 ]
