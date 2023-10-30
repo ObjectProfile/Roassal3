@@ -15,13 +15,14 @@ RSChartExample >> example01Markers [
 	x := -3.14 to: 3.14 by: 0.01.
 	p := RSLinePlot new.
 	p x: x y: x sin * 0.22 + 0.5.
-	p verticalTick asFloat.
+	
 	p addDecoration: RSYMarkerDecoration new average.
 	p addDecoration: RSYMarkerDecoration new min.
 	p addDecoration: RSYMarkerDecoration new max.
 	p addDecoration: RSXMarkerDecoration new max.
 	p addDecoration: RSXMarkerDecoration new min.
 	p addDecoration: (RSXMarkerDecoration new value: 0).
+	p verticalTick asFloat.
 	^ p
 ]
 
