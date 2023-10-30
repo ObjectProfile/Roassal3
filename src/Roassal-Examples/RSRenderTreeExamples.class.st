@@ -18,7 +18,7 @@ RSRenderTreeExamples >> example01BigVisualization131k [
 	"(2 raisedTo: 17) = 131072 = 131K"
 	| c b1 b2 |
 	c := RSCanvas new.
-	c aaNone.
+	c host aaNone.
 	b2 := nil.
 	1 to: (2 raisedTo: 17) do: [ :i |
 		b1 := b2.
@@ -42,7 +42,7 @@ RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 	"(2 raisedTo: 19) = 524288 = 0.52 Million"
 	| c b1 b2 |
 	c := RSCanvas new.
-	c aaNone.
+	c host aaNone.
 	b2 := nil.
 	1 to: (2 raisedTo: 19) do: [ :i |
 		b1 := b2.
