@@ -107,26 +107,36 @@ BaselineOfRoassal3 >> corePackagesNames [
 
 { #category : 'dependencies' }
 BaselineOfRoassal3 >> dependencies: spec [
-	spec baseline: 'Bloc' with: [
-		spec repository: 'github://pharo-graphics/Bloc:dev-1.0/src' ].
 
-	spec baseline: 'AthensSVG' with: [
+	spec
+		baseline: 'Bloc'
+		with: [ spec repository: 'github://pharo-graphics/Bloc:dev-1.0/src' ].
+
+	spec
+		baseline: 'AthensSVG'
+		with: [
 		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
-	spec package: 'Athens-SVG-PathConverter' with: [
-		spec repository: 'github://pharo-contributions/Athens-SVG/src'].
-	spec baseline: 'Geometry' with: [ 
+	spec
+		package: 'Athens-SVG-PathConverter'
+		with: [
+		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
+	spec
+		baseline: 'Geometry'
+		with: [
 		spec repository: 'github://pharo-contributions/Geometry/src' ].
-	spec baseline: 'NumericScales'with: [ 
-		spec repository: 'github://ObjectProfile/NumericScales:v1.01/src' ].
-	spec 
-		baseline: 'OSSubprocess'
-		with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
-	spec 
+	spec
+		baseline: 'NumericScales'
+		with: [
+		spec repository: 'github://pharo-graphics/NumericScales:v1.03/src' ].
+	spec baseline: 'OSSubprocess' with: [
+		spec repository:
+			'github://pharo-contributions/OSSubprocess/repository' ].
+	spec
 		baseline: 'DataFrame'
 		with: [ spec repository: 'github://PolyMathOrg/DataFrame/src' ].
-	spec 
-   		baseline: 'AIDatasets' 
-   		with: [ spec repository: 'github://pharo-ai/datasets' ].
+	spec
+		baseline: 'AIDatasets'
+		with: [ spec repository: 'github://pharo-ai/datasets' ]
 ]
 
 { #category : 'API-packages' }
