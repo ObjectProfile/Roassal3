@@ -1,4 +1,3 @@
-# Roassal3
 # Attention
 <img width="400" alt="image" src="https://github.com/ObjectProfile/Roassal3/assets/10532890/c92f4033-954f-4e29-a13d-d90ab23dffcd">
 
@@ -11,6 +10,18 @@ New repositories:
 - RoassalLayouts =>  https://github.com/pharo-graphics/RoassalLayouts
 
 Roassal is part of pharo thats why we want to keep it as part of the pharo ecosystem, thats why we are moving and this repository will be frozen.
+
+To load pharo-graphics/Roassal in a pharo10/11 you will have to remove roassal3 first to avoid conflicts.
+```st
+#(Roassal3 Numeric) do: [:string |
+  regExp := '*', string ,'*'.
+  packages := RPackageOrganizer default packages
+	  select: [ :each | regExp match: each name ].
+  packages do: [ :each | each removeFromSystem ].
+]
+```
+
+# Roassal3
 
 [![CI](https://github.com/ObjectProfile/Roassal3/actions/workflows/runTests.yml/badge.svg)](https://github.com/ObjectProfile/Roassal3/actions/workflows/runTests.yml)
 ![Discord](https://img.shields.io/discord/223421264751099906)
