@@ -2,12 +2,13 @@
 Baseline for https://github.com/ObjectProfile/Roassal3
 "
 Class {
-	#name : #BaselineOfRoassal3,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfRoassal3
+	#name : 'BaselineOfRoassal3',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfRoassal3',
+	#package : 'BaselineOfRoassal3'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfRoassal3 >> baseline: spec [
 	<baseline>
 	"https://github.com/ObjectProfile/Roassal3"
@@ -19,7 +20,7 @@ BaselineOfRoassal3 >> baseline: spec [
 	spec for: #'common' do: [ self baselineForCommon: spec ].
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfRoassal3 >> baselineForCommon: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
@@ -29,7 +30,7 @@ BaselineOfRoassal3 >> baselineForCommon: spec [
 		tests: self testPackagesNames.
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfRoassal3 >> baselineForPharo10: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
@@ -41,7 +42,7 @@ BaselineOfRoassal3 >> baselineForPharo10: spec [
 		tests: self testPackagesNames.
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfRoassal3 >> baselineForPharo11: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
@@ -52,7 +53,7 @@ BaselineOfRoassal3 >> baselineForPharo11: spec [
 		tests: self testPackagesNames.
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfRoassal3 >> baselineForPharo8: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
@@ -65,7 +66,7 @@ BaselineOfRoassal3 >> baselineForPharo8: spec [
 		tests: self testPackagesNames.
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfRoassal3 >> baselineForPharo9: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
@@ -77,7 +78,7 @@ BaselineOfRoassal3 >> baselineForPharo9: spec [
 		tests: self testPackagesNames.
 ]
 
-{ #category : #'API-packages' }
+{ #category : 'API-packages' }
 BaselineOfRoassal3 >> corePackagesNames [
 	^ #(
 	'Roassal3-Event'
@@ -104,7 +105,7 @@ BaselineOfRoassal3 >> corePackagesNames [
 	)
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 BaselineOfRoassal3 >> dependencies: spec [
 	spec baseline: 'Bloc' with: [
 		spec repository: 'github://pharo-graphics/Bloc:dev-1.0/src' ].
@@ -116,7 +117,7 @@ BaselineOfRoassal3 >> dependencies: spec [
 	spec baseline: 'Geometry' with: [ 
 		spec repository: 'github://pharo-contributions/Geometry/src' ].
 	spec baseline: 'NumericScales'with: [ 
-		spec repository: 'github://ObjectProfile/NumericScales:v1.01/src' ].
+		spec repository: 'github://ObjectProfile/NumericScales:v1.03/src' ].
 	spec 
 		baseline: 'OSSubprocess'
 		with: [ spec repository: 'github://pharo-contributions/OSSubprocess/repository' ].
@@ -128,7 +129,7 @@ BaselineOfRoassal3 >> dependencies: spec [
    		with: [ spec repository: 'github://pharo-ai/datasets' ].
 ]
 
-{ #category : #'API-packages' }
+{ #category : 'API-packages' }
 BaselineOfRoassal3 >> examplePackagesNames [
 	^ #(
 	'Roassal3-Examples'
@@ -141,7 +142,7 @@ BaselineOfRoassal3 >> examplePackagesNames [
 	'Roassal3-Spec-Examples')
 ]
 
-{ #category : #'API-packages' }
+{ #category : 'API-packages' }
 BaselineOfRoassal3 >> extraPackagesNames [
 	^ #(
 	'Roassal3-Mondrian'
@@ -150,7 +151,7 @@ BaselineOfRoassal3 >> extraPackagesNames [
 	'Roassal3-LayoutStudio-Tests')
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfRoassal3 >> registerPackages: spec [
 	"The packages to use, but not load"
 	spec package: #'Roassal3' with: [ spec requires: #('Geometry' 'NumericScales') ].
@@ -181,7 +182,7 @@ BaselineOfRoassal3 >> registerPackages: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 [
 	| core |
 	core := #('Core').
@@ -201,7 +202,7 @@ BaselineOfRoassal3 >> roassalGroups: spec core: arr1 examples: arr2 tests: arr3 
 		group: 'Full-DataFrame' with: #('Full' 'Roassal3-Chart-DataFrame')
 ]
 
-{ #category : #'API-packages' }
+{ #category : 'API-packages' }
 BaselineOfRoassal3 >> testPackagesNames [
 	^ #(
 	'Roassal3-Global-Tests'
