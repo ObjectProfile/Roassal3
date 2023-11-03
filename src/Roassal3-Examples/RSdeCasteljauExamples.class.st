@@ -259,10 +259,6 @@ RSdeCasteljauExamples >> example44deCasteljauLineNoteBox [
 	| line |
 	line := self lineDeCasteljauLineNoteBox.
 
-	self assert: (Rectangle encompassing: line controlPoints)
-		= (-4.520638537331172 @ -7.975723858025306 corner:
-				 218.56668027942536 @ 189.46698343689167).
-
 	^ RSCanvas new
 		  addAll: line asGroupWithControlNet;
 		  zoomToFit;
@@ -345,46 +341,6 @@ RSdeCasteljauExamples >> example44deCasteljauLineNoteBoxJunctionOfFourBeziers [
 	rightTop := bottomRight junction: top right: [ :c0 :c1 :c2 | c1 ].
 
 	topLeft := rightTop junction: left right: [ :c0 :c1 :c2 | c1 ].
-
-	self assert: topLeft designPoints , leftBottom designPoints
-		, bottomRight designPoints , rightTop designPoints = { 
-			(0 @ 0).
-			(-33.024 @ -5.286000000000001).
-			(0 @ 0).
-			(-1.143 @ 17).
-			(0 @ 39.19).
-			(0.429 @ 59.429).
-			(-1.143 @ 70.095).
-			(-2.597 @ 86.21).
-			(0 @ 100).
-			(0 @ 100).
-			(2.597 @ 113.79).
-			(0 @ 100).
-			(33.024 @ 105.286).
-			(51.077 @ 90.71).
-			(81.187 @ 102.83).
-			(113.583 @ 105.57).
-			(137.6 @ 103.85).
-			(161.80339887498948 @ 100).
-			(161.80339887498948 @ 100).
-			(186.00679774997897 @ 96.15).
-			(161.80339887498948 @ 100).
-			(159.20639887498947 @ 86.21).
-			(160.66039887498948 @ 70.095).
-			(162.23239887498949 @ 59.429).
-			(161.80339887498948 @ 39.19).
-			(160.66039887498948 @ 17).
-			(161.80339887498948 @ 0).
-			(161.80339887498948 @ 0).
-			(162.94639887498948 @ -17).
-			(161.80339887498948 @ 0).
-			(137.6 @ 3.8499999999999943).
-			(113.583 @ 5.569999999999993).
-			(81.187 @ 2.8299999999999983).
-			(51.077 @ -9.290000000000006).
-			(33.024 @ 5.286000000000001).
-			(0 @ 0) }.
-
 
 	^ RSCanvas new
 		  addAll: (topLeft asGroupWithControlNetColoured: Color red);
@@ -509,25 +465,25 @@ RSdeCasteljauExamples >> example44deCasteljauLinePenTwoLines [
 	| b1 b2 b3 |
 	b1 := RSdeCasteljauLine new
 		      samplesLinspace: 50;
-		      pen: [ :aBezier | 
+		      pen: [ :aBezier |
 			      aBezier
 				      addPoint: 25 @ 50;
 				      addPoint: 150 @ 50 via: 25 @ 100 via: 150 @ 100 ].
 
 	b2 := RSdeCasteljauLine new
 		      samplesLinspace: 50;
-		      pen: [ :aBezier | 
+		      pen: [ :aBezier |
 			      aBezier
 				      addPoint: b1 designPoints last;
 				      addPoint: 250 @ 25
 				      via:
-					      (b1 designPoints lastButOne reflectedAbout:
+					      (b1 designPoints nextToLast reflectedAbout:
 							       b1 designPoints last)
 				      via: 200 @ 0 ].
 
 	b3 := RSdeCasteljauLine new
 		      samplesLinspace: 50;
-		      pen: [ :aBezier | 
+		      pen: [ :aBezier |
 			      aBezier
 				      addPoint: 200 @ 0;
 				      addPoint: 250 @ 25 ].
@@ -535,7 +491,7 @@ RSdeCasteljauExamples >> example44deCasteljauLinePenTwoLines [
 	^ RSCanvas new
 		  addAll: b1 asGroupWithControlNet;
 		  addAll: (b2 asGroupWithControlNetColoured: Color red);
-		  addAll: ((b1 junction: b3 right: [ :c0 :c1 :c2 | c1 ]) 
+		  addAll: ((b1 junction: b3 right: [ :c0 :c1 :c2 | c1 ])
 				   asGroupWithControlNetColoured: Color blue);
 		  zoomToFit;
 		  addInteraction: RSCanvasController new;

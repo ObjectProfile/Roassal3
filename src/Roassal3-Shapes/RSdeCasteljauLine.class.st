@@ -13,7 +13,7 @@ Class {
 RSdeCasteljauLine >> addBezierPoint: aPoint [
 
 	| firstPoint |
-	firstPoint := points lastButOne reflectedAbout: points last.
+	firstPoint := points nextToLast reflectedAbout: points last.
 
 	self addPoint: aPoint via: firstPoint
 ]
@@ -22,7 +22,7 @@ RSdeCasteljauLine >> addBezierPoint: aPoint [
 RSdeCasteljauLine >> addBezierPoint: aPoint via: secondPoint [
 
 	| firstPoint |
-	firstPoint := points lastButOne reflectedAbout: points last.
+	firstPoint := points nextToLast reflectedAbout: points last.
 
 	self addPoint: aPoint via: firstPoint via: secondPoint
 ]
