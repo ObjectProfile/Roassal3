@@ -15,7 +15,7 @@ RandomBinomial >> density: x [
 	^ (n choose: x) * (p ** x) * (1 - p ** (n - x))
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 RandomBinomial >> initialize [
 
 	super initialize.

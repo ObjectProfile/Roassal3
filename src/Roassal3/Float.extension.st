@@ -19,6 +19,12 @@ Float class >> goldenRatio [
 ]
 
 { #category : '*Roassal3' }
+Float >> halved [
+
+	^ self * 0.5
+]
+
+{ #category : '*Roassal3' }
 Float class >> platinumRatio [
 
 	^ self goldenRatio + 1
