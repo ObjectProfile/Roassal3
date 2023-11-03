@@ -51,6 +51,12 @@ Class {
 }
 
 { #category : 'public' }
+RSLabel class >> defaultCodeFont [
+
+	^ StandardFonts codeFont
+]
+
+{ #category : 'public' }
 RSLabel class >> defaultFont [
 	^ StandardFonts defaultFont
 ]
@@ -236,6 +242,12 @@ c @ RSCanvasController
 	fontSize = aNumber ifTrue: [ ^ self ].
 	fontSize := aNumber.
 	self resetFont
+]
+
+{ #category : 'managing font' }
+RSLabel >> fontSizeSilverRatio [
+
+	self fontSize: self fontSize * Float silverRatio
 ]
 
 { #category : 'testing' }
@@ -446,4 +458,10 @@ c open
 ```
 "
 	self emphasisAdd: TextEmphasis underlined
+]
+
+{ #category : 'managing font' }
+RSLabel >> useDefaultCodeFont [
+
+	self font: self class defaultCodeFont
 ]
