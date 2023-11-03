@@ -77,6 +77,12 @@ RSTLine >> dashed [
 ]
 
 { #category : 'public - shape' }
+RSTLine >> dotted [
+
+	self dashArray: { Float goldenRatio }
+]
+
+{ #category : 'public - shape' }
 RSTLine >> format [
 	^ formatString
 ]

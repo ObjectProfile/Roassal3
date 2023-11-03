@@ -167,6 +167,12 @@ RSAbstractLine >> dashed [
 	self dashArray: #(4)
 ]
 
+{ #category : 'style - dashes' }
+RSAbstractLine >> dotted [
+
+	self dashArray: { Float goldenRatio }
+]
+
 { #category : 'accessing' }
 RSAbstractLine >> endPoint [
 	^ self subclassResponsibility
