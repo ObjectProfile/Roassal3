@@ -389,8 +389,7 @@ RSdeCasteljauLine >> polar: ratio [
 RSdeCasteljauLine >> primitiveRefreshDesignPoints: designPoints controlPoints: destControlPoints parameterDomain: domain [
 
 	<primitive: 'primitive_decasteljau' module: 'LuaPlugin'>
-	self primitiveFail
-	"	^ super refreshControlPoints"
+	^ super refreshControlPoints
 ]
 
 { #category : 'accessing' }
