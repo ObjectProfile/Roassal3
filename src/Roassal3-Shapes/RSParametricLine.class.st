@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'points',
 		'pointsSize',
-		'cumulativeArcLengths',
 		'sandboxPoints',
 		'parameterization',
 		'overlappingControlPointsDistance'
