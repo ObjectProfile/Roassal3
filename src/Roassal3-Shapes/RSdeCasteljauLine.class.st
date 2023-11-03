@@ -395,10 +395,14 @@ RSdeCasteljauLine >> primitiveRefreshDesignPoints: designPoints controlPoints: d
 { #category : 'accessing' }
 RSdeCasteljauLine >> refreshControlPoints [
 
+	| paramDomain |
+	paramDomain := (parameterization domain ifNil: [ #(  ) ]) collect:
+		               #asFloat.
+
 	^ self
 		  primitiveRefreshDesignPoints: points
 		  controlPoints: controlPoints
-		  parameterDomain: (parameterization domain collect: #asFloat)
+		  parameterDomain: paramDomain
 ]
 
 { #category : 'accessing - structure variables' }
