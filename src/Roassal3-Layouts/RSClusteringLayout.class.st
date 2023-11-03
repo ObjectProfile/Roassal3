@@ -4,28 +4,30 @@ Then the clusters will have perform `clustersLayout`.
 In general I have 2 layouts, one for clusters another of elements inside each cluster.
 "
 Class {
-	#name : #RSClusteringLayout,
-	#superclass : #RSLayout,
+	#name : 'RSClusteringLayout',
+	#superclass : 'RSLayout',
 	#instVars : [
 		'clustersLayout',
 		'forEachLayout'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : 'Roassal3-Layouts-Core',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSClusteringLayout >> clustersLayout [
 
 	^ clustersLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSClusteringLayout >> clustersLayout: anObject [
 
 	clustersLayout := anObject
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSClusteringLayout >> doExecute: shapes [
 	"Performs the layout"
 
@@ -36,19 +38,19 @@ RSClusteringLayout >> doExecute: shapes [
 	clustersLayout on: clusters
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSClusteringLayout >> forEachLayout [
 
 	^ forEachLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSClusteringLayout >> forEachLayout: anObject [
 
 	forEachLayout := anObject
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSClusteringLayout >> getClusterFor: shapes [
 	| result resultWithGroups |
 	result := OrderedCollection new.
@@ -64,7 +66,7 @@ RSClusteringLayout >> getClusterFor: shapes [
 	^ resultWithGroups
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSClusteringLayout >> initialize [
 	super initialize.
 	forEachLayout := RSHorizontalLineLayout new.

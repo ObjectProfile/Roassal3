@@ -10,7 +10,7 @@ Class {
 	#tag : 'Lines'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RSParametricXYLine >> controlPoints: aSequenceableOfPoints at: t [
 
 	^ (x value: t) @ (y value: t)

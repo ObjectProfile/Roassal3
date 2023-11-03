@@ -81,13 +81,13 @@ RSFullMessageSend >> hash [
 	^ super hash bitXor: client hash
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'dispatching' }
 RSFullMessageSend >> ifMessageSend: msBlock ifReturnMessageSend: rBlock [
 
 	^ msBlock cull: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'dispatching' }
 RSFullMessageSend >> ifSelfSend: sBlock ifNotSelfSend: nsBlock [
 
 	^ self client == self receiver
@@ -95,7 +95,7 @@ RSFullMessageSend >> ifSelfSend: sBlock ifNotSelfSend: nsBlock [
 		  ifFalse: [ nsBlock cull: self ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RSFullMessageSend >> recordReturnSend: anAssoc inDictionary: aDictionary [
 
 	"I've to record nothing"
@@ -103,6 +103,6 @@ RSFullMessageSend >> recordReturnSend: anAssoc inDictionary: aDictionary [
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RSFullMessageSend >> styleLine: aLine [
 ]

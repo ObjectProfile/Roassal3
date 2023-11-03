@@ -1,39 +1,41 @@
 Trait {
-	#name : #RSTWalkBasedRegularVerticalTreeLayout,
-	#category : #'Roassal3-Layouts-Core'
+	#name : 'RSTWalkBasedRegularVerticalTreeLayout',
+	#category : 'Roassal3-Layouts-Core',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Core'
 }
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSTWalkBasedRegularVerticalTreeLayout >> breadthGapAmong: aShape and: anotherShape [
 
 	^ self horizontalGapAmong: aShape and: anotherShape
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSTWalkBasedRegularVerticalTreeLayout >> breadthMeasureOf: aShape [
 
 	^ aShape width
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSTWalkBasedRegularVerticalTreeLayout >> depthGapAmong: aShapeParent and: aShape [
 
 	^ self verticalGapAmongParent: aShapeParent andChild: aShape
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSTWalkBasedRegularVerticalTreeLayout >> depthMeasureOf: aShape [
 
 	^ aShape height
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSTWalkBasedRegularVerticalTreeLayout >> horizontalGapAmong: aShapeParent and: aShape [
 
 	self explicitRequirement
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSTWalkBasedRegularVerticalTreeLayout >> positionOfShape: aShape atDepth: depth atBreadth: breadth [
 
 	| shift |
@@ -42,13 +44,13 @@ RSTWalkBasedRegularVerticalTreeLayout >> positionOfShape: aShape atDepth: depth 
 	^ breadth @ depth + shift
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSTWalkBasedRegularVerticalTreeLayout >> updateDepthBreakingIndexOfParent: aShape at: position amongChild: aChild at: childPosition [
 
 	^ (position x > childPosition x) asBit
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSTWalkBasedRegularVerticalTreeLayout >> verticalGapAmongParent: aShapeParent andChild: aShape [
 
 	self explicitRequirement

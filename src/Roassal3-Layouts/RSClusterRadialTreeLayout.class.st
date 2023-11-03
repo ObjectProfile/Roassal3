@@ -2,12 +2,14 @@
 This class combines a cluster tree layout and Radial tree layout to undestand big groups
 "
 Class {
-	#name : #RSClusterRadialTreeLayout,
-	#superclass : #RSClusterTreeLayout,
-	#category : #'Roassal3-Layouts-Tree'
+	#name : 'RSClusterRadialTreeLayout',
+	#superclass : 'RSClusterTreeLayout',
+	#category : 'Roassal3-Layouts-Tree',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Tree'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSClusterRadialTreeLayout class >> exampleWithNumber [
 	| canvas shapes color |
 	canvas := RSCanvas new.
@@ -34,12 +36,12 @@ RSClusterRadialTreeLayout class >> exampleWithNumber [
 	^ canvas open
 ]
 
-{ #category : #'drawing - general' }
+{ #category : 'drawing - general' }
 RSClusterRadialTreeLayout >> draw: aNode [
 	self draw: aNode level: 1.
 ]
 
-{ #category : #'drawing - general' }
+{ #category : 'drawing - general' }
 RSClusterRadialTreeLayout >> draw: aNode level: level [
 	| layer allChildren position |
 	layer := self layerOf: aNode.

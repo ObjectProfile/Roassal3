@@ -4,12 +4,14 @@ The `RSRadialTreeLayout` class implements a layout algorithm for arranging nodes
 Radial tree layouts are useful for visualizing hierarchical relationships, such as organizational charts or family trees, where the focus is on the relationships between the nodes rather than the precise positions of the nodes.
 "
 Class {
-	#name : #RSRadialTreeLayout,
-	#superclass : #RSAbstractCompactTreeLayout,
-	#category : #'Roassal3-Layouts-Tree'
+	#name : 'RSRadialTreeLayout',
+	#superclass : 'RSAbstractCompactTreeLayout',
+	#category : 'Roassal3-Layouts-Tree',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Tree'
 }
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 RSRadialTreeLayout >> compareContourOf: aNode with: another [
 	"return the number of radians the subtree induced by aNode must be displaced to be separated by a predefined distance (horizontalGap) from the one induced by anotherNode"
 	| difference max nodeA nodeB |
@@ -32,7 +34,7 @@ RSRadialTreeLayout >> compareContourOf: aNode with: another [
 	^ max
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSRadialTreeLayout >> computeGap: aNode [
 	" compute the vertical gap needed for drawing the radial tree "
 
@@ -59,7 +61,7 @@ RSRadialTreeLayout >> computeGap: aNode [
 		self verticalGap: gap ]
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 RSRadialTreeLayout >> computePosition: aNode [
 	"compute the position of the given node and of his sons recursively"
 	| children neighbor nodeA |
@@ -117,7 +119,7 @@ RSRadialTreeLayout >> computePosition: aNode [
 					put: (self followRightContour: neighbor toLayer: (self layerOf: nodeA) + 1) ] ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSRadialTreeLayout >> doExecute: nodeElements [
 	| rootNodes xOffset maximumRadius |
 	rootNodes := self rootNodesFor: nodeElements.
@@ -135,12 +137,12 @@ RSRadialTreeLayout >> doExecute: nodeElements [
 		xOffset := xOffset + (2 * maximumRadius) + 10 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSRadialTreeLayout >> gap [
 	^ self verticalGap
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSRadialTreeLayout >> layoutLayer: aCollection radius: oldRadius from: aFromAngle to: aToAngle [
 
 	| delta childRadius maximumRadius myRadius fromAngle toAngle |
@@ -173,7 +175,7 @@ RSRadialTreeLayout >> layoutLayer: aCollection radius: oldRadius from: aFromAngl
 	^ maximumRadius
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSRadialTreeLayout >> moveAllElementsToTopLeft: elements [
 	| pos min |
 	pos := elements collect: #position.
@@ -181,7 +183,7 @@ RSRadialTreeLayout >> moveAllElementsToTopLeft: elements [
 	elements do: [ :e | e translateBy: min negated ]
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 RSRadialTreeLayout >> radialDraw: aNode [
 	"draw the subtree induced by the given node"
 	| children r max |
@@ -193,14 +195,14 @@ RSRadialTreeLayout >> radialDraw: aNode [
 	^ r + max
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSRadialTreeLayout >> rotateSubtreeFrom: aNode by: aFloat [
 	aNode theta: aNode theta + aFloat.
 	(self childrenFor: aNode) do: [ :e |
 		self rotateSubtreeFrom: e by: aFloat ]
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 RSRadialTreeLayout >> toRadialTree: aNode withMod: aFloat [
 	"compute polar coordinates of the subtree induced by anode from its cartesian coordinates "
 

@@ -1,9 +1,11 @@
 Trait {
-	#name : #RSTWalkBasedRegularTreeGapsPyramidalDepth,
-	#category : #'Roassal3-Layouts-Core'
+	#name : 'RSTWalkBasedRegularTreeGapsPyramidalDepth',
+	#category : 'Roassal3-Layouts-Core',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Core'
 }
 
-{ #category : #gap }
+{ #category : 'gap' }
 RSTWalkBasedRegularTreeGapsPyramidalDepth >> gapAmongParent: aParent andChild: aChild default: aGap layout: layout [
 
 	| childrenSize i j |

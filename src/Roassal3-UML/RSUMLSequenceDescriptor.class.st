@@ -605,7 +605,7 @@ RSUMLSequenceDescriptor >> yEnd [
 	^ self yStartOf: messagesSends last
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RSUMLSequenceDescriptor >> yEndOfHeader: anObject ifAbsent: aBlock [
 
 	^ lastSends

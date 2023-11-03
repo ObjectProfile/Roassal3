@@ -4,17 +4,19 @@ I am the vertical tree layout algorithm described in the publication [Drawing no
 I use the trait `RSTWalkBasedRegularTreeLayout` to get the main behavior and fullfil the explicit requirements to have a tree layout growing toward the vertical dimension.
 "
 Class {
-	#name : #RSVanDerPloegTreeLayout,
-	#superclass : #RSTreeLayout,
+	#name : 'RSVanDerPloegTreeLayout',
+	#superclass : 'RSTreeLayout',
 	#traits : 'RSTWalkBasedRegularTreeLayout + RSTWalkBasedRegularTreeLayoutOnShapeProperties + RSTWalkBasedRegularVerticalTreeLayout',
 	#classTraits : 'RSTWalkBasedRegularTreeLayout classTrait + RSTWalkBasedRegularTreeLayoutOnShapeProperties classTrait + RSTWalkBasedRegularVerticalTreeLayout classTrait',
 	#instVars : [
 		'root'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : 'Roassal3-Layouts-Core',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Core'
 }
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSVanDerPloegTreeLayout >> doInitialize: elements [
 
 	super doInitialize: elements.
@@ -25,25 +27,25 @@ RSVanDerPloegTreeLayout >> doInitialize: elements [
 		        ifMultipleRoots: [ :roots | RSComposite new ]
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSVanDerPloegTreeLayout >> horizontalGapAmong: aShape and: anotherShape [
 
 	^ self horizontalGap
 ]
 
-{ #category : #'private - hook' }
+{ #category : 'private - hook' }
 RSVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
 	^ self layout: root depth: aPoint y breadth: aPoint x
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSVanDerPloegTreeLayout >> ongoing: aShape depth: aDepth breadth: aBreadth [
 
 	
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSVanDerPloegTreeLayout >> verticalGapAmongParent: aShapeParent andChild: aShape [
 
 	^ self verticalGap

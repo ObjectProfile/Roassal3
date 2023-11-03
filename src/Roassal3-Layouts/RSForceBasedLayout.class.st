@@ -15,8 +15,8 @@ I work with `RSMockShape` and `RSMockLine`. I work for optimization I work with 
 
 "
 Class {
-	#name : #RSForceBasedLayout,
-	#superclass : #RSLineDrivenLayout,
+	#name : 'RSForceBasedLayout',
+	#superclass : 'RSLineDrivenLayout',
 	#instVars : [
 		'iterations',
 		'nodes',
@@ -34,10 +34,12 @@ Class {
 		'quadtree',
 		'autoRepulse'
 	],
-	#category : #'Roassal3-Layouts-Force'
+	#category : 'Roassal3-Layouts-Force',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Force'
 }
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 RSForceBasedLayout >> accumulate: aQuad [
 	| centerCharge |
 	centerCharge := 0@0.
@@ -60,7 +62,7 @@ RSForceBasedLayout >> accumulate: aQuad [
 	aQuad centerOfCharge: centerCharge / aQuad charge
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RSForceBasedLayout >> addLines: realLines [
 	| newMockLines |
 	newMockLines := realLines
@@ -70,7 +72,7 @@ RSForceBasedLayout >> addLines: realLines [
 	lines addAll: newMockLines
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RSForceBasedLayout >> addNodes: realElements [
 	| newMockElements |
 	newMockElements := (realElements collect: [ :e | self newMockElementFor: e ]).
@@ -78,12 +80,12 @@ RSForceBasedLayout >> addNodes: realElements [
 	nodes addAll: newMockElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> alpha [
 	^ alpha
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> alpha: aFloat [
 	"alpha is a value between 0 and 1.
 	- 1 represents a strong change in nodes position.
@@ -91,17 +93,17 @@ RSForceBasedLayout >> alpha: aFloat [
 	alpha := aFloat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> autoRepulse [
 	^ autoRepulse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> autoRepulse: aBoolean [
 	autoRepulse := aBoolean
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSForceBasedLayout >> calculateAutoRepulse [
 	lines do: [ :line | self calculateAutoRepulseFor: line ].
 	nodes do: [ :node | | e |
@@ -110,7 +112,7 @@ RSForceBasedLayout >> calculateAutoRepulse [
 		node charge: e * -2 ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSForceBasedLayout >> calculateAutoRepulseFor: line [
 	| e1 e2 n |
 	e1 := line from extent.
@@ -121,35 +123,35 @@ RSForceBasedLayout >> calculateAutoRepulseFor: line [
 	line length: n
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> center [
 	^ center
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> center: aPoint [
 	"gravity moves elements to that point"
 	center := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> charge [
 	^ charge
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> charge: aFloat [
 	"Typically a negative value. E.g., -300.
 	This value affects new nodes. then you can change charge for each node"
 	charge := aFloat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> currentQuadtree [
 	^ quadtree
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSForceBasedLayout >> doExecute: nodeShapes [
 	nodeShapes do: [ :n | n updateLinesOFF ].
 	self nodes: nodeShapes.
@@ -164,80 +166,80 @@ RSForceBasedLayout >> doExecute: nodeShapes [
 	
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSForceBasedLayout >> doNotUseProgressBar [
 	shouldUseProgressBar := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> friction [
 	^ friction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> friction: aNumber [
 	"usuarly a value between 0 and 1
 	This affects all nodes"
 	friction := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> gravity [
 	^ gravity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> gravity: aNumber [
 	"it is the force from nodes to move around center"
 	gravity := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> initialLayout [
 	^ initialLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> initialLayout: aLayout [
 	"The default layout performed before run this layout"
 	initialLayout := aLayout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSForceBasedLayout >> initialize [
 	super initialize.
 	random := Random seed: 42.
 	self reset.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> iterations [
 	^ iterations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> iterations: aNumber [
 	"aNumber is a 0 positive number used to run this layout aNumber times"
 	iterations := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> length [
 	^ length
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> length: aFloat [
 	"Specifiy the length of the edges. E.g., 50"
 	length := aFloat
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 RSForceBasedLayout >> mockElementAt: realNode [
 	^ nodes detect: [ :each | each realShape == realNode ] ifNone: [ nil ]
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 RSForceBasedLayout >> mockElementAt: realNode ifPresent: presentBlock [
 
 	^ nodes
@@ -245,17 +247,17 @@ RSForceBasedLayout >> mockElementAt: realNode ifPresent: presentBlock [
 		  ifFound: presentBlock
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 RSForceBasedLayout >> mockLineAt: anEdge [
 	^ lines detect: [ :each | each realLine == anEdge ] ifNone: [ nil ]
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 RSForceBasedLayout >> mockLineAt: anEdge ifPresent: presentBlock [
 	^ lines detect: [ :each | each realLine == anEdge ] ifFound: presentBlock
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 RSForceBasedLayout >> newMockElementFor: e [
 	^ RSMockShape new
 		realShape: e;
@@ -264,7 +266,7 @@ RSForceBasedLayout >> newMockElementFor: e [
 		yourself
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 RSForceBasedLayout >> newMockLineFor: e [
 	| from to |
 	from := self mockElementAt: e from.
@@ -281,30 +283,30 @@ RSForceBasedLayout >> newMockLineFor: e [
 		yourself
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 RSForceBasedLayout >> nodes [
 	^ nodes
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 RSForceBasedLayout >> nodes: aCollection [
 	nodes := aCollection
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RSForceBasedLayout >> removeEdge: aRealEdge [
 
 	self mockLineAt: aRealEdge ifPresent: [ :edge | lines remove: edge ]
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RSForceBasedLayout >> removeNode: aRealNode [
 	| node |
 	node := self mockElementAt: aRealNode.
 	nodes remove: node
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 RSForceBasedLayout >> repulse: aNode from: aQuad [
 
 	aQuad soleChild = aNode ifFalse: [
@@ -328,7 +330,7 @@ RSForceBasedLayout >> repulse: aNode from: aQuad [
 		aQuad subQuadsDo: [ :aSubQuad | self repulse: aNode from: aSubQuad ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSForceBasedLayout >> reset [
 	self
 		autoRepulse: false;
@@ -346,7 +348,7 @@ RSForceBasedLayout >> reset [
 		useProgressBar
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSForceBasedLayout >> runLayoutIn: job [
 	"Central method"
 	iterations isZero ifTrue: [
@@ -362,7 +364,7 @@ RSForceBasedLayout >> runLayoutIn: job [
 	self nodes: #(); edges: #().
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSForceBasedLayout >> runLayoutInJob [
 	[ :job |
 		job
@@ -372,22 +374,22 @@ RSForceBasedLayout >> runLayoutInJob [
 		self runLayoutIn: job ] asJob run
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSForceBasedLayout >> runLayoutSimply [
 	self runLayoutIn: Job new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSForceBasedLayout >> shouldUseProgressBar [
 	^ shouldUseProgressBar
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSForceBasedLayout >> shouldUseProgressBar: aBoolean [
 	shouldUseProgressBar := aBoolean
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSForceBasedLayout >> start [
 	"mandatory for animations"
 	initialLayout on: nodes.
@@ -401,7 +403,7 @@ RSForceBasedLayout >> start [
 	alpha ifNil: [ alpha :=  0.1 ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSForceBasedLayout >> step [
 	nodes ifEmpty: [ ^ self ].
 	self stepEdgeForces.
@@ -411,7 +413,7 @@ RSForceBasedLayout >> step [
 	nodes do: [ :node | node applyToRealElement ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSForceBasedLayout >> stepEdgeForces [
 	"Apply forces of edges."
 	lines do: [ :each |
@@ -432,7 +434,7 @@ RSForceBasedLayout >> stepEdgeForces [
 	]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSForceBasedLayout >> stepFriction [
 	"Apply friction. This is the last to do in a step, after new positions have been defined."
 	nodes do: [ :each |
@@ -445,7 +447,7 @@ RSForceBasedLayout >> stepFriction [
 		each oldPosition: current ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSForceBasedLayout >> stepGravityForce [
 	"Apply gravity"
 	| k |
@@ -457,7 +459,7 @@ RSForceBasedLayout >> stepGravityForce [
 		each translateTo: pos + (k * (center - pos)) ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSForceBasedLayout >> stepNodeRepulsion [
 	"Handle fixed nodes. Do this after all forces in a step were already applied."
 	quadtree := RSQuadTreeForce withAll: nodes.
@@ -469,24 +471,24 @@ RSForceBasedLayout >> stepNodeRepulsion [
 				ifFalse: [ self repulse: each from: quadtree ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> strength [
 	^ strength
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> strength: aFloat [
 	"Set the force of attraction for the edges. A high value results in having nodes together.
 	The default value is 1.0"
 	strength := aFloat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> theta [
 	^ theta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSForceBasedLayout >> theta: aNumber [
 	"Theta coefficient from Barnes-Hut simulation
 	- Value ranges on [0, 1]
@@ -495,7 +497,7 @@ RSForceBasedLayout >> theta: aNumber [
 	theta := aNumber
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSForceBasedLayout >> useProgressBar [
 	"Public method. Make the layout use a progress bar"
 	shouldUseProgressBar := true

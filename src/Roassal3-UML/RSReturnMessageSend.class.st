@@ -45,13 +45,13 @@ RSReturnMessageSend >> dispatchTimespan: aTimespan selectorShape: aShape onSeque
 		  selectorShape: aShape
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'dispatching' }
 RSReturnMessageSend >> ifMessageSend: msBlock ifReturnMessageSend: rBlock [
 
 	^ rBlock cull: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'dispatching' }
 RSReturnMessageSend >> ifSelfSend: sBlock ifNotSelfSend: nsBlock [
 
 	^ self key ifSelfSend: sBlock ifNotSelfSend: nsBlock
@@ -77,7 +77,7 @@ RSReturnMessageSend >> receiver [
 	^ self key client
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RSReturnMessageSend >> recordReturnSend: anAssoc inDictionary: aDictionary [
 
 	aDictionary
@@ -103,7 +103,7 @@ RSReturnMessageSend >> selector [
 	^ self key selector
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RSReturnMessageSend >> styleLine: aLine [
 
 	aLine dashArray: { Float goldenPlatinumRatio }

@@ -2,8 +2,8 @@
 I describe a compact layout of information, I visit the graph and put each level in a dictionary to access the children of each node
 "
 Class {
-	#name : #RSAbstractCompactTreeLayout,
-	#superclass : #RSAbstractGraphLayout,
+	#name : 'RSAbstractCompactTreeLayout',
+	#superclass : 'RSAbstractGraphLayout',
 	#traits : 'RSTLayoutProperties',
 	#classTraits : 'RSTLayoutProperties classTrait',
 	#instVars : [
@@ -11,15 +11,17 @@ Class {
 		'root',
 		'initialLayout'
 	],
-	#category : #'Roassal3-Layouts-Tree'
+	#category : 'Roassal3-Layouts-Tree',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Tree'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractCompactTreeLayout class >> horizontalGap: anInteger [
 	^ self new horizontalGap: anInteger; yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractCompactTreeLayout class >> horizontalGap: anInt verticalGap: another [
 
 	| new |
@@ -32,36 +34,36 @@ RSAbstractCompactTreeLayout class >> horizontalGap: anInt verticalGap: another [
 	^ new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractCompactTreeLayout class >> isAbstract [
 	^ self name = #RSAbstractCompactTreeLayout
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractCompactTreeLayout class >> verticalGap: anInteger [
 	^ self new verticalGap: anInteger; yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractCompactTreeLayout >> childrenFor: aNode [
 	^ sonsDictionary isEmpty
 		ifTrue: [ super childrenFor: aNode ]
 		ifFalse: [ sonsDictionary at: aNode ifAbsent: [ ^ OrderedCollection new ] ]
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 RSAbstractCompactTreeLayout >> compareContourOf: aNode with: another [
 	"return the number of radians the subtree induced by aNode must be displaced to be separated by a predefined distance (horizontalGap) from the one induced by anotherNode"
 	self subclassResponsibility
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 RSAbstractCompactTreeLayout >> computePosition: aNode [
 "compute the position of the given node and of his sons recursively"
 	self subclassResponsibility
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 RSAbstractCompactTreeLayout >> followLeftContour: aNode toLayer: anInteger [
 	"return the last node in the left contour begining at anode"
 
@@ -80,7 +82,7 @@ RSAbstractCompactTreeLayout >> followLeftContour: aNode toLayer: anInteger [
 				  toLayer: anInteger ]
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 RSAbstractCompactTreeLayout >> followRightContour: aNode toLayer: anInteger [
 	"return the node in the right contour begining at anode in layer anInteger"
 
@@ -99,7 +101,7 @@ RSAbstractCompactTreeLayout >> followRightContour: aNode toLayer: anInteger [
 				  toLayer: anInteger ]
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 RSAbstractCompactTreeLayout >> getAbcissaOf: aNode inSubtreeFromLayer: anInteger [
 	| node x |
 
@@ -118,12 +120,12 @@ RSAbstractCompactTreeLayout >> getAbcissaOf: aNode inSubtreeFromLayer: anInteger
 	^ x
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RSAbstractCompactTreeLayout >> initialLayout: aLayout [
 	initialLayout := aLayout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractCompactTreeLayout >> initialize [
 	super initialize.
 	verticalGap := 20.
@@ -131,7 +133,7 @@ RSAbstractCompactTreeLayout >> initialize [
 	sonsDictionary := Dictionary new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RSAbstractCompactTreeLayout >> initialize: aNode whoseFatherIs: another [
 
 	self fatherOf: aNode put: another.
@@ -144,7 +146,7 @@ RSAbstractCompactTreeLayout >> initialize: aNode whoseFatherIs: another [
 		self initialize: e whoseFatherIs: aNode ]
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 RSAbstractCompactTreeLayout >> leftSiblingOf: aNode [
 	"return the left sibling of the given node "
 
@@ -156,7 +158,7 @@ RSAbstractCompactTreeLayout >> leftSiblingOf: aNode [
 			ifFalse: [ ^ children at: (children indexOf: aNode) - 1 ] ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RSAbstractCompactTreeLayout >> root: aNode [
 	root := aNode
 ]

@@ -9,7 +9,7 @@ Class {
 	#tag : 'Lines'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'draw helpers' }
 RSdeCasteljauLine >> addBezierPoint: aPoint [
 
 	| firstPoint |
@@ -18,7 +18,7 @@ RSdeCasteljauLine >> addBezierPoint: aPoint [
 	self addPoint: aPoint via: firstPoint
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'draw helpers' }
 RSdeCasteljauLine >> addBezierPoint: aPoint via: secondPoint [
 
 	| firstPoint |
@@ -27,19 +27,19 @@ RSdeCasteljauLine >> addBezierPoint: aPoint via: secondPoint [
 	self addPoint: aPoint via: firstPoint via: secondPoint
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'draw helpers' }
 RSdeCasteljauLine >> addPoint: aPoint [
 
 	points add: aPoint
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'draw helpers' }
 RSdeCasteljauLine >> addPoint: aPoint via: anotherPoint [
 
 	self addPoint: aPoint via: anotherPoint via: anotherPoint
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'draw helpers' }
 RSdeCasteljauLine >> addPoint: aPoint via: firstPoint via: secondPoint [
 
 	points
@@ -48,7 +48,7 @@ RSdeCasteljauLine >> addPoint: aPoint via: firstPoint via: secondPoint [
 		add: aPoint
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'draw helpers' }
 RSdeCasteljauLine >> addPoint: aPoint via: firstPoint via: secondPoint relativeTo: basePoint [
 
 	self
@@ -99,7 +99,7 @@ RSdeCasteljauLine >> asRSBezier [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RSdeCasteljauLine >> controlPoints: aSequenceableOfPoints at: t [
 
 	^ self deCasteljau: aSequenceableOfPoints at: t asFloat
@@ -152,7 +152,7 @@ RSdeCasteljauLine >> difference [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 RSdeCasteljauLine >> elevate: n [
 
 	| line |
@@ -363,7 +363,7 @@ RSdeCasteljauLine >> notifyDesignPointsChanged [
 		overlappingDistancesSum: self overlappingControlPointsDistance
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'draw helpers' }
 RSdeCasteljauLine >> pen: aBlock [
 
 	"Inspired by https://css-tricks.com/svg-path-syntax-illustrated-guide/"

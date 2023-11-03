@@ -9,63 +9,65 @@ I define a layouts with horizontal and vertical gap spaces between elements.
 
 "
 Class {
-	#name : #RSAbstractBoxedLayout,
-	#superclass : #RSLayout,
+	#name : 'RSAbstractBoxedLayout',
+	#superclass : 'RSLayout',
 	#instVars : [
 		'gapSize',
 		'horizontalGap',
 		'verticalGap'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : 'Roassal3-Layouts-Core',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractBoxedLayout class >> isAbstract [
 	^ self name = #RSAbstractBoxedLayout
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSAbstractBoxedLayout >> defaultGapSize [
 	^ 5
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBoxedLayout >> gapSize [
 	^ gapSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBoxedLayout >> gapSize: aSizeInPixels [
 	gapSize := aSizeInPixels.
 	self horizontalGap: gapSize.
 	self verticalGap: gapSize.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBoxedLayout >> horizontalGap [
 
 	^ horizontalGap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBoxedLayout >> horizontalGap: aNumber [
 
 	horizontalGap := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractBoxedLayout >> initialize [
 	super initialize.
 	self gapSize: self defaultGapSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBoxedLayout >> verticalGap [
 
 	^ verticalGap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBoxedLayout >> verticalGap: aNumber [
 
 	verticalGap := aNumber

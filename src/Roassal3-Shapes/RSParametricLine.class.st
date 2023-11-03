@@ -159,7 +159,7 @@ RSParametricLine >> controlPointsSize [
 	^ pointsSize
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RSParametricLine >> designPoints [
 
 	^ points
@@ -201,7 +201,7 @@ RSParametricLine >> overlappingControlPointsDistance [
 	^ overlappingControlPointsDistance
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RSParametricLine >> parameterization [
 
 	^ parameterization

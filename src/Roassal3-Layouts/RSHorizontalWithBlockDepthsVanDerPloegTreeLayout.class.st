@@ -1,12 +1,14 @@
 Class {
-	#name : #RSHorizontalWithBlockDepthsVanDerPloegTreeLayout,
-	#superclass : #RSHorizontalVanDerPloegTreeLayout,
+	#name : 'RSHorizontalWithBlockDepthsVanDerPloegTreeLayout',
+	#superclass : 'RSHorizontalVanDerPloegTreeLayout',
 	#traits : 'RSTWalkBasedRegularTreeGapsBlockDepth',
 	#classTraits : 'RSTWalkBasedRegularTreeGapsBlockDepth classTrait',
-	#category : #'Roassal3-Layouts-Core'
+	#category : 'Roassal3-Layouts-Core',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSHorizontalWithBlockDepthsVanDerPloegTreeLayout >> horizontalGapAmongParent: aShapeParent andChild: aShape [
 
 	^ self

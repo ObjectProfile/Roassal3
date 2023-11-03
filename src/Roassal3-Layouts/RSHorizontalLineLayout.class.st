@@ -5,12 +5,14 @@ You can use label alignment to align labels based on baseline of each font.
 
 "
 Class {
-	#name : #RSHorizontalLineLayout,
-	#superclass : #RSAbstractLineLayout,
-	#category : #'Roassal3-Layouts-Line'
+	#name : 'RSHorizontalLineLayout',
+	#superclass : 'RSAbstractLineLayout',
+	#category : 'Roassal3-Layouts-Line',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Line'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHorizontalLineLayout class >> example1 [
 	| c |
 	c := self canvasExample.
@@ -21,7 +23,7 @@ RSHorizontalLineLayout class >> example1 [
 	^ c open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHorizontalLineLayout class >> exampleLabel [
 	| c |
 	c := RSCanvas new.
@@ -44,29 +46,29 @@ RSHorizontalLineLayout class >> exampleLabel [
 	^ c open
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSHorizontalLineLayout >> alignBottom [
 	self alignment: #bottom
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSHorizontalLineLayout >> alignLabel [
 	"Align shapes along the label baseline. It is here assumed that shapes are labels"
 	self alignment: #label
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSHorizontalLineLayout >> alignMiddle [
 	"Make the element middle"
 	self alignment: #middle
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSHorizontalLineLayout >> alignTop [
 	self alignment: #top
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSHorizontalLineLayout >> deltaFor: anRSShape [
 	| delta |
 	delta := 0.
@@ -77,12 +79,12 @@ RSHorizontalLineLayout >> deltaFor: anRSShape [
 	^ 0 @ delta
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSHorizontalLineLayout >> movePointer: pointer accordingToFigure: anRSShape [
 	^ (pointer x + anRSShape width + self horizontalGap) @ pointer y
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSHorizontalLineLayout >> positionOriginalPointer: aCollectionOfShapes [
 	| maxHeight delta |
 	delta := 0.

@@ -30,7 +30,7 @@ RSUMLSequenceBuilder >> build [
 	^ super build
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RSUMLSequenceBuilder >> endShapeWithX: x andY: y [
 
 	^ RSBox new
@@ -110,7 +110,7 @@ RSUMLSequenceBuilder >> labelShapeOfString: aString [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RSUMLSequenceBuilder >> lifeLines: selfLines [
 
 	| lb yStart yEnd descriptor commonIndex transparentHeaders minTopHeader lifelines selfMessageSends |
@@ -194,7 +194,7 @@ RSUMLSequenceBuilder >> lifeLines: selfLines [
 		  as: RSGroup
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RSUMLSequenceBuilder >> lifeLines: selfLines selfMessageSends: selfSends lineBuilder: lb descriptor: descriptor startShape: startShape endShape: endShape [
 
 	selfSends
@@ -270,16 +270,16 @@ RSUMLSequenceBuilder >> shapeFor: anObject index: anIndex [
 		  ifFalse: [ super shapeFor: anObject index: anIndex ]
 ]
 
-{ #category : 'as yet unclassified' }
-RSUMLSequenceBuilder >> shapeOrNil: minTopHeader shape: headerShape min: aBlock [
+{ #category : 'accessing' }
+RSUMLSequenceBuilder >> shapeOrNil: minTopHeader shape: aShape min: aBlock [
 
-	^ minTopHeader ifNil: [ headerShape ] ifNotNil: [ 
+	^ minTopHeader ifNil: [ aShape ] ifNotNil: [
 		  | headerTop minTop |
-		  headerTop := aBlock value: headerShape.
+		  headerTop := aBlock value: aShape.
 		  minTop := aBlock value: minTopHeader.
 
 		  headerTop < minTop
-			  ifTrue: [ headerShape ]
+			  ifTrue: [ aShape ]
 			  ifFalse: [ minTopHeader ] ]
 ]
 

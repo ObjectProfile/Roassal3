@@ -8,20 +8,22 @@ My instance variables are:
 - lineItemsCount: a number or block to compute the number of desired elements per row.
 "
 Class {
-	#name : #RSAbstractGridLayout,
-	#superclass : #RSAbstractBoxedLayout,
+	#name : 'RSAbstractGridLayout',
+	#superclass : 'RSAbstractBoxedLayout',
 	#instVars : [
 		'lineItemsCountBlock'
 	],
-	#category : #'Roassal3-Layouts-Grid'
+	#category : 'Roassal3-Layouts-Grid',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Grid'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractGridLayout class >> isAbstract [
 	^ self name = #RSAbstractGridLayout
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractGridLayout class >> on: aCollectionOfElements withGap: anInteger withLineItemsCount: aBlock [
 	"place the elements in a grid with (aBlock roValue: aCollectionOfElements) as the amount of elements horizontally"
 
@@ -31,7 +33,7 @@ RSAbstractGridLayout class >> on: aCollectionOfElements withGap: anInteger withL
 	^ aCollectionOfElements
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractGridLayout class >> on: aCollectionOfElements withLineItemsCount: aBlock [
 	"place the elements in a grid with (aBlock roValue: aCollectionOfElements) as the amount of elements horizontally
 
@@ -50,7 +52,7 @@ RSAbstractGridLayout class >> on: aCollectionOfElements withLineItemsCount: aBlo
 	^ aCollectionOfElements
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSAbstractGridLayout class >> withGap: anInteger [
 
 	^ self new
@@ -58,7 +60,7 @@ RSAbstractGridLayout class >> withGap: anInteger [
 			yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSAbstractGridLayout class >> withGap: anInteger withLineItemsCount: aBlock [
 
 	^self new
@@ -67,7 +69,7 @@ RSAbstractGridLayout class >> withGap: anInteger withLineItemsCount: aBlock [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSAbstractGridLayout class >> withLineItemsCount: aBlock [
 
 	^self new
@@ -75,7 +77,7 @@ RSAbstractGridLayout class >> withLineItemsCount: aBlock [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractGridLayout >> defaultLineItemsCount [
 	^ [ :elements |
 			| height width |
@@ -87,24 +89,24 @@ RSAbstractGridLayout >> defaultLineItemsCount [
 					width @ height ]) x ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractGridLayout >> initialize [
 	super initialize.
 	self lineItemsCount: self defaultLineItemsCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractGridLayout >> lineItemsCount [
 	^ lineItemsCountBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractGridLayout >> lineItemsCount: aNumberOrASymbolOrABlock [
 	"The argument will be evaluated (using rsValue:) against the set of elements to perform the layout on. The result of this evaluation has to be a number, which indicates the number of elements per line"
 	lineItemsCountBlock := aNumberOrASymbolOrABlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractGridLayout >> lineItemsCountBlock [
 	^ lineItemsCountBlock
 ]
