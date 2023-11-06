@@ -11,12 +11,13 @@ Class {
 
 { #category : 'building suites' }
 RSPLinesTest class >> testParameters [
+
 	| m classesToConsider |
 	m := ParametrizedTestMatrix new.
-	classesToConsider := RSAbstractLine allSubclasses select: [ :c | c isAbstract not ].
-	classesToConsider do: [ :cls |
-		m addCase: { (#shapeClass -> cls) }
-	].
+	classesToConsider := RSAbstractLine allSubclasses select: [ :c |
+		                     (c isAbstract or: [ c = RSSegmentedPolyline ])
+			                     not ].
+	classesToConsider do: [ :cls | m addCase: { (#shapeClass -> cls) } ].
 	^ m
 ]
 

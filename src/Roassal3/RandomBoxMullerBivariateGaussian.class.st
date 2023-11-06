@@ -9,25 +9,6 @@ Class {
 	#tag : 'Random'
 }
 
-{ #category : 'converting' }
-RandomBoxMullerBivariateGaussian >> asShapeScatter [
-
-	| gen points |
-	gen := self copy.
-	points := ((1 to: 500) collect: [ :each1 | gen next ]) sorted.
-
-	^ RSComposite new shapes: (RSChart new
-			   addPlot: (RSScatterPlot new
-					    x: (points collect: [ :each | each x ])
-					    y: (points collect: [ :each | each y ]);
-					    color: Color gray translucent;
-					    yourself);
-			   addDecoration: RSHorizontalTick new;
-			   addDecoration: RSVerticalTick new;
-			   build;
-			   shapes)
-]
-
 { #category : 'accessing' }
 RandomBoxMullerBivariateGaussian >> density: x [
 

@@ -10,9 +10,9 @@ Class {
 }
 
 { #category : 'lines' }
-RSdeCasteljauExamples >> example01deCasteljauLine [
+RSdeCasteljauExamples >> example44deCasteljauLine [
 
-	<script: 'self new example01deCasteljauLine open'>
+	<script: 'self new example44deCasteljauLine open'>
 	| points |
 	points := {
 		          (1 @ 0).
