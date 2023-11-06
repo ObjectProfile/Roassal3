@@ -151,12 +151,16 @@ RSBoundingShape >> defaultExtent [
 
 { #category : 'accessing' }
 RSBoundingShape >> extent: aPoint [
-	| oldExtent extent |
-	extent := baseRectangle extent.
+	| oldExtent extent delta |
+	
+	extent := self baseRectangleWithBorder extent.
 	extent = aPoint ifTrue: [ ^ self ].
 	self assert: aPoint isPoint.
 	oldExtent := extent.
-	baseRectangle := Rectangle floatCenter: 0@0 extent: aPoint.
+	delta := self hasBorder
+		ifTrue: [ border width ]
+		ifFalse: [ 0 ].
+	baseRectangle := Rectangle floatCenter: 0@0 extent: aPoint - delta.
 	self resetBBox; resetPath.
 	self announce: [ RSExtentChangedEvent new
 		shape: self;

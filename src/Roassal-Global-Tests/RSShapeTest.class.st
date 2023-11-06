@@ -112,6 +112,36 @@ RSShapeTest >> testEncompassingRectangleContainsBorderWidth [
 ]
 
 { #category : 'tests' }
+RSShapeTest >> testExtent [
+	| extent box |
+	extent := 100@100.
+	box := RSBox new.
+	box extent: extent.
+	self assert: box extent equals: extent
+]
+
+{ #category : 'tests' }
+RSShapeTest >> testExtentWithBorder [
+	| extent box |
+	extent := 100@100.
+	box := RSBox new.
+	box borderWidth: 10.
+	box extent: extent.
+	self assert: box extent equals: extent
+]
+
+{ #category : 'tests' }
+RSShapeTest >> testExtentWithBorderMin [
+	| extent box borderWidth|
+	extent := 1@1.
+	borderWidth := 10.
+	box := RSBox new.
+	box borderWidth: borderWidth.
+	box extent: extent.
+	self assert: box extent equals: borderWidth asPoint.
+]
+
+{ #category : 'tests' }
 RSShapeTest >> testHasModel [
 
 	self deny: RSCircle new hasModel.

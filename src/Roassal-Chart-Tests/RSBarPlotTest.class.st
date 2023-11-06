@@ -20,22 +20,6 @@ RSBarPlotTest >> setUp [
 	plot := RSBarPlot new x: x y: y
 ]
 
-{ #category : 'tests' }
-RSBarPlotTest >> test2BarPlots [
-	| d1 d2 extent vtick width |
-	d1 := #(4 10 5 9).
-	d2 := #(-5 -6 -3 -3 ).
-	plot := RSBarPlot new y: d1.
-	extent := plot extent.
-	vtick := plot verticalTick withNoLabels.
-	plot removeHorizontalTicks.
-	plot build.
-	width := plot spine border width.
-	self
-		assert: plot canvas encompassingRectangle extent
-		equals: extent+(vtick configuration tickSize @0)+(width / 2 @ width)
-]
-
 { #category : 'running' }
 RSBarPlotTest >> testBasic [
 
@@ -91,6 +75,24 @@ RSBarPlotTest >> testPaddingIsCorrect [
 	plot build.
 
 	self assert: plot padding equals: 5 @ 5
+]
+
+{ #category : 'tests' }
+RSBarPlotTest >> testPlotExtent [
+	| d1 d2 extent vtick width |
+	d1 := #(4 10 5 9).
+	d2 := #(-5 -6 -3 -3 ).
+	plot := RSBarPlot new y: d1.
+	extent := 500@300.
+	plot extent: extent.
+	vtick := plot verticalTick withNoLabels.
+	plot removeHorizontalTicks.
+	plot removeVerticalTicks.
+	plot build.
+	width := plot spine border width.
+	self
+		assert: plot canvas encompassingRectangle extent
+		equals: plot extent
 ]
 
 { #category : 'tests' }
