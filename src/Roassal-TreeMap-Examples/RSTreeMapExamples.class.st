@@ -210,3 +210,22 @@ RSTreeMapExamples >> example07Roassal [
 	title addedIn: b canvas.
 	^ b canvas
 ]
+
+{ #category : 'examples' }
+RSTreeMapExamples >> example08Numbers [
+	<script: 'self new example08Numbers open'>
+	<noTest>
+	| b labels |
+	b := RSTreeMap new.
+	b boxShape 
+		@ RSDraggable;
+		@ (RSLabeled new
+		in: [ :lbl | lbl location middle ];
+		yourself).
+		
+	labels := (1 to: 100) collect: #asString.
+	b boxShape color: Color veryLightGray.
+	b from: labels using: [ #() ].
+	b modelWeight: [ :n | n size ].
+	^ b
+]
