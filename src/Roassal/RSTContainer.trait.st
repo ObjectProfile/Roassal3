@@ -43,14 +43,14 @@ RSTContainer >> addAllShapes: aCollection [
 ]
 
 { #category : 'adding' }
-RSTContainer >> addBasicShape: arg1 [
+RSTContainer >> addBasicShape: aShape [
 
-	| tmp1 |
-	tmp1 := self privateShapes.
-	tmp1 add: arg1.
-	arg1 entryIndex: tmp1 size.
-	shapeCollection add: arg1.
-	arg1 invalidate
+	| aCollection |
+	aCollection := self privateShapes.
+	aCollection add: aShape.
+	aShape entryIndex: aCollection size.
+	shapeCollection add: aShape.
+	aShape invalidate
 ]
 
 { #category : 'adding nodes edges' }
