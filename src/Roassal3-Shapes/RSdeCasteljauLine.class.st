@@ -117,7 +117,7 @@ RSdeCasteljauLine >> deCasteljau: aSequenceableOfPoints at: t [
 		| hPoint i |
 		i := k + 1.
 		h := self weight: h * t * (pointsSize - k) atIndex: i.
-		h := h max: Number epsilon.
+		h := h max: 2.220446049250313e-16.
 		h := h / ((self weight: k * u atIndex: k) + h).
 		hPoint := h * (aSequenceableOfPoints at: i).
 		qPoint := qPoint * (1 - h) + hPoint ].
