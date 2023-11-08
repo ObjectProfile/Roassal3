@@ -122,7 +122,7 @@ RSLabeled >> getOrCreateLabel: aShape [
 		ifAbsentPut: [ self createLabel: aShape ].
 	parent :=aShape parent.
 	aShape when: RSShapeRemovedEvent send: #remove to: label.
-	(label isInACanvas not and: [parent notNil ])
+	(label isInACanvas not and: [ parent isNotNil ])
 		ifTrue: [ parent addShape: label shape ].
 	^ label
 ]

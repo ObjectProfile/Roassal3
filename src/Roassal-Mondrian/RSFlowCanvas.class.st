@@ -1,6 +1,6 @@
 Class {
-	#name : #RSFlowCanvas,
-	#superclass : #Object,
+	#name : 'RSFlowCanvas',
+	#superclass : 'Object',
 	#instVars : [
 		'breadcrumbs',
 		'breadcrumbsLabels',
@@ -8,20 +8,22 @@ Class {
 		'mapping',
 		'breadcrumbsLabel'
 	],
-	#category : #'Roassal-Mondrian-Flow'
+	#category : 'Roassal-Mondrian-Flow',
+	#package : 'Roassal-Mondrian',
+	#tag : 'Flow'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFlowCanvas >> breadcrumbs [
 	^ breadcrumbs asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFlowCanvas >> canvas [
 	^ canvas
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSFlowCanvas >> clickOnModel: aModel [
 	(mapping includesKey: aModel class)
 		ifTrue: [
@@ -45,7 +47,7 @@ RSFlowCanvas >> clickOnModel: aModel [
 	self updateBreadcrumbs
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSFlowCanvas >> initialize [
 
 	super initialize.
@@ -55,7 +57,7 @@ RSFlowCanvas >> initialize [
 	breadcrumbs := OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSFlowCanvas >> initializeCanvas [
 
 	canvas := RSCanvas new.
@@ -66,18 +68,18 @@ RSFlowCanvas >> initializeCanvas [
 "
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSFlowCanvas >> open [
 	^ canvas open
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSFlowCanvas >> setBreadcrumbsLabel: aString [
 	breadcrumbsLabel text: aString.
 	breadcrumbsLabel translateTopLeftTo: 0 @ 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSFlowCanvas >> setOnCanvas: aCanvas [
 
 	| relevantShapes |
@@ -85,7 +87,7 @@ RSFlowCanvas >> setOnCanvas: aCanvas [
 		assert: [ aCanvas class == RSCanvas ]
 		description: 'Must provide a canvas'.
 	canvas := aCanvas.
-	relevantShapes := (aCanvas deepNodes select: [ :s | s model notNil ])
+	relevantShapes := (aCanvas deepNodes select: [ :s | s model isNotNil ])
 		                  asGroup.
 	relevantShapes
 		when: RSMouseClick
@@ -93,7 +95,7 @@ RSFlowCanvas >> setOnCanvas: aCanvas [
 		for: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSFlowCanvas >> updateBreadcrumbs [
 
 	breadcrumbsLabels do: #remove.
@@ -120,7 +122,7 @@ RSFlowCanvas >> updateBreadcrumbs [
 	breadcrumbsLabel translateTopLeftTo: 0 @ 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSFlowCanvas >> when: aClass visualize: twoArgsBlock [
 	"twoArgsBlock follows [ :canvas :object | ... ]"
 	mapping at: aClass put: twoArgsBlock

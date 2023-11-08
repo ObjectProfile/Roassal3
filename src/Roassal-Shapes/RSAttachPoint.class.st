@@ -104,7 +104,7 @@ RSAttachPoint >> endingPointOf: aLine [
 
 { #category : 'private' }
 RSAttachPoint >> hasParents: shape in: aLine [
-	^ shape parent notNil and: [ aLine parent notNil ]
+	^ shape parent isNotNil and: [ aLine parent isNotNil ]
 ]
 
 { #category : 'initialization' }

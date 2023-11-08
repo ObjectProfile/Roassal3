@@ -2,26 +2,27 @@
 I define a new basic highlight interaction
 "
 Class {
-	#name : #RSSunburstFadeInteraction,
-	#superclass : #RSHighlightable,
+	#name : 'RSSunburstFadeInteraction',
+	#superclass : 'RSHighlightable',
 	#instVars : [
 		'still',
 		'builder'
 	],
-	#category : #'Roassal-Sunburst'
+	#category : 'Roassal-Sunburst',
+	#package : 'Roassal-Sunburst'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSunburstFadeInteraction >> builder [
 	^ builder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSunburstFadeInteraction >> builder: aBuilder [
 	builder := aBuilder
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSunburstFadeInteraction >> highlightShapesFor: shape [
 	| parents |
 	parents := self pathFor: shape.
@@ -29,13 +30,13 @@ RSSunburstFadeInteraction >> highlightShapesFor: shape [
 		reject: [ :s | parents includes: s]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSunburstFadeInteraction >> initialize [
 	super initialize.
 	self highlightColor: [ :shape | shape color alpha: 0.15 ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSunburstFadeInteraction >> onShape: aShape [
 	aShape
 		when: RSMouseEnter do: [ :evt |
@@ -56,12 +57,12 @@ RSSunburstFadeInteraction >> onShape: aShape [
 		for: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSunburstFadeInteraction >> pathFor: shape [
 	| list current |
 	list := OrderedCollection new.
 	current := shape.
-	[ current notNil ] whileTrue: [
+	[ current isNotNil ] whileTrue: [
 		list add: current.
 		current := current sparent ].
 	^ list

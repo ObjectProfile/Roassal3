@@ -17,7 +17,7 @@ Trait {
 { #category : 'adding nodes edges' }
 RSTContainer >> add: aShape [
 	self
-		assert: aShape notNil
+		assert: aShape isNotNil
 		description: 'Nil cannot be added to this container'.
 	aShape
 		addedIn: self; "will choose the correct collection: lines or nodes"

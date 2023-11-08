@@ -21,7 +21,7 @@ RSSelfLoopCPController class >> example [
 	links do: [ :assoc | | from to line |
 		from := canvas shapeFromModel: assoc key.
 		to := canvas shapeFromModel: assoc value.
-		(from notNil and: [ to notNil ]) ifTrue: [
+		(from isNotNil and: [ to isNotNil ]) ifTrue: [
 			line := RSBezier new
 				markerEnd: arrow;
 				attachPoint: (RSBorderAttachPoint new endOffset: 5);

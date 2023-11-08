@@ -12,7 +12,7 @@ RSShape >> draggable [
 
 { #category : '*Roassal-Interaction' }
 RSShape >> hasShadow [
-	^ self shadow notNil
+	^ self shadow isNotNil
 ]
 
 { #category : '*Roassal-Interaction' }

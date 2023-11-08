@@ -241,7 +241,7 @@ RSMondrianTest >> testLabeledOuterShapes05 [
 	shape := m canvas shapes first.
 	self assert: shape class equals: RSComposite.
 	self assert: shape color equals: Color white.
-	self assert: shape border notNil.
+	self assert: shape border isNotNil.
 	self assert: shape border width equals: 2.
 
 	self assert: shape children size equals: 2.

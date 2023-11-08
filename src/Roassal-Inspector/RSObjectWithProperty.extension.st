@@ -8,5 +8,5 @@ RSObjectWithProperty >> inspectorAnnouncer [
 
 { #category : '*Roassal-Inspector' }
 RSObjectWithProperty >> inspectorAnnouncerContext: aContext [
-	aContext active: announcer notNil
+	aContext active: announcer isNotNil
 ]

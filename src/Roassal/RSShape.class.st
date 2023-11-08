@@ -393,7 +393,7 @@ RSShape >> globalEncompassingRectangle [
 
 { #category : 'testing' }
 RSShape >> hasBorder [
-	^ border notNil and: [ border width > 0 ]
+	^ border isNotNil and: [ border width > 0 ]
 ]
 
 { #category : 'testing' }
@@ -405,13 +405,13 @@ RSShape >> hasChildren [
 RSShape >> hasEventCallback [
 	"Return true if at least one event callback has been added to the shape"
 
-	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]
+	^ announcer isNotNil and: [ announcer numberOfSubscriptions > 0 ]
 ]
 
 { #category : 'testing' }
 RSShape >> hasModel [
 	"Return true if a model is set in the shape. Return false otherwise"
-	^ model notNil
+	^ model isNotNil
 ]
 
 { #category : 'accessing' }
@@ -498,7 +498,7 @@ RSShape >> isFixed: aBool [
 
 { #category : 'testing' }
 RSShape >> isInACanvas [
-	^ parent notNil
+	^ parent isNotNil
 ]
 
 { #category : 'testing' }
@@ -612,7 +612,7 @@ RSShape >> printOn: stream [
 { #category : 'actions' }
 RSShape >> pushBack [
 	"Move the element behind. This method can be called only if the shape is in a canvas"
-	self assert: [ parent notNil ] description: 'Should add the shape in a canvas first'.
+	self assert: parent isNotNil description: 'Should add the shape in a canvas first'.
 	parent pushBack: self
 ]
 
@@ -637,7 +637,7 @@ RSShape >> renderOn: aCanvas [
 RSShape >> resetBBox [
 
 	| shouldUpdate |
-	shouldUpdate := parent notNil.
+	shouldUpdate := parent isNotNil.
 
 	shouldUpdate
 		ifTrue: [ "We have to update the dirty rectangle with the old position first."

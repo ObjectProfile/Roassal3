@@ -2,57 +2,59 @@
 Used to convert instances of BaselineOf into RSBaselineModel 
 "
 Class {
-	#name : #RSBaselineModel,
-	#superclass : #Object,
+	#name : 'RSBaselineModel',
+	#superclass : 'Object',
 	#instVars : [
 		'class',
 		'name',
 		'level',
 		'dependencies'
 	],
-	#category : #'Roassal-BaselineMap-Model'
+	#category : 'Roassal-BaselineMap-Model',
+	#package : 'Roassal-BaselineMap',
+	#tag : 'Model'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RSBaselineModel >> = another [
 	^ name = another name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBaselineModel >> baselineClass [
 
 	^ class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBaselineModel >> baselineClass: aClass [
 	class := aClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSBaselineModel >> browse [
 	class ifNil: [ ^ nil ].
 	^ class browse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBaselineModel >> dependencies [
 
 	^ dependencies
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBaselineModel >> dependencies: anObject [
 
 	dependencies := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RSBaselineModel >> hash [
 	^ name hash
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 RSBaselineModel >> inspectionBaselineMap: builder [
 	<inspectorPresentationOrder: 10 title: 'Dependencies Map'>
 	| canvas |
@@ -67,31 +69,31 @@ RSBaselineModel >> inspectionBaselineMap: builder [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBaselineModel >> level [
 
 	^ level
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBaselineModel >> level: anObject [
 
 	level := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBaselineModel >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBaselineModel >> name: anObject [
 
 	name := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSBaselineModel >> printOn: stream [
 	stream << name
 ]

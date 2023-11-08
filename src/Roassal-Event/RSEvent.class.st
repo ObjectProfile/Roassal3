@@ -70,10 +70,10 @@ RSEvent >> shape: aRSShape [
 	shape := aRSShape
 ]
 
-{ #category : 'accessing' }
+{ #category : 'update' }
 RSEvent >> signalUpdate [
 	"Trigger a refresh of the morph. The method signalUpdate has to be called when some visual properties are changed (e.g., color, position)"
-	morph notNil ifTrue: [ morph changed ]
+	morph ifNotNil: [ morph changed ]
 ]
 
 { #category : 'accessing' }

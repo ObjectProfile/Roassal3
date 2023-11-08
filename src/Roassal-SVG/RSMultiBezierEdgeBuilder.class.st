@@ -128,7 +128,7 @@ RSMultiBezierEdgeBuilder >> followersOf: element with: selector [
 	| t followers |
 	followers := OrderedCollection new.
 	t := element.
-	[ t notNil ] whileTrue: [
+	[ t isNotNil ] whileTrue: [
 		followers add: t.
 		t := canvas shapeFromModel: (selector rsValue: t model) ].
 	^ followers

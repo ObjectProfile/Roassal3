@@ -2,12 +2,13 @@
 I am prepared to sunburst arcs
 "
 Class {
-	#name : #RSSunburstCPController,
-	#superclass : #RSAbstractCPController,
-	#category : #'Roassal-Sunburst'
+	#name : 'RSSunburstCPController',
+	#superclass : 'RSAbstractCPController',
+	#category : 'Roassal-Sunburst',
+	#package : 'Roassal-Sunburst'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSunburstCPController >> controlPointsFor: aLine [
 	| cp1 cp2 cp3 cp4 from to width1 width2 |
 	from := aLine from.

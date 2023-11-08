@@ -242,7 +242,7 @@ c @ RSCanvasController
 
 { #category : 'testing' }
 RSLabel >> hasText [
-	^ text notNil and: [ text isNotEmpty ]
+	^ text isNotNil and: [ text isNotEmpty ]
 ]
 
 { #category : 'initialization' }

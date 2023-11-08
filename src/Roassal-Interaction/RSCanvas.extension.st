@@ -50,7 +50,7 @@ RSCanvas >> selectionInteraction: aRSSelectionInCanvasInteraction [
 RSCanvas >> setSelectedShapes: aGroupOfShapes [
 
 	self
-		assert: self selectionInteraction notNil
+		assert: self selectionInteraction isNotNil
 		description:
 		'This canvas has no selection interaction. RSSelectionInCanvasInteraction has to be added to canvas.'.
 	self selectionInteraction setSelectedShapes: aGroupOfShapes on: self

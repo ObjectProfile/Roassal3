@@ -184,7 +184,7 @@ RSPolygon >> geometry [
 
 { #category : 'testing' }
 RSPolygon >> hasPoints [
-	^ points notNil and: [ points isNotEmpty ]
+	^ points isNotNil and: [ points isNotEmpty ]
 ]
 
 { #category : 'initialization' }

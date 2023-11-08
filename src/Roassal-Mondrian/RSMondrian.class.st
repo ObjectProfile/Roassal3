@@ -22,8 +22,8 @@ m
 ```
 "
 Class {
-	#name : #RSMondrian,
-	#superclass : #Object,
+	#name : 'RSMondrian',
+	#superclass : 'Object',
 	#instVars : [
 		'canvas',
 		'layoutBuilder',
@@ -32,15 +32,17 @@ Class {
 		'lineBuilder',
 		'depth'
 	],
-	#category : #'Roassal-Mondrian-Core'
+	#category : 'Roassal-Mondrian-Core',
+	#package : 'Roassal-Mondrian',
+	#tag : 'Core'
 }
 
-{ #category : #'building - graph' }
+{ #category : 'building - graph' }
 RSMondrian >> applyLayout [
 	layoutBuilder on: nodesForLayout
 ]
 
-{ #category : #'building - graph' }
+{ #category : 'building - graph' }
 RSMondrian >> arrowedLine [
 	lineBuilder := RSLineBuilder arrowedLineWithOffset.
 	lineBuilder canvas: canvas.
@@ -50,7 +52,7 @@ RSMondrian >> arrowedLine [
 	^ lineBuilder
 ]
 
-{ #category : #'public - opening and public' }
+{ #category : 'public - opening and public' }
 RSMondrian >> build [
 	"This is a public method. It is used to actually build the visualization from the description provided by the user."
 	| interaction |
@@ -64,23 +66,23 @@ RSMondrian >> build [
 	self canvas pushBackEdges
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMondrian >> canvas [
 	"Return the canvas that contains the visualization built by Mondrian"
 	^ canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMondrian >> canvas: aCanvas [
 	canvas := aCanvas
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSMondrian >> defaultLineColor [
 	^ Color gray translucent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSMondrian >> initialize [
 	super initialize.
 	shapeBuilder := RSShapeBuilder new.
@@ -90,7 +92,7 @@ RSMondrian >> initialize [
 	depth := 0
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 RSMondrian >> inspectorVisualization [
 	<inspectorPresentationOrder: 90 title: 'Mondrian'>
 	self build.
@@ -99,23 +101,23 @@ RSMondrian >> inspectorVisualization [
 		yourself
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 RSMondrian >> inspectorVisualizationContext: aContext [
 
   aContext withoutEvaluator
 ]
 
-{ #category : #'building - graph' }
+{ #category : 'building - graph' }
 RSMondrian >> layout [
 	^ layoutBuilder
 ]
 
-{ #category : #'building - graph' }
+{ #category : 'building - graph' }
 RSMondrian >> line [
 	^ self lines
 ]
 
-{ #category : #'building - graph' }
+{ #category : 'building - graph' }
 RSMondrian >> lines [
 	lineBuilder := RSLineBuilder line.
 	lineBuilder canvas: canvas.
@@ -124,7 +126,7 @@ RSMondrian >> lines [
 	^ lineBuilder
 ]
 
-{ #category : #'building - graph' }
+{ #category : 'building - graph' }
 RSMondrian >> nodes: objects [
 	"Add a new node represengint an object to the view. The node is a container for other objects.
 
@@ -167,7 +169,7 @@ RSMondrian >> nodes: objects [
 	^ nodes
 ]
 
-{ #category : #'building - graph' }
+{ #category : 'building - graph' }
 RSMondrian >> nodes: objects forEach: oneArgBlock [
 	"Add a new node represengint an object to the view. The node is a container for other objects.
 
@@ -244,14 +246,14 @@ b open
 	^ nodes
 ]
 
-{ #category : #'public - normalizer' }
+{ #category : 'public - normalizer' }
 RSMondrian >> normalizeColor: oneArgBlock [
 	RSNormalizer color
 		shapes: self canvas nodes;
 		normalize: oneArgBlock
 ]
 
-{ #category : #'public - normalizer' }
+{ #category : 'public - normalizer' }
 RSMondrian >> normalizeColor: oneArgBlock from: fromColor to: toColor [
 	RSNormalizer color
 		shapes: self canvas nodes;
@@ -260,14 +262,14 @@ RSMondrian >> normalizeColor: oneArgBlock from: fromColor to: toColor [
 		normalize: oneArgBlock
 ]
 
-{ #category : #'public - normalizer' }
+{ #category : 'public - normalizer' }
 RSMondrian >> normalizeFontSize: oneArgBlock [
 	RSNormalizer fontSize
 		shapes: self canvas nodes;
 		normalize: oneArgBlock
 ]
 
-{ #category : #'public - normalizer' }
+{ #category : 'public - normalizer' }
 RSMondrian >> normalizeFontSize: oneArgBlock from: fromNumber to: toNumber [
 	RSNormalizer fontSize
 		shapes: self canvas nodes;
@@ -276,14 +278,14 @@ RSMondrian >> normalizeFontSize: oneArgBlock from: fromNumber to: toNumber [
 		normalize: oneArgBlock
 ]
 
-{ #category : #'public - normalizer' }
+{ #category : 'public - normalizer' }
 RSMondrian >> normalizeHeight: oneArgBlock [
 	RSNormalizer height
 		shapes: self canvas nodes;
 		normalize: oneArgBlock
 ]
 
-{ #category : #'public - normalizer' }
+{ #category : 'public - normalizer' }
 RSMondrian >> normalizeHeight: oneArgBlock from: fromValue to: toValue [
 	RSNormalizer height
 		shapes: self canvas nodes;
@@ -292,14 +294,14 @@ RSMondrian >> normalizeHeight: oneArgBlock from: fromValue to: toValue [
 		normalize: oneArgBlock
 ]
 
-{ #category : #'public - normalizer' }
+{ #category : 'public - normalizer' }
 RSMondrian >> normalizeSize: oneArgBlock [
 	RSNormalizer size
 		shapes: self canvas nodes;
 		normalize: oneArgBlock
 ]
 
-{ #category : #'public - normalizer' }
+{ #category : 'public - normalizer' }
 RSMondrian >> normalizeSize: oneArgBlock from: aSmallSize to: aLargeSize [
 	RSNormalizer size
 		shapes: self canvas nodes;
@@ -308,14 +310,14 @@ RSMondrian >> normalizeSize: oneArgBlock from: aSmallSize to: aLargeSize [
 		normalize: oneArgBlock
 ]
 
-{ #category : #'public - normalizer' }
+{ #category : 'public - normalizer' }
 RSMondrian >> normalizeWidth: oneArgBlock [
 	RSNormalizer width
 		shapes: self canvas nodes;
 		normalize: oneArgBlock
 ]
 
-{ #category : #'public - normalizer' }
+{ #category : 'public - normalizer' }
 RSMondrian >> normalizeWidth: oneArgBlock from: fromValue to: toValue [
 	RSNormalizer width
 		shapes: self canvas nodes;
@@ -324,33 +326,33 @@ RSMondrian >> normalizeWidth: oneArgBlock from: fromValue to: toValue [
 		normalize: oneArgBlock
 ]
 
-{ #category : #'public - opening and public' }
+{ #category : 'public - opening and public' }
 RSMondrian >> open [
 	"Open the visualization"
 	self build.
 	^ canvas open
 ]
 
-{ #category : #'public - opening and public' }
+{ #category : 'public - opening and public' }
 RSMondrian >> openOnce [
 	self build.
 	^ canvas openOnce
 ]
 
-{ #category : #'public - opening and public' }
+{ #category : 'public - opening and public' }
 RSMondrian >> openOnceWithTitle: aTitle [
 	self build.
 	^ canvas openOnceWithTitle: aTitle
 ]
 
-{ #category : #'public - opening and public' }
+{ #category : 'public - opening and public' }
 RSMondrian >> openWithTitle: aTitle [
 	"Open the visualization"
 	self build.
 	^ canvas openWithTitle: aTitle
 ]
 
-{ #category : #'public - normalizer' }
+{ #category : 'public - normalizer' }
 RSMondrian >> ordinalColor: oneArgBlock [
 	| numberOfDifferentColors scale |
 	numberOfDifferentColors := (self canvas nodes collect: [ :aShape | oneArgBlock rsValue: aShape model ] as: Set) size.
@@ -358,7 +360,7 @@ RSMondrian >> ordinalColor: oneArgBlock [
 	self canvas nodes do: [ :aShape | aShape color: (scale scale: (oneArgBlock rsValue: aShape model)) ]
 ]
 
-{ #category : #'building - graph' }
+{ #category : 'building - graph' }
 RSMondrian >> orthoHorizontalline [
 	lineBuilder := RSLineBuilder orthoHorizontal.
 	lineBuilder canvas: canvas.
@@ -367,7 +369,7 @@ RSMondrian >> orthoHorizontalline [
 	^ lineBuilder
 ]
 
-{ #category : #'building - graph' }
+{ #category : 'building - graph' }
 RSMondrian >> orthoVerticalLine [
 	lineBuilder := RSLineBuilder orthoVertical.
 	lineBuilder canvas: canvas.
@@ -377,12 +379,12 @@ RSMondrian >> orthoVerticalLine [
 	^ lineBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMondrian >> shape [
 	^ shapeBuilder
 ]
 
-{ #category : #'building - graph' }
+{ #category : 'building - graph' }
 RSMondrian >> shapesOn: someObjects [
 	| ss |
 	ss := shapeBuilder shapesOn: someObjects.
@@ -391,7 +393,7 @@ RSMondrian >> shapesOn: someObjects [
 	^ ss
 ]
 
-{ #category : #'public - normalizer' }
+{ #category : 'public - normalizer' }
 RSMondrian >> translucentShapes [
 	self canvas shapes do: [ :s | s color: s color translucent ]
 ]

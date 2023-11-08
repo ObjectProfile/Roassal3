@@ -81,7 +81,7 @@ c open
 
 { #category : 'testing' }
 RSBox >> hasCornerRadius [
-	^ cornerRadius notNil
+	^ cornerRadius isNotNil
 		and: [ cornerRadius max > 0 and: [ cornerRadius min >= 0 ] ]
 ]
 

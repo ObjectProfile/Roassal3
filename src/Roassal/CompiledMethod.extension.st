@@ -11,9 +11,11 @@ CompiledMethod >> dependentClassesWithOccurences [
 
 	"We unify a class and its metaclass"
 	self literalsDo: [ :l |
-					"We also check if the method is not an extension"
-					((l isVariableBinding
-					and: [ l value notNil ])
-					and: [ l value isBehavior ])  ifTrue: [ cll add: l value ] ].
+		"We also check if the method is not an extension"
+		(l isVariableBinding and: [ 
+			l value isNotNil and: [ 
+				l value isBehavior ] ]) ifTrue: [ cll add: l value ].
+	].
+
 	^ cll asArray
 ]

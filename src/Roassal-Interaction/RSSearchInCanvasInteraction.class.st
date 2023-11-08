@@ -41,8 +41,8 @@ RSSearchInCanvasInteraction >> adjustRegExpIfNecessary: regExp [
 RSSearchInCanvasInteraction >> candidateShapes [
 	"Return shapes for which the model has to be matched.
 	 Only shapes that are not a line and having a model may be eligeable to be highligted"
-	self assert: [ canvas notNil ] description: 'Canvas should be set first'.
-	^ canvas allChildren select: [ :child | child model notNil and: [ child isNode ] ]
+	self assert: [ canvas isNotNil ] description: 'Canvas should be set first'.
+	^ canvas allChildren select: [ :child | child model isNotNil and: [ child isNode ] ]
 ]
 
 { #category : 'accessing' }
@@ -80,7 +80,7 @@ RSSearchInCanvasInteraction >> isKeyForSearch: evt [
 { #category : 'util' }
 RSSearchInCanvasInteraction >> isRegExpValid: regExp [
 	"Is the regular expression relevant to be processed"
-	^ regExp notNil and: [ regExp notEmpty ]
+	^ regExp isNotNil and: [ regExp notEmpty ]
 ]
 
 { #category : 'configuration' }

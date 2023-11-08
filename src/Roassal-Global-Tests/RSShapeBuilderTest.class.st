@@ -148,5 +148,5 @@ RSShapeBuilderTest >> testWithBorder [
 	self assert: (result collect: #model) asArray equals: #(1).
 
 	shape := result first.
-	self assert: shape border notNil
+	self assert: shape border isNotNil
 ]

@@ -195,12 +195,12 @@ RSEventProcessor >> eventOfClass: anEventClass from: aMorphicEvent [
 
 { #category : 'testing' }
 RSEventProcessor >> hasEvents [
-	^ eventBeginingDragging notNil
+	^ eventBeginingDragging isNotNil
 ]
 
 { #category : 'testing' }
 RSEventProcessor >> isDragging [
-	^ eventBeginingDragging notNil
+	^ eventBeginingDragging isNotNil
 ]
 
 { #category : 'lastMousePosition' }

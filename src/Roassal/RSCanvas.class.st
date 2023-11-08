@@ -87,7 +87,7 @@ RSCanvas >> accept: visitor [
 RSCanvas >> add: aShape [
 	"Main method to add a shape to a shape to a canvas"
 	self
-		assert: aShape notNil
+		assert: aShape isNotNil
 		description: 'Nil cannot be added to a canvas'.
 
 	self

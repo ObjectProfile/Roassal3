@@ -8,34 +8,35 @@ You can use this layout in with RTLayoutBuilder or with RTSunburstBuilder
 and their examples to get more info
 "
 Class {
-	#name : #RSAbstractSunburstLayout,
-	#superclass : #RSLayout,
+	#name : 'RSAbstractSunburstLayout',
+	#superclass : 'RSLayout',
 	#instVars : [
 		'hasCenter',
 		'radialSpacing',
 		'builder',
 		'firstNode'
 	],
-	#category : #'Roassal-Sunburst'
+	#category : 'Roassal-Sunburst',
+	#package : 'Roassal-Sunburst'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractSunburstLayout class >> isAbstract [
 
 	^ self == RSAbstractSunburstLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractSunburstLayout >> builder [
 	^ builder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractSunburstLayout >> builder: aSunburstBuilder [
 	builder := aSunburstBuilder
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractSunburstLayout >> doExecute: shapes [
 	| virtual |
 	shapes isEmpty ifTrue: [ ^  self ].
@@ -51,17 +52,17 @@ RSAbstractSunburstLayout >> doExecute: shapes [
 	shapes do: [ :shape | shape sparent: nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractSunburstLayout >> hasCenter [
 	^ hasCenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractSunburstLayout >> hasCenter: aBool [
 	hasCenter := aBool
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractSunburstLayout >> initialize [
 	super initialize.
 	self
@@ -69,29 +70,29 @@ RSAbstractSunburstLayout >> initialize [
 		radialSpacing: 5
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractSunburstLayout >> layoutSunburst: shape [
 	self
 		setRadius: shape;
 		setChildrenAngles: shape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractSunburstLayout >> radialSpacing [
 	^ radialSpacing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractSunburstLayout >> radialSpacing: aNumber [
 	radialSpacing := aNumber
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractSunburstLayout >> setCenterRadius: shape [
 	self subclassResponsibility
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractSunburstLayout >> setChildrenAngles: shape [
 	| children parentAngle angleOffset parentWeight |
 	children := shape schildren.
@@ -109,12 +110,12 @@ RSAbstractSunburstLayout >> setChildrenAngles: shape [
 		parentAngle := b. ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractSunburstLayout >> setNormalRadius: shape [
 	self subclassResponsibility
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSAbstractSunburstLayout >> setRadius: shape [
 	firstNode
 		ifTrue: [

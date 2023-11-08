@@ -1,6 +1,6 @@
-Extension { #name : #RSLineBuilder }
+Extension { #name : 'RSLineBuilder' }
 
-{ #category : #'*Roassal-Sunburst' }
+{ #category : '*Roassal-Sunburst' }
 RSLineBuilder class >> sunburstBezier [
 	^ self bezier
 		controlPointsController: RSSunburstCPController new;

@@ -235,7 +235,8 @@ RSLineBuilder >> beDirectional [
 { #category : 'accessing' }
 RSLineBuilder >> canvas [
 	"Return the canvas if it was manually set using #canvas: or infer it from the shapes added to the builder"
-	(canvas isNil and: [ fromShapes notNil ]) ifTrue: [ canvas := fromShapes anyOne canvas ].
+	(canvas isNil and: [ fromShapes isNotNil ])
+		ifTrue: [ canvas := fromShapes anyOne canvas ].
 
 	^ canvas
 ]
@@ -326,7 +327,7 @@ RSLineBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
 	self resetCreatedEdges.
 	self fromShapes copy do: [ :e |
 		tfromElements := self fromShapes shapesFromModels: (aFromBlockOrSymbol rsValue: e model).
-		(tfromElements notNil and: [tfromElements notEmpty]) ifTrue: [
+		(tfromElements isNotNil and: [tfromElements notEmpty]) ifTrue: [
 			toElement := self toShapes shapeFromModel: (aBlockOrASymbol rsValue: e model).
 			tfromElements do: [ :fromElement |
 				self createEdgeIfNecessaryFrom: fromElement to: toElement ] ] ].
@@ -554,7 +555,7 @@ RSEdgeBuilder line
 RSForceBasedLayout on: b nodes.
 b"
 	| assocs allObjects |
-	self assert: [ objects notNil ] description: 'Cannot provide a nil value as the source'.
+	self assert: [ objects isNotNil ] description: 'Cannot provide a nil value as the source'.
 	self assert: [ objects isCollection ] description: 'Need to provide a collection as the source'.
 	allObjects := Set new.
 
@@ -731,7 +732,7 @@ b open
 	associations do: [ :assoc |
 		fromElement := self fromShapes shapeFromModel: assoc key.
 		toElement := self toShapes shapeFromModel: assoc value.
-		(fromElement notNil and: [ toElement notNil ])
+		(fromElement isNotNil and: [ toElement isNotNil ])
 			ifTrue: [ self createEdgeIfNecessaryFrom: fromElement to: toElement ] ].
 	self moveBehindIfNecessary: createdEdges.
 	^ createdEdges

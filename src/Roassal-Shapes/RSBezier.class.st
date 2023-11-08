@@ -118,7 +118,7 @@ RSBezier >> buildPathOn: visitor [
 { #category : 'accessing' }
 RSBezier >> controlPoints: anArrayOfPoints [
 	self
-		assert: anArrayOfPoints notNil
+		assert: anArrayOfPoints isNotNil
 		description: 'The argument can not be nil';
 		assert: (anArrayOfPoints size between: 2 and: 4)
 		description: 'The array size must be between 2 and 4 points'.

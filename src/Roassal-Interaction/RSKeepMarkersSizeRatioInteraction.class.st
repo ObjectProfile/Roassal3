@@ -50,7 +50,7 @@ Class {
 RSKeepMarkersSizeRatioInteraction >> onShape: anEdge [
 	| markers sizes offsets |
 	anEdge isInACanvas ifFalse: [ self error: 'add this edge to a canvas first' ].
-	markers := anEdge markers select: #notNil.
+	markers := anEdge markers select: #isNotNil.
 	sizes := markers collect: [:marker | marker shape extent].
 	offsets := markers collect: #offset.
 	anEdge canvas when: RSScaleChangedEvent do: [ :evt | | delta |
