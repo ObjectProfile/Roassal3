@@ -1,15 +1,16 @@
 Class {
-	#name : #RoassalSpecTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Spec-Tests'
+	#name : 'RoassalSpecTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Spec-Tests',
+	#package : 'Roassal-Spec-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RoassalSpecTest >> isValid [
 	^ Smalltalk globals includesKey: #SpRoassalPresenter
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RoassalSpecTest >> testBasic [
 	| spec value window |
 	self isValid ifFalse: [ ^ self ].
@@ -24,7 +25,7 @@ RoassalSpecTest >> testBasic [
 	window close
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RoassalSpecTest >> testTakeKeyboardFocus [
 	| spec window canvas window2 |
 	self isValid ifFalse: [ ^ self ].

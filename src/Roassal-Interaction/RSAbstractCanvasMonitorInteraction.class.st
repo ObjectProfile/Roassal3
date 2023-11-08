@@ -52,7 +52,7 @@ RSAbstractCanvasMonitorInteraction >> lastFramePerSecond [
 { #category : 'hooks' }
 RSAbstractCanvasMonitorInteraction >> onShape: aCanvas [
 	| location |
-	self assert: shape notNil description: 'Define your monitor shape'.
+	self assert: shape isNotNil description: 'Define your monitor shape'.
 	shape isFixed: true.
 	aCanvas addShape: shape.
 	location := RSLocation new inner; bottom; left; offset: 10@0.

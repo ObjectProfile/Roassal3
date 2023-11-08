@@ -75,7 +75,7 @@ RSShadowInteractionTest >> testShadowUpdatePositionWhenShapeMoves [
 RSShadowInteractionTest >> testShapeHasShadow [
 
 	shape @ interaction.
-	self assert: shape shadow notNil
+	self assert: shape shadow isNotNil
 ]
 
 { #category : 'tests' }

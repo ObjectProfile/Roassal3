@@ -2,17 +2,19 @@
 Custom basemap builder that supports theme with pharo
 "
 Class {
-	#name : #RSThemedMapBuilder,
-	#superclass : #RSMapBuilder,
-	#category : #'Roassal-BaselineMap-Customs'
+	#name : 'RSThemedMapBuilder',
+	#superclass : 'RSMapBuilder',
+	#category : 'Roassal-BaselineMap-Customs',
+	#package : 'Roassal-BaselineMap',
+	#tag : 'Customs'
 }
 
-{ #category : #events }
+{ #category : 'events' }
 RSThemedMapBuilder >> browse: evt [
 	evt shape model browse
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSThemedMapBuilder >> defaultContainer [
 	| theme |
 	theme := self theme.
@@ -25,7 +27,7 @@ RSThemedMapBuilder >> defaultContainer [
 		yourself
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSThemedMapBuilder >> highlight: evt [
 	| box lines boxes |
 	box := evt shape.
@@ -37,7 +39,7 @@ RSThemedMapBuilder >> highlight: evt [
 	evt canvas propertyAt: #highlightedLines put: lines
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSThemedMapBuilder >> highlightAnt: antBorder [
 	| animation canvas |
 	canvas := self container.
@@ -54,7 +56,7 @@ RSThemedMapBuilder >> highlightAnt: antBorder [
 	canvas propertyAt: #ant put: animation
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSThemedMapBuilder >> highlightBoxes: boxes [
 	| canvas color |
 	canvas := self canvas.
@@ -69,7 +71,7 @@ RSThemedMapBuilder >> highlightBoxes: boxes [
 	canvas propertyAt: #highlightedBoxes put: boxes
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSThemedMapBuilder >> highlightLines: lines [
 	| canvas antBorder color |
 	lines ifEmpty: [ ^ self ].
@@ -87,7 +89,7 @@ RSThemedMapBuilder >> highlightLines: lines [
 	self highlightAnt: antBorder
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSThemedMapBuilder >> highlightable [
 	^ RSHighlightable new
 		when: RSHighlightEvent send: #highlight: to: self;
@@ -95,7 +97,7 @@ RSThemedMapBuilder >> highlightable [
 		yourself
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSThemedMapBuilder >> marker [
 	| theme marker |
 	theme := self theme.
@@ -107,7 +109,7 @@ RSThemedMapBuilder >> marker [
 	^ marker
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSThemedMapBuilder >> newBorderFor: aModel [
 	aModel baselineClass ifNotNil: [ ^ nil ].
 	^ RSBorder new
@@ -117,14 +119,14 @@ RSThemedMapBuilder >> newBorderFor: aModel [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSThemedMapBuilder >> newBox [
 	^ super newBox
 		color: self theme selectionColor;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSThemedMapBuilder >> newLabelFor: model [
 	| label |
 	label := super newLabelFor: model.
@@ -134,7 +136,7 @@ RSThemedMapBuilder >> newLabelFor: model [
 	^ label
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSThemedMapBuilder >> newLineBuilder [
 	| marker |
 	marker := self marker.
@@ -148,7 +150,7 @@ RSThemedMapBuilder >> newLineBuilder [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSThemedMapBuilder >> newShapeFor: model [
 	^ (super newShapeFor: model)
 		when: RSMouseDoubleClick send: #browse: to: self;
@@ -156,13 +158,13 @@ RSThemedMapBuilder >> newShapeFor: model [
 		yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSThemedMapBuilder >> renderIn: aCanvas [
 	super renderIn: aCanvas.
 	aCanvas nodes @ self highlightable
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSThemedMapBuilder >> shadowFor: box [
 	^ RSBox new
 		position: box position;
@@ -171,7 +173,7 @@ RSThemedMapBuilder >> shadowFor: box [
 		yourself
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSThemedMapBuilder >> showMenu: evt [
 	| menu newContext tool class |
 
@@ -189,19 +191,19 @@ RSThemedMapBuilder >> showMenu: evt [
 	menu popUpInWorld: self currentWorld
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSThemedMapBuilder >> theme [
 	^ Smalltalk ui theme
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSThemedMapBuilder >> themeChanged: evt [
 	evt canvas shapes copy do: #remove.
 	evt canvas color: self theme backgroundColor.
 	self renderIn: evt canvas
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSThemedMapBuilder >> unhighlight: evt [
 	evt canvas
 		propertyAt: #ant ifPresent: [ :anime | anime stop ];
@@ -209,13 +211,13 @@ RSThemedMapBuilder >> unhighlight: evt [
 		propertyAt: #highlightedBoxes ifPresent: [ :boxes | self unhighlightBoxes: boxes ]
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSThemedMapBuilder >> unhighlightBoxes: boxes [
 	boxes do: [ :box |
 		box propertyAt: #shadow ifPresent: [ :shadow | shadow remove ] ]
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSThemedMapBuilder >> unhighlightLines: lines [
 	lines do: [ :line |
 		line border: (line propertyAt: #oldBorder).

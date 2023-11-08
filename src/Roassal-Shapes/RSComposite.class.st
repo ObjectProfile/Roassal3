@@ -339,7 +339,7 @@ RSComposite >> fixedShapes [
 
 { #category : 'testing' }
 RSComposite >> hasChildren [
-	^ children notNil and: [ children isNotEmpty ]
+	^ children isNotNil and: [ children isNotEmpty ]
 ]
 
 { #category : 'initialization' }

@@ -6,7 +6,7 @@ RSLayout class >> classesWithDefinitionsToEdit [
 	^ ((self withAllSubclasses
 		select: [ :cls | cls isAbstract not ]
 		thenCollect: [ :cls | cls -> cls layoutDefinition ])
-		select: [:tuple | tuple value notNil ])
+		select: [:tuple | tuple value isNotNil ])
 		sorted: [ :a :b | a key name < b key name ]
 ]
 

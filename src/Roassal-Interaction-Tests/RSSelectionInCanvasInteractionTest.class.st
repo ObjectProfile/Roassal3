@@ -34,7 +34,7 @@ RSSelectionInCanvasInteractionTest >> testAnnounceWhenSelectionStart [
 			 position: 0 asPoint;
 			 shiftKeyPressed: true;
 			 yourself).
-	self assert: selectionFrom notNil
+	self assert: selectionFrom isNotNil
 ]
 
 { #category : 'tests' }
@@ -49,7 +49,7 @@ RSSelectionInCanvasInteractionTest >> testAnnounceWhenShapesAreSelected [
 		do: [ :evt | selectionFrom := evt selectedShapes ]
 		for: self.
 	canvas setSelectedShapes: shapes.
-	self assert: selectionFrom notNil
+	self assert: selectionFrom isNotNil
 ]
 
 { #category : 'tests' }
@@ -120,7 +120,7 @@ RSSelectionInCanvasInteractionTest >> testSelectShapesHaveShadow [
 
 	canvas @ RSSelectionInCanvasInteraction.
 	canvas setSelectedShapes: shapes.
-	self assert: (shapes allSatisfy: [ :each | each shadow notNil ])
+	self assert: (shapes allSatisfy: [ :each | each shadow isNotNil ])
 ]
 
 { #category : 'tests' }

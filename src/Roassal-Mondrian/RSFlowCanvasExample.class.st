@@ -1,10 +1,12 @@
 Class {
-	#name : #RSFlowCanvasExample,
-	#superclass : #Object,
-	#category : #'Roassal-Mondrian-Flow'
+	#name : 'RSFlowCanvasExample',
+	#superclass : 'Object',
+	#category : 'Roassal-Mondrian-Flow',
+	#package : 'Roassal-Mondrian',
+	#tag : 'Flow'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSFlowCanvasExample >> example01 [
 	| shapes f |
 
@@ -23,7 +25,7 @@ RSFlowCanvasExample >> example01 [
 	f open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSFlowCanvasExample >> example02CallGraph [
 	| f cms lbls |
 

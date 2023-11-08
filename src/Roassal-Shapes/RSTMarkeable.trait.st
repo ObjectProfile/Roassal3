@@ -12,8 +12,8 @@ Trait {
 RSTMarkeable >> hasMarkers [
 	| m |
 	m := self privateMarkers.
-	^ m notNil and: [
-		m anySatisfy: [ :mar | mar notNil ].  ]
+	^ m isNotNil and: [
+		m anySatisfy: [ :mar | mar isNotNil ].  ]
 ]
 
 { #category : 'accessing - markers' }

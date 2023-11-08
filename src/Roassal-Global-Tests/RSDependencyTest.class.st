@@ -27,7 +27,7 @@ RSDependencyTest >> assertPackage: p1Name doesNotDependOn: p2Name [
 { #category : 'testing' }
 RSDependencyTest >> hasPackage: aString [
 
-	^ (self packageNamed: aString) notNil
+	^ (self packageNamed: aString) isNotNil
 ]
 
 { #category : 'private - accessing' }

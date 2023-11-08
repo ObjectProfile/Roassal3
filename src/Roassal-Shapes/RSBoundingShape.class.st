@@ -216,7 +216,7 @@ RSBoundingShape >> hasEdges [
 { #category : 'testing' }
 RSBoundingShape >> hasLines [
 	"Return true if the shape has any outgoing or incoming line"
-	^ connectedLines notNil
+	^ connectedLines isNotNil
 ]
 
 { #category : 'accessing' }
@@ -506,13 +506,13 @@ c
 { #category : 'edges - deprecated' }
 RSBoundingShape >> shouldUpdateEdges [
 	"Moving a shape around usually involve recomputing the original of the connected egdes. This may be disabled. This method indicates whether edges are updated when the shape is moved."
-	^ shouldUpdateLines and: [ connectedLines notNil ]
+	^ shouldUpdateLines and: [ connectedLines isNotNil ]
 ]
 
 { #category : 'testing' }
 RSBoundingShape >> shouldUpdateLines [
 	"Moving a shape around usually involve recomputing the original of the connected egdes. This may be disabled. This method indicates whether edges are updated when the shape is moved."
-	^ shouldUpdateLines and: [ connectedLines notNil ]
+	^ shouldUpdateLines and: [ connectedLines isNotNil ]
 ]
 
 { #category : 'accessing' }

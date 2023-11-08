@@ -5,30 +5,31 @@ You can customize the angle of the arc, and play with the with radius and width 
 
 "
 Class {
-	#name : #RSSunburstBuilder,
-	#superclass : #RSAbstractTreeBuilder,
+	#name : 'RSSunburstBuilder',
+	#superclass : 'RSAbstractTreeBuilder',
 	#instVars : [
 		'maxLevel',
 		'strategy',
 		'sliceShape',
 		'color'
 	],
-	#category : #'Roassal-Sunburst'
+	#category : 'Roassal-Sunburst',
+	#package : 'Roassal-Sunburst'
 }
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RSSunburstBuilder >> constantWidthStrategy [
 	self strategy: RSSunburstConstantWidthLayout new.
 	^ strategy
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RSSunburstBuilder >> extentStrategy [
 	self strategy: RSSunburstExtentLayout new.
 	^ strategy
 ]
 
-{ #category : #'public - building' }
+{ #category : 'public - building' }
 RSSunburstBuilder >> from: objects nesting: block1 leaves: block2 [
 	| r |
 	r := super from: objects nesting: block1 leaves: block2.
@@ -36,7 +37,7 @@ RSSunburstBuilder >> from: objects nesting: block1 leaves: block2 [
 	^ r
 ]
 
-{ #category : #'public - building' }
+{ #category : 'public - building' }
 RSSunburstBuilder >> from: objects using: ablock [
 	| r |
 	r := super from: objects using: ablock.
@@ -44,7 +45,7 @@ RSSunburstBuilder >> from: objects using: ablock [
 	^ r
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSunburstBuilder >> initialize [
 	super initialize.
 	self extentStrategy extent: 500@500.
@@ -54,18 +55,18 @@ RSSunburstBuilder >> initialize [
 	maxLevel := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSunburstBuilder >> maxLevel [
 	^ maxLevel
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSSunburstBuilder >> renderIn: aCanvas [
 	super renderIn: aCanvas.
 	self strategy on: self rootNodes
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSunburstBuilder >> shapeFor: anObject [
 	| slice |
 	slice := self sliceShape copy
@@ -75,23 +76,23 @@ RSSunburstBuilder >> shapeFor: anObject [
 	^ slice
 ]
 
-{ #category : #'public - shape' }
+{ #category : 'public - shape' }
 RSSunburstBuilder >> sliceColor: aBlock [
 	"an object"
 	color := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSunburstBuilder >> sliceShape [
 	^ sliceShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSunburstBuilder >> strategy [
 	^ strategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSunburstBuilder >> strategy: anStrategy [
 	strategy := anStrategy.
 	strategy builder: self

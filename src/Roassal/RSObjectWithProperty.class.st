@@ -106,12 +106,12 @@ RSObjectWithProperty >> hasInteraction: anInteractionClass [
 
 { #category : 'properties' }
 RSObjectWithProperty >> hasProperties [
-	^ properties notNil and: [ properties notEmpty ]
+	^ properties isNotNil and: [ properties notEmpty ]
 ]
 
 { #category : 'properties' }
 RSObjectWithProperty >> hasProperty: aKey [
-	^ properties notNil and: [ properties includesKey: aKey ]
+	^ properties isNotNil and: [ properties includesKey: aKey ]
 ]
 
 { #category : 'testing' }

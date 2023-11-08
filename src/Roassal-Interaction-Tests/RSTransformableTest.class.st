@@ -34,7 +34,7 @@ RSTransformableTest >> testBasic02 [
 	s announce: RSMouseLeftClick new.
 	self assert: canvas shapes size > shapes size.
 	handles := canvas propertyAt: interaction key.
-	self assert: handles notNil.
+	self assert: handles isNotNil.
 	self assert: handles isNotEmpty.
 
 	canvas announce: RSMouseClick new.
@@ -82,11 +82,11 @@ RSTransformableTest >> testDrag [
 	shapes @ interaction .
 	s := shapes first.
 	s announce: RSMouseLeftClick new.
-	self assert: (canvas propertyAt: interaction key) notNil.
+	self assert: (canvas propertyAt: interaction key) isNotNil.
 	s announce: RSMouseDragStart new.
 	self assert: (canvas propertyAt: interaction key) isNil.
 	s announce: RSMouseDragEnd new.
-	self assert: (canvas propertyAt: interaction key) notNil
+	self assert: (canvas propertyAt: interaction key) isNotNil
 ]
 
 { #category : 'running' }

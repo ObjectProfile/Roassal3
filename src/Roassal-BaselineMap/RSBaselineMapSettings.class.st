@@ -2,35 +2,37 @@
 Settings for BaselineMap package, you can change the default class builder
 "
 Class {
-	#name : #RSBaselineMapSettings,
-	#superclass : #Object,
+	#name : 'RSBaselineMapSettings',
+	#superclass : 'Object',
 	#classInstVars : [
 		'classMapBuilder'
 	],
-	#category : #'Roassal-BaselineMap-UI'
+	#category : 'Roassal-BaselineMap-UI',
+	#package : 'Roassal-BaselineMap',
+	#tag : 'UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBaselineMapSettings class >> classMapBuilder [
 	^ classMapBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBaselineMapSettings class >> classMapBuilder: aClass [
 	classMapBuilder := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBaselineMapSettings class >> classMapBuilderOrDefault [
 	^ self classMapBuilder ifNil: [ self defaultClassMapBuilder ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBaselineMapSettings class >> defaultClassMapBuilder [
 	^ RSThemedMapBuilder
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RSBaselineMapSettings class >> settingsClassOn: aBuilder [
 	<systemsettings>
 	(aBuilder pickOne: #classMapBuilder)
@@ -42,7 +44,7 @@ RSBaselineMapSettings class >> settingsClassOn: aBuilder [
 		default: self defaultClassMapBuilder
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RSBaselineMapSettings class >> settingsGroupOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #baselineMap)

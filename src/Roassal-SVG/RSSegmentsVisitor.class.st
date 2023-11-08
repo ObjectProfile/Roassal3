@@ -16,7 +16,7 @@ RSSegmentsVisitor >> visitBoundingShape: aRSSVGPath [
 	aRSSVGPath segments do: [ :each |
 		b perform: each first withArguments: each second ].
 	segment := b pathStart.
-	[ segment notNil ] whileTrue: [
+	[ segment isNotNil ] whileTrue: [
 		segment visitWith: self.
 		segment := segment next ]
 ]

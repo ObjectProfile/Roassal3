@@ -32,7 +32,7 @@ RSStrokeStyle class >> fromString: aString [
 { #category : 'comparing' }
 RSStrokeStyle >> = anObject [
 	^ self == anObject or: [
-		anObject notNil and: [
+		anObject isNotNil and: [
 			capStyle = anObject capStyle and: [
 				joinStyle = anObject joinStyle and: [
 					dashOffset = anObject dashOffset and: [

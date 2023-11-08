@@ -86,7 +86,7 @@ RSAbstractPlot >> chart: aChart [
 RSAbstractPlot >> checkAssertion [
 
 	self
-		assert: [ xValues notNil and: [ yValues notNil ] ]
+		assert: [ xValues isNotNil and: [ yValues isNotNil ] ]
 		description: 'X and Y values must be added'.
 	self
 		assert: [ xValues size = yValues size ]

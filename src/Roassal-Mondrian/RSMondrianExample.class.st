@@ -1,10 +1,12 @@
 Class {
-	#name : #RSMondrianExample,
-	#superclass : #Object,
-	#category : #'Roassal-Mondrian-Examples'
+	#name : 'RSMondrianExample',
+	#superclass : 'Object',
+	#category : 'Roassal-Mondrian-Examples',
+	#package : 'Roassal-Mondrian',
+	#tag : 'Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSMondrianExample >> example01 [
 	<script: 'self new example01 inspect'>
 	| b |
