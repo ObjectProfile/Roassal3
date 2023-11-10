@@ -660,6 +660,16 @@ RSCanvas >> shapesWithActionForPosition: aPositionInSpace [
 	^ result
 ]
 
+{ #category : 'event processing' }
+RSCanvas >> shapesWithActionForPositionInPixels: position [
+	| result |
+	"TOP shapes are first"
+	result := OrderedCollection new.
+	result addAll: (fixedShapes entriesAtPoint: position).
+	result addAll: (self shapeCollection entriesAtPoint: (self camera fromPixelToSpace: position)).
+	^ result
+]
+
 { #category : 'accessing' }
 RSCanvas >> shouldClearBackground [
 	"Return whether the screen must be cleaned at each screen refresh"

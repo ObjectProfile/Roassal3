@@ -226,6 +226,11 @@ RSLineBuilder >> attachPoint: anAttachPoint [
 	self shape attachPoint: anAttachPoint
 ]
 
+{ #category : 'public - attach point' }
+RSLineBuilder >> attachPointDo: aBlock [
+	aBlock value: self attachPoint
+]
+
 { #category : 'public - configuration' }
 RSLineBuilder >> beDirectional [
 	"When lines are created, this allow for having lines going from A to B, and from B to A"

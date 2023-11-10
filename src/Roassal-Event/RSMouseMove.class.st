@@ -7,3 +7,8 @@ Class {
 	#category : 'Roassal-Event',
 	#package : 'Roassal-Event'
 }
+
+{ #category : 'accessing' }
+RSMouseMove >> fromEvent: aMorphicEvent [
+	self positionFromCamera
+]

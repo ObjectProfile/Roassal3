@@ -18,8 +18,10 @@ Class {
 	#instVars : [
 		'canvas',
 		'morph',
-		'shape',
-		'timeStamp'
+		'currentShape',
+		'timeStamp',
+		'targetShape',
+		'stopPropagation'
 	],
 	#category : 'Roassal-Event',
 	#package : 'Roassal-Event'
@@ -34,7 +36,7 @@ RSEvent >> camera [
 RSEvent >> canvas [
 
 	^ canvas ifNil: [
-		  canvas := shape ifNil: [ nil ] ifNotNil: [ shape canvas ] ]
+		  canvas := targetShape ifNil: [ nil ] ifNotNil: [ targetShape canvas ] ]
 ]
 
 { #category : 'accessing' }
@@ -42,9 +44,20 @@ RSEvent >> canvas: aRSCanvas [
 	canvas := aRSCanvas
 ]
 
+{ #category : 'accessing' }
+RSEvent >> currentShape [
+	^ currentShape
+]
+
+{ #category : 'accessing' }
+RSEvent >> currentShape: aRSShape [
+	currentShape := aRSShape
+]
+
 { #category : 'initialization' }
 RSEvent >> initialize [
 	super initialize.
+	stopPropagation := false.
 	self timeStamp
 ]
 
@@ -60,20 +73,42 @@ RSEvent >> morph: aMorph [
 
 { #category : 'accessing' }
 RSEvent >> shape [
-	^ shape
+	^ self currentShape
 ]
 
 { #category : 'accessing' }
 RSEvent >> shape: aRSShape [
 	"An event should now the shape to which it is related to.
 	The shape has to be set before emitting the event."
-	shape := aRSShape
+	self currentShape: aRSShape
 ]
 
 { #category : 'update' }
 RSEvent >> signalUpdate [
 	"Trigger a refresh of the morph. The method signalUpdate has to be called when some visual properties are changed (e.g., color, position)"
 	morph ifNotNil: [ morph changed ]
+]
+
+{ #category : 'accessing' }
+RSEvent >> stopPropagation [
+	^ stopPropagation
+]
+
+{ #category : 'accessing' }
+RSEvent >> stopPropagation: aBoolean [
+	stopPropagation := aBoolean
+]
+
+{ #category : 'accessing' }
+RSEvent >> targetShape [
+	^ targetShape
+]
+
+{ #category : 'accessing' }
+RSEvent >> targetShape: aRSShape [
+	"An event should now the shape to which it is related to.
+	The shape has to be set before emitting the event."
+	targetShape := aRSShape
 ]
 
 { #category : 'accessing' }

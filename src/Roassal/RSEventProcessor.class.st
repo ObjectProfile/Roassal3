@@ -6,10 +6,10 @@ Class {
 	#superclass : 'RSObject',
 	#instVars : [
 		'eventBeginingDragging',
-		'shapeBeingPointed',
 		'roassalCanvas',
 		'athensMorph',
-		'lastMousePosition'
+		'lastMousePosition',
+		'shapesBeingPointed'
 	],
 	#category : 'Roassal-Core',
 	#package : 'Roassal',
@@ -18,24 +18,12 @@ Class {
 
 { #category : 'events - processed' }
 RSEventProcessor >> eventKeyDown: aMorphicEvent [
-	| rsEvent |
-	rsEvent := self eventOfClass: RSKeyDown from: aMorphicEvent.
-	rsEvent
-		position: (roassalCanvas camera fromPixelToSpace: rsEvent position);
-		keyValue: aMorphicEvent keyValue;
-		keyName: aMorphicEvent key name. "(self class keyNameFor: aMorphicEvent keyValue)".
-	rsEvent shape announce: rsEvent
+	self process: aMorphicEvent rsEventClass: RSKeyDown
 ]
 
 { #category : 'events - processed' }
 RSEventProcessor >> eventKeyUp: aMorphicEvent [
-	| rsEvent |
-	rsEvent := self eventOfClass: RSKeyUp from: aMorphicEvent.
-	rsEvent
-		position: (roassalCanvas camera fromPixelToSpace: rsEvent position);
-		keyValue: aMorphicEvent keyValue;
-		keyName: aMorphicEvent key name.
-	rsEvent shape announce: rsEvent
+	self process: aMorphicEvent rsEventClass: RSKeyUp
 ]
 
 { #category : 'events - processed' }
@@ -66,8 +54,8 @@ RSEventProcessor >> eventMouseDoubleClick: aMorphicEvent [
 RSEventProcessor >> eventMouseDragEnd: aMorphicEvent [
 	| rsEvent |
 	rsEvent := self eventOfClass: RSMouseDragEnd from: aMorphicEvent.
-	rsEvent shape: shapeBeingPointed.
-	shapeBeingPointed announce: rsEvent.
+	rsEvent shape: shapesBeingPointed.
+	shapesBeingPointed announce: rsEvent.
 
 	eventBeginingDragging := nil
 ]
@@ -86,8 +74,8 @@ RSEventProcessor >> eventMouseDragStart: aMorphicEvent [
 		ifTrue: [ rsEventClass := RSMouseMiddleDragStart ].
 	rsEvent := self eventOfClass: rsEventClass actionClass: RSMouseDragging from: aMorphicEvent.
 
-	shapeBeingPointed := rsEvent shape.
-	shapeBeingPointed announce: rsEvent
+	shapesBeingPointed := rsEvent shape.
+	shapesBeingPointed announce: rsEvent
 ]
 
 { #category : 'events - processed' }
@@ -99,15 +87,15 @@ RSEventProcessor >> eventMouseDragging: aMorphicEvent [
 	rsEvent position: (roassalCanvas camera fromPixelToSpace: rsEvent position).
 	rsEvent step: step.
 
-	shapeBeingPointed ifNil: [ shapeBeingPointed := rsEvent shape ].
+	shapesBeingPointed ifNil: [ shapesBeingPointed := rsEvent shape ].
 	"If the element was removed during the drag then cancel the event"
-	shapeBeingPointed parent ifNil: [
+	shapesBeingPointed parent ifNil: [
 		eventBeginingDragging := nil.
-		shapeBeingPointed := nil.
+		shapesBeingPointed := nil.
 		^ self ].
 
-	rsEvent shape: shapeBeingPointed.
-	shapeBeingPointed announce: rsEvent.
+	rsEvent shape: shapesBeingPointed.
+	shapesBeingPointed announce: rsEvent.
 	eventBeginingDragging := aMorphicEvent copy
 ]
 
@@ -122,36 +110,28 @@ RSEventProcessor >> eventMouseEnter: aMorphicEvent [
 RSEventProcessor >> eventMouseLeave: aMorphicEvent [
 	| rsEvent |
 	rsEvent := self eventOfClass: RSMouseLeave from: aMorphicEvent.
-	shapeBeingPointed ifNotNil: [
-		rsEvent shape: shapeBeingPointed].
+	shapesBeingPointed ifNotNil: [
+		rsEvent shape: shapesBeingPointed].
 	rsEvent shape announce: rsEvent
 ]
 
 { #category : 'events - processed' }
 RSEventProcessor >> eventMouseMove: aMorphicEvent [
-	| rsEvent |
-	rsEvent := self eventOfClass: RSMouseMove from: aMorphicEvent.
-	rsEvent position: (roassalCanvas camera fromPixelToSpace: rsEvent position).
-	rsEvent shape announce: rsEvent
+	self process: aMorphicEvent rsEventClass: RSMouseMove.
 ]
 
 { #category : 'events - processed' }
 RSEventProcessor >> eventMouseOver: aMorphicEvent [
-	| currentShape rsEvent |
-	shapeBeingPointed ifNil: [
-		shapeBeingPointed := self shapeForEvent: aMorphicEvent ].
-	currentShape := self shapeForEvent: aMorphicEvent.
-	currentShape == shapeBeingPointed
+	| currentShapes difference |
+	currentShapes := self shapesForEvent: aMorphicEvent.
+	shapesBeingPointed ifNil: [ shapesBeingPointed := currentShapes ].
+	(currentShapes hasSameObjects: shapesBeingPointed)
 		ifTrue: [ ^ self ].
-	
-	rsEvent := self newEventOfClass: RSMouseLeave from: aMorphicEvent.
-	rsEvent shape: shapeBeingPointed.
-	shapeBeingPointed announce: rsEvent.
-	
-	shapeBeingPointed := currentShape.
-	rsEvent := self newEventOfClass: RSMouseEnter from: aMorphicEvent.
-	rsEvent shape: shapeBeingPointed.
-	shapeBeingPointed announce: rsEvent
+	difference := shapesBeingPointed difference: currentShapes.
+	self process: difference classEvent: RSMouseLeave event: aMorphicEvent.
+	difference := currentShapes difference: shapesBeingPointed.
+	self process: difference classEvent: RSMouseEnter event: aMorphicEvent.
+	shapesBeingPointed := currentShapes
 ]
 
 { #category : 'events - processed' }
@@ -203,12 +183,12 @@ RSEventProcessor >> isDragging [
 	^ eventBeginingDragging isNotNil
 ]
 
-{ #category : 'lastMousePosition' }
+{ #category : 'accessing' }
 RSEventProcessor >> lastMousePosition [
 	^ lastMousePosition
 ]
 
-{ #category : 'lastMousePosition' }
+{ #category : 'accessing' }
 RSEventProcessor >> lastMousePosition: aPoint [
 	lastMousePosition := aPoint
 ]
@@ -247,6 +227,43 @@ RSEventProcessor >> newEventOfClass: anEventClass from: aMorphicEvent [
 	^ rsEvent
 ]
 
+{ #category : 'events - processing' }
+RSEventProcessor >> process: aListOfShapes classEvent: aRSEventClass event: aMorphicEvent [
+	| listToPropagate rsEvent |
+	aListOfShapes ifEmpty: [ ^ self ].
+	listToPropagate := aListOfShapes.
+	"TODO an idea to reverse or not the list of children"
+	rsEvent := self newEventOfClass: aRSEventClass from: aMorphicEvent.
+	rsEvent targetShape: aListOfShapes first.
+	"aRSEventClass traceCr.
+	listToPropagate traceCr.
+	'' traceCr."
+	self propagate: listToPropagate event: rsEvent. 
+	
+]
+
+{ #category : 'events - processed' }
+RSEventProcessor >> process: aMorphicEvent rsEventClass: aRSEventClass [
+	| rsEvent list |
+	shapesBeingPointed ifNil: [ ^ self ].
+	list := shapesBeingPointed copy.
+	list add: roassalCanvas.
+	rsEvent := self newEventOfClass: aRSEventClass from: aMorphicEvent.
+	rsEvent setPosition: aMorphicEvent.
+	rsEvent targetShape: list first.
+	self propagate: list event: rsEvent.
+]
+
+{ #category : 'events - processing' }
+RSEventProcessor >> propagate: listToPropagate event: rsEvent [
+	listToPropagate do: [ :each |
+		rsEvent currentShape: each.
+		each announce: rsEvent.
+		rsEvent stopPropagation ifTrue: [ ^ self ]
+	].
+	
+]
+
 { #category : 'accessing - shapes' }
 RSEventProcessor >> relativePositionFor: evt [
 	^ evt position - athensMorph bounds origin
@@ -266,6 +283,12 @@ RSEventProcessor >> roassalCanvas: aRSCanvas [
 RSEventProcessor >> shapeForEvent: anEvent [
 	"Return the roassal shape for the event provided as argument"
 	^ roassalCanvas shapeWithActionForPositionInPixels: (self relativePositionFor: anEvent)
+]
+
+{ #category : 'accessing - shapes' }
+RSEventProcessor >> shapesForEvent: anEvent [
+	"Return the roassal shape for the event provided as argument"
+	^ roassalCanvas shapesWithActionForPositionInPixels: (self relativePositionFor: anEvent)
 ]
 
 { #category : 'events - processing' }

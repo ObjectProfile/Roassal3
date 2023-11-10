@@ -280,6 +280,11 @@ RSAbstractLine >> from: aShapeOrAPoint [
 ]
 
 { #category : 'accessing' }
+RSAbstractLine >> from: anRSBoundingShape to: anotherRSBoundingShape [
+	self from: anRSBoundingShape; to: anotherRSBoundingShape
+]
+
+{ #category : 'accessing' }
 RSAbstractLine >> includedRadius [
 	^ self border width / 2
 ]

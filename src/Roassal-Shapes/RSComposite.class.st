@@ -236,12 +236,14 @@ c open
 { #category : 'adding' }
 RSComposite >> addEntriesIn: aCollection position: position [
 	| pos result includesPoint |
+	
 	includesPoint := self includesPoint: position.
 	includesPoint ifFalse: [ ^ self ].
 	pos := self matrix rsInverseTransform: position.
 	result := self shapeCollection entriesAtPoint: pos.
 	aCollection addAll: result.
-	includesPoint ifTrue: [ aCollection add: self ]
+	aCollection add: self.
+	
 ]
 
 { #category : 'adding' }

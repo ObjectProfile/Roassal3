@@ -118,7 +118,8 @@ RSCollectionTest >> testContainsPointInComposite [
 	self assert: shapes size equals: 1.
 	self assert: shapes first equals: composite.
 	shapes := shapeCollection entriesAtPoint: position.
-	self assert: shapes size equals: 2
+	self assert: shapes size equals: 2.
+	self assert: shapes asArray equals: {box. composite}
 ]
 
 { #category : 'tests' }

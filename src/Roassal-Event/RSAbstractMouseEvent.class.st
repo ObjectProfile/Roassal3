@@ -7,8 +7,3 @@ Class {
 	#category : 'Roassal-Event',
 	#package : 'Roassal-Event'
 }
-
-{ #category : 'testing' }
-RSAbstractMouseEvent >> isPositionAboveShape [
-	^ shape encompassingRectangle containsPoint: self positionFromCamera
-]

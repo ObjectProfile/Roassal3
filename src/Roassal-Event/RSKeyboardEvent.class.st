@@ -12,6 +12,14 @@ Class {
 	#package : 'Roassal-Event'
 }
 
+{ #category : 'accessing' }
+RSKeyboardEvent >> fromEvent: aMorphicEvent [
+	self
+		positionFromCamera;
+		keyValue: aMorphicEvent keyValue;
+		keyName: aMorphicEvent key name
+]
+
 { #category : 'initialization' }
 RSKeyboardEvent >> initialize [
 	super initialize.

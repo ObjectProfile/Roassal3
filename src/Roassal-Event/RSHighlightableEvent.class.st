@@ -28,6 +28,7 @@ RSHighlightableEvent >> source [
 ]
 
 { #category : 'accessing' }
-RSHighlightableEvent >> source: anElementOrView [
-	source := anElementOrView
+RSHighlightableEvent >> source: aShapeOrCanvas [
+	source := aShapeOrCanvas.
+	self canvas: aShapeOrCanvas canvas
 ]

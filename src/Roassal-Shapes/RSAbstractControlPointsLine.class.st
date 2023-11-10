@@ -83,8 +83,8 @@ RSAbstractControlPointsLine >> controlPointsController [
 ]
 
 { #category : 'accessing' }
-RSAbstractControlPointsLine >> controlPointsController: aCPController [
-	controlPointsController := aCPController
+RSAbstractControlPointsLine >> controlPointsController: anRSAbstractCPController [
+	controlPointsController := anRSAbstractCPController
 ]
 
 { #category : 'accessing' }

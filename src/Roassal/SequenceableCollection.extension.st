@@ -8,6 +8,16 @@ SequenceableCollection >> argmax [
 ]
 
 { #category : '*Roassal' }
+SequenceableCollection >> hasSameObjects: otherCollection [
+	| size |
+	(size := self size) = otherCollection size ifFalse: [^ false].
+	1 to: size do:
+		[:index |
+		(self at: index) == (otherCollection at: index) ifFalse: [^ false]].
+	^ true
+]
+
+{ #category : '*Roassal' }
 SequenceableCollection >> max: aSelectorOrOneArgBlock [
 	^ (self collect: aSelectorOrOneArgBlock) max
 ]

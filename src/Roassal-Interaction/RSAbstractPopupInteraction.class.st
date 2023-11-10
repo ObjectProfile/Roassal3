@@ -153,11 +153,7 @@ RSAbstractPopupInteraction >> popupKey [
 { #category : 'hooks' }
 RSAbstractPopupInteraction >> registerRemoveEventsOn: aShape [
 	self class removeEvents do: [ :clsEvent |
-		aShape
-			when: clsEvent
-			do: [ :evt |
-				self removePopupOn: evt ]
-			for: self ]
+		aShape when: clsEvent send: #removePopupOn: to: self ]
 ]
 
 { #category : 'hooks' }

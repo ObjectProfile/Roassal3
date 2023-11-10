@@ -57,8 +57,8 @@ RSTLine >> controlPointsController [
 ]
 
 { #category : 'public - shape' }
-RSTLine >> controlPointsController: aCPController [
-	self shape controlPointsController: aCPController
+RSTLine >> controlPointsController: anRSAbstractCPController [
+	self shape controlPointsController: anRSAbstractCPController
 ]
 
 { #category : 'public - shape' }
