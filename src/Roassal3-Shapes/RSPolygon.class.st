@@ -25,18 +25,16 @@ c
 ```
 "
 Class {
-	#name : 'RSPolygon',
-	#superclass : 'RSBoundingShape',
+	#name : #RSPolygon,
+	#superclass : #RSBoundingShape,
 	#instVars : [
 		'points',
 		'radius'
 	],
-	#category : 'Roassal3-Shapes-Bounding',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Bounding'
+	#category : 'Roassal3-Shapes-Bounding'
 }
 
-{ #category : 'utilities' }
+{ #category : #utilities }
 RSPolygon class >> fitPolygonToSquare: points [
 	| maxx minx maxy miny sx sy x y |
 	minx := maxx :=  points first x.
@@ -63,7 +61,7 @@ RSPolygon class >> fitPolygonToSquare: points [
 	^ points
 ]
 
-{ #category : 'utilities' }
+{ #category : #utilities }
 RSPolygon class >> generatePointsFitSquare: sides [
 	| points |
 	points := self generateUnitNgonPoints: sides rotation: 0.
@@ -71,7 +69,7 @@ RSPolygon class >> generatePointsFitSquare: sides [
 	^ points
 ]
 
-{ #category : 'utilities' }
+{ #category : #utilities }
 RSPolygon class >> generateUnitNgonPoints: sides rotation: rotationAngle [
 
 	^ self generateUnitNgonPoints: sides  rotation: rotationAngle
@@ -79,7 +77,7 @@ RSPolygon class >> generateUnitNgonPoints: sides rotation: rotationAngle [
 		radius: [ :a :i | 1 ]
 ]
 
-{ #category : 'utilities' }
+{ #category : #utilities }
 RSPolygon class >> generateUnitNgonPoints: sides rotation: rotationAngle angle: angleBloc radius: radiusBloc [
 	"sides a Number
 	rotation is a number in radians
@@ -100,12 +98,12 @@ RSPolygon class >> generateUnitNgonPoints: sides rotation: rotationAngle angle: 
 	^ points
 ]
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 RSPolygon >> buildPathOn: visitor [
 	visitor buildPolygonPath: self
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RSPolygon >> centerPoints [
 	"Private method, should not be used externally"
 
@@ -118,13 +116,13 @@ RSPolygon >> centerPoints [
 	^ r
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSPolygon >> cornerRadii [
 	"Return the corner radii, indicating how smooth the polygon corners shoulid be"
 	^ radius ifNil: [ 0 ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSPolygon >> cornerRadii: aNumber [
 	"Set the corner radii. Has the effect to make corners smooth
 	For example:
@@ -154,7 +152,7 @@ c
 	self resetPath
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RSPolygon >> extent: newExtent [
 	| min max s extent |
 	self hasPoints
@@ -172,7 +170,7 @@ RSPolygon >> extent: newExtent [
 	super extent: newExtent
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 RSPolygon >> geometry [
 	| rect e |
 	rect := self encompassingRectangle.
@@ -182,18 +180,18 @@ RSPolygon >> geometry [
 		vertices: self points + self position
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSPolygon >> hasPoints [
 	^ points notNil and: [ points isNotEmpty ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSPolygon >> initialize [
 	super initialize.
 	points := #()
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 RSPolygon >> invert [
 	| positionPrevInverting |
 	positionPrevInverting := self position.
@@ -201,13 +199,13 @@ RSPolygon >> invert [
 	self position: (positionPrevInverting y@positionPrevInverting x).
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSPolygon >> points [
 	"Return the points defining the polygon"
 	^ points
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSPolygon >> points: anArray [
 	"Set the points used to draw the polygon."
 	| rec |
@@ -217,7 +215,7 @@ RSPolygon >> points: anArray [
 	super extent: rec extent
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSPolygon >> preciseIncludesPoint: aPoint [
 	"Return true or false if a point is contained in the shape"
 	| invertedPoint |
@@ -228,7 +226,7 @@ RSPolygon >> preciseIncludesPoint: aPoint [
 			polygon: points) includesPoint: invertedPoint]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RSPolygon >> privatePoints: anArray [
 	"Private method, should bot be used externally"
 	points := anArray

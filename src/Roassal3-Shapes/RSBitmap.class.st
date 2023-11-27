@@ -2,17 +2,15 @@
 I can draw Forms
 "
 Class {
-	#name : 'RSBitmap',
-	#superclass : 'RSBoundingShape',
+	#name : #RSBitmap,
+	#superclass : #RSBoundingShape,
 	#instVars : [
 		'form'
 	],
-	#category : 'Roassal3-Shapes-Bounding',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Bounding'
+	#category : 'Roassal3-Shapes-Bounding'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSBitmap class >> newFrom: anObject [
 	| shape |
 	shape := self new.
@@ -24,7 +22,7 @@ RSBitmap class >> newFrom: anObject [
 		
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RSBitmap >> computeRectangle [
 	baseRectangle := Rectangle floatCenter: 0@0 extent: (form
 		ifNil: [ 0@0 ]
@@ -32,7 +30,7 @@ RSBitmap >> computeRectangle [
 	encompassingRectangle := nil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBitmap >> extent: newExtent [
 	| oldExtent |
 	oldExtent := self extent.
@@ -42,24 +40,24 @@ RSBitmap >> extent: newExtent [
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBitmap >> form [
 	^ form
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBitmap >> form: aForm [
 	aForm ifNil: [ ^ self ].
 	form := aForm.
 	self computeRectangle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBitmap >> paintOn: visitor [
 	^ visitor paintFor: self form: self form
 ]
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 RSBitmap >> path [
 	^ self baseRectangle
 ]

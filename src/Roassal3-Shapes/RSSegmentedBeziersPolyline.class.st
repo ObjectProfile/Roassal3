@@ -1,21 +1,19 @@
 Class {
-	#name : 'RSSegmentedBeziersPolyline',
-	#superclass : 'RSPolyline',
+	#name : #RSSegmentedBeziersPolyline,
+	#superclass : #RSPolyline,
 	#instVars : [
 		'splits'
 	],
-	#category : 'Roassal3-Shapes-Lines',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Lines'
+	#category : 'Roassal3-Shapes-Lines'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSSegmentedBeziersPolyline >> buildPathOn: visitor [
 
 	visitor buildSegmentedBeziersPolylinePath: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSSegmentedBeziersPolyline >> controlPoints: aCollectionOfPoints [
 
 	| random yDistance |
@@ -140,14 +138,14 @@ RSSegmentedBeziersPolyline >> controlPoints: aCollectionOfPoints [
 	super controlPoints: aCollectionOfPoints
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSSegmentedBeziersPolyline >> cornerRadiusAmongPoint: aPoint andPoint: anotherPoint [
 
 	^ (((aPoint distanceTo: anotherPoint) max: 2) log: 2) "max:
 		  self cornerRadii"
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSSegmentedBeziersPolyline >> initialize [
 
 	super initialize.
@@ -155,7 +153,7 @@ RSSegmentedBeziersPolyline >> initialize [
 	self cornerRadii: 5
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSSegmentedBeziersPolyline >> splits [
 
 	^ splits

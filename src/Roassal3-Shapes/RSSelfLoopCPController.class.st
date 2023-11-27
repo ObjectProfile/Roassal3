@@ -2,14 +2,12 @@
 Used for straight lines and self loop lines
 "
 Class {
-	#name : 'RSSelfLoopCPController',
-	#superclass : 'RSAbstractCPController',
-	#category : 'Roassal3-Shapes-ControlPoints',
-	#package : 'Roassal3-Shapes',
-	#tag : 'ControlPoints'
+	#name : #RSSelfLoopCPController,
+	#superclass : #RSAbstractCPController,
+	#category : 'Roassal3-Shapes-ControlPoints'
 }
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSSelfLoopCPController >> controlPointsFor: aLine [
 	| ap from to |
 	ap := aLine attachPoint.
@@ -23,7 +21,7 @@ RSSelfLoopCPController >> controlPointsFor: aLine [
 	^ Array with: from with: to
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSSelfLoopCPController >> selfLoopControlPointsFor: aLine [
 	| temp from to delta matrix |
 	temp := aLine from.

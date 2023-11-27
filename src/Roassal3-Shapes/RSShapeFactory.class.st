@@ -2,19 +2,17 @@
 I can create shapes in order that the client can modify it
 "
 Class {
-	#name : 'RSShapeFactory',
-	#superclass : 'RSObject',
-	#category : 'Roassal3-Shapes-Util',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Util'
+	#name : #RSShapeFactory,
+	#superclass : #RSObject,
+	#category : 'Roassal3-Shapes-Util'
 }
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> arc [
 	^ RSPieSlice new
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> arrow [
 	"inverted vee"
 	^ self polygonWithPoints: (Array
@@ -24,12 +22,12 @@ RSShapeFactory class >> arrow [
 		with: 0 @ -1)
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSShapeFactory class >> arrowedLine [
 	^ RSArrowedLine new
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSShapeFactory class >> arrowedLineWithOffset: aFloat [
 	"[0 1] value"
 	| inst |
@@ -38,27 +36,27 @@ RSShapeFactory class >> arrowedLineWithOffset: aFloat [
 	^ inst
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> bitmap [
 	^ RSBitmap new
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> box [
 	^ self rectangle
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> circle [
 	^ self ellipse
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> composite [
 	^ RSComposite new
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> diamond [
 	^ self polygonWithPoints: (Array
 		with: 0 @ 1
@@ -67,37 +65,37 @@ RSShapeFactory class >> diamond [
 		with: -1 @ 0)
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> ellipse [
 	^ RSEllipse new
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> heptagon [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 7)
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> hexagon [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 6)
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> label [
 	^ RSLabel new
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> octagon [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 8)
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> pentagon [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 5)
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> plus [
 	| t t1 |
 	t := 2 / 6 asFloat.
@@ -117,24 +115,24 @@ RSShapeFactory class >> plus [
 		(-1@ t)}
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> polygon [
 	^ RSPolygon new
 ]
 
-{ #category : 'utilities' }
+{ #category : #utilities }
 RSShapeFactory class >> polygonWithPoints: points [
 	^ self polygon
 		privatePoints: points;
 		yourself
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> rectangle [
 	^ RSBox new
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> rhomboid [
 	^ self polygonWithPoints: (Array
 		with: -1 @ -1
@@ -143,7 +141,7 @@ RSShapeFactory class >> rhomboid [
 		with: -0.333 @ 1)
 ]
 
-{ #category : 'utilities' }
+{ #category : #utilities }
 RSShapeFactory class >> shapeFromString: aString [
 	"self shapeFromString: 'd'"
 	#(o circle
@@ -159,12 +157,12 @@ RSShapeFactory class >> shapeFromString: aString [
 	^ nil
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> square [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 4)
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> star [
 	| star5Points outerPoints innerPoints innerRadius ar |
 	star5Points := Array new: 10.
@@ -184,12 +182,12 @@ RSShapeFactory class >> star [
 	^ self polygonWithPoints: star5Points
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> triangle [
 	^ self polygonWithPoints: (RSPolygon generatePointsFitSquare: 3)
 ]
 
-{ #category : 'shapes' }
+{ #category : #shapes }
 RSShapeFactory class >> vee [
 	^ self polygonWithPoints: (Array
 		with: -1 @ -1

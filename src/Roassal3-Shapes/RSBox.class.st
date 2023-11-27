@@ -34,27 +34,25 @@ c
 
 "
 Class {
-	#name : 'RSBox',
-	#superclass : 'RSBoundingShape',
+	#name : #RSBox,
+	#superclass : #RSBoundingShape,
 	#instVars : [
 		'cornerRadius'
 	],
-	#category : 'Roassal3-Shapes-Bounding',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Bounding'
+	#category : 'Roassal3-Shapes-Bounding'
 }
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 RSBox >> buildPathOn: visitor [
 	visitor buildBoxPath: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBox >> cornerRadius [
 	^ cornerRadius
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBox >> cornerRadius: aRSCornerRadius [
 	"Set the radius of the corners. Accept a number as argument or a RSCornerRadius.
 
@@ -79,13 +77,13 @@ c open
 	self resetPath
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSBox >> hasCornerRadius [
 	^ cornerRadius notNil
 		and: [ cornerRadius max > 0 and: [ cornerRadius min >= 0 ] ]
 ]
 
-{ #category : 'path' }
+{ #category : #path }
 RSBox >> resetPath [
 	path := self hasCornerRadius
 		ifTrue: [ nil ]

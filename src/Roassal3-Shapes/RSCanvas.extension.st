@@ -1,6 +1,6 @@
-Extension { #name : 'RSCanvas' }
+Extension { #name : #RSCanvas }
 
-{ #category : '*Roassal3-Shapes' }
+{ #category : #'*Roassal3-Shapes' }
 RSCanvas >> asShape [
 	"Convert a canvas as a composite shape. Note that all the shapes are removed from the canvas after the convertion. Here is an example:
 
@@ -57,7 +57,7 @@ c
 		yourself
 ]
 
-{ #category : '*Roassal3-Shapes' }
+{ #category : #'*Roassal3-Shapes' }
 RSCanvas >> asShapeModel: aModelObject [
 	"Convert a canvas as a composite shape. Note that all the shapes are removed from the canvas after the convertion. Attach a model to the composite shape. Here is an example:
 

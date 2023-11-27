@@ -1,12 +1,10 @@
 Class {
-	#name : 'RSdeCasteljauPolynomialLine',
-	#superclass : 'RSdeCasteljauLine',
-	#category : 'Roassal3-Shapes-Lines',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Lines'
+	#name : #RSdeCasteljauPolynomialLine,
+	#superclass : #RSdeCasteljauLine,
+	#category : 'Roassal3-Shapes-Lines'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauPolynomialLine >> deCasteljau: aSequenceableOfPoints at: t [
 
 	| aPoint n |

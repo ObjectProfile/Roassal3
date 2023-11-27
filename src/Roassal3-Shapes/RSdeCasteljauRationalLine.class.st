@@ -1,15 +1,13 @@
 Class {
-	#name : 'RSdeCasteljauRationalLine',
-	#superclass : 'RSdeCasteljauWeightedLine',
+	#name : #RSdeCasteljauRationalLine,
+	#superclass : #RSdeCasteljauWeightedLine,
 	#instVars : [
 		'mappedPoints'
 	],
-	#category : 'Roassal3-Shapes-Lines',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Lines'
+	#category : 'Roassal3-Shapes-Lines'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauRationalLine >> controlPoints: aSequenceableOfPoints [
 
 	mappedPoints := Array streamContents: [ :aStream | 
@@ -21,7 +19,7 @@ RSdeCasteljauRationalLine >> controlPoints: aSequenceableOfPoints [
 	super controlPoints: aSequenceableOfPoints
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauRationalLine >> deCasteljau: aSequenceableOfPoints at: t [
 
 	| factor n |

@@ -1,16 +1,14 @@
 Class {
-	#name : 'RSSegmentedPolyline',
-	#superclass : 'RSPolyline',
+	#name : #RSSegmentedPolyline,
+	#superclass : #RSPolyline,
 	#instVars : [
 		'lineBlock',
 		'junctionBlock'
 	],
-	#category : 'Roassal3-Shapes-Lines',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Lines'
+	#category : 'Roassal3-Shapes-Lines'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSSegmentedPolyline >> controlPoints: aCollectionOfArrays [
 
 	| lines aLine points |
@@ -28,13 +26,13 @@ RSSegmentedPolyline >> controlPoints: aCollectionOfArrays [
 	super controlPoints: points
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSSegmentedPolyline >> junctionBlock: anObject [
 
 	junctionBlock := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSSegmentedPolyline >> lineBlock: anObject [
 
 	lineBlock := anObject

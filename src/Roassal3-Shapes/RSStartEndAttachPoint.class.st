@@ -2,48 +2,46 @@
 You can combine different attach points
 "
 Class {
-	#name : 'RSStartEndAttachPoint',
-	#superclass : 'RSAttachPoint',
+	#name : #RSStartEndAttachPoint,
+	#superclass : #RSAttachPoint,
 	#instVars : [
 		'startAttachPoint',
 		'endAttachPoint'
 	],
-	#category : 'Roassal3-Shapes-AttachPoint',
-	#package : 'Roassal3-Shapes',
-	#tag : 'AttachPoint'
+	#category : 'Roassal3-Shapes-AttachPoint'
 }
 
-{ #category : 'public - hooks' }
+{ #category : #'public - hooks' }
 RSStartEndAttachPoint >> basicEndingPointOf: anEdge [
 
 	^ endAttachPoint basicEndingPointOf: anEdge
 ]
 
-{ #category : 'public - hooks' }
+{ #category : #'public - hooks' }
 RSStartEndAttachPoint >> basicStartingPointOf: anEdge [
 
 	^ startAttachPoint basicStartingPointOf: anEdge
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSStartEndAttachPoint >> endAttachPoint [
 
 	^ endAttachPoint
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSStartEndAttachPoint >> endAttachPoint: anObject [
 
 	endAttachPoint := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSStartEndAttachPoint >> startAttachPoint [
 
 	^ startAttachPoint
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSStartEndAttachPoint >> startAttachPoint: anObject [
 
 	startAttachPoint := anObject

@@ -2,14 +2,12 @@
 I am similar to RSHorizontalAttachPoint, with the different that I want to find the shortests distance
 "
 Class {
-	#name : 'RSShortestHorizontalAttachPoint',
-	#superclass : 'RSOffsetAttachPoint',
-	#category : 'Roassal3-Shapes-AttachPoint',
-	#package : 'Roassal3-Shapes',
-	#tag : 'AttachPoint'
+	#name : #RSShortestHorizontalAttachPoint,
+	#superclass : #RSOffsetAttachPoint,
+	#category : 'Roassal3-Shapes-AttachPoint'
 }
 
-{ #category : 'public - hooks' }
+{ #category : #'public - hooks' }
 RSShortestHorizontalAttachPoint >> basicEndingPointOf: aLine [
 	| r1 r2 off p1 p2 center |
 	r1 := aLine from globalEncompassingRectangle.
@@ -23,7 +21,7 @@ RSShortestHorizontalAttachPoint >> basicEndingPointOf: aLine [
 		ifFalse: [ p2 ]
 ]
 
-{ #category : 'public - hooks' }
+{ #category : #'public - hooks' }
 RSShortestHorizontalAttachPoint >> basicStartingPointOf: aLine [
 	| r1 r2 off p1 p2 center |
 	r1 := aLine from globalEncompassingRectangle.

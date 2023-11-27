@@ -4,14 +4,12 @@ Directed controlpoints controller based on attach point from each line.
 This directed bezier uses 3 control points
 "
 Class {
-	#name : 'RSDirectedBezierCPAPController',
-	#superclass : 'RSAbstractCPAPController',
-	#category : 'Roassal3-Shapes-ControlPoints',
-	#package : 'Roassal3-Shapes',
-	#tag : 'ControlPoints'
+	#name : #RSDirectedBezierCPAPController,
+	#superclass : #RSAbstractCPAPController,
+	#category : 'Roassal3-Shapes-ControlPoints'
 }
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSDirectedBezierCPAPController >> controlPointsFrom: fromPoint to: toPoint [
 	| a b vector u unit mid height width dist |
 	a := fromPoint.

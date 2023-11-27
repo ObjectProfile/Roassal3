@@ -31,22 +31,20 @@ c
 ```
 "
 Class {
-	#name : 'RSCairoCachedMetricsProvider',
-	#superclass : 'RSCairoMetricsProvider',
+	#name : #RSCairoCachedMetricsProvider,
+	#superclass : #RSCairoMetricsProvider,
 	#instVars : [
 		'cache'
 	],
-	#category : 'Roassal3-Shapes-TextMetrics',
-	#package : 'Roassal3-Shapes',
-	#tag : 'TextMetrics'
+	#category : 'Roassal3-Shapes-TextMetrics'
 }
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSCairoCachedMetricsProvider >> dictionaryFor: font [
 	^ Dictionary new
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSCairoCachedMetricsProvider >> extentsOf: aRSLabel [
 	| map font h w |
 	font := aRSLabel font.
@@ -71,12 +69,12 @@ RSCairoCachedMetricsProvider >> extentsOf: aRSLabel [
 		yourself
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSCairoCachedMetricsProvider >> initialize [
 	cache := Dictionary new
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSCairoCachedMetricsProvider >> widthOf: char map: map font: aLogicalFont [
 	^ map at: char
 		ifAbsentPut: [

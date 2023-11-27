@@ -2,14 +2,12 @@
 I am a generalized implementation of Bezier lines.
 "
 Class {
-	#name : 'RSdeCasteljauLine',
-	#superclass : 'RSParametricLine',
-	#category : 'Roassal3-Shapes-Lines',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Lines'
+	#name : #RSdeCasteljauLine,
+	#superclass : #RSParametricLine,
+	#category : #'Roassal3-Shapes-Lines'
 }
 
-{ #category : 'draw helpers' }
+{ #category : #'draw helpers' }
 RSdeCasteljauLine >> addBezierPoint: aPoint [
 
 	| firstPoint |
@@ -18,7 +16,7 @@ RSdeCasteljauLine >> addBezierPoint: aPoint [
 	self addPoint: aPoint via: firstPoint
 ]
 
-{ #category : 'draw helpers' }
+{ #category : #'draw helpers' }
 RSdeCasteljauLine >> addBezierPoint: aPoint via: secondPoint [
 
 	| firstPoint |
@@ -27,19 +25,19 @@ RSdeCasteljauLine >> addBezierPoint: aPoint via: secondPoint [
 	self addPoint: aPoint via: firstPoint via: secondPoint
 ]
 
-{ #category : 'draw helpers' }
+{ #category : #'draw helpers' }
 RSdeCasteljauLine >> addPoint: aPoint [
 
 	points add: aPoint
 ]
 
-{ #category : 'draw helpers' }
+{ #category : #'draw helpers' }
 RSdeCasteljauLine >> addPoint: aPoint via: anotherPoint [
 
 	self addPoint: aPoint via: anotherPoint via: anotherPoint
 ]
 
-{ #category : 'draw helpers' }
+{ #category : #'draw helpers' }
 RSdeCasteljauLine >> addPoint: aPoint via: firstPoint via: secondPoint [
 
 	points
@@ -48,7 +46,7 @@ RSdeCasteljauLine >> addPoint: aPoint via: firstPoint via: secondPoint [
 		add: aPoint
 ]
 
-{ #category : 'draw helpers' }
+{ #category : #'draw helpers' }
 RSdeCasteljauLine >> addPoint: aPoint via: firstPoint via: secondPoint relativeTo: basePoint [
 
 	self
@@ -57,7 +55,7 @@ RSdeCasteljauLine >> addPoint: aPoint via: firstPoint via: secondPoint relativeT
 		via: secondPoint + basePoint
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 RSdeCasteljauLine >> asBeziersGroup [
 
 	^ self asBeziersGroupSplitBlock: [ :aBezier | 
@@ -66,13 +64,13 @@ RSdeCasteljauLine >> asBeziersGroup [
 			  ifFalse: [ nil ] ]
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 RSdeCasteljauLine >> asBeziersGroupSplitBlock: aBlock [
 
 	^ (self splitWhile: aBlock) collect: [ :each | each asRSBezier ]
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 RSdeCasteljauLine >> asGroupBernsteinBase [
 
 	| n scale |
@@ -91,7 +89,7 @@ RSdeCasteljauLine >> asGroupBernsteinBase [
 		  as: RSGroup
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 RSdeCasteljauLine >> asRSBezier [
 
 	^ RSBezier new
@@ -99,13 +97,13 @@ RSdeCasteljauLine >> asRSBezier [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> controlPoints: aSequenceableOfPoints at: t [
 
 	^ self deCasteljau: aSequenceableOfPoints at: t asFloat
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> deCasteljau: aSequenceableOfPoints at: t [
 
 	| h u qPoint |
@@ -125,7 +123,7 @@ RSdeCasteljauLine >> deCasteljau: aSequenceableOfPoints at: t [
 	^ qPoint
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> derivative [
 
 	^ RSdeCasteljauDerivativeLine new
@@ -134,7 +132,7 @@ RSdeCasteljauLine >> derivative [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> difference [
 
 	| diffPoints size |
@@ -152,7 +150,7 @@ RSdeCasteljauLine >> difference [
 		  yourself
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSdeCasteljauLine >> elevate: n [
 
 	| line |
@@ -163,7 +161,7 @@ RSdeCasteljauLine >> elevate: n [
 	^ line
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> increment [
 
 	| incremented sandbox |
@@ -194,7 +192,7 @@ RSdeCasteljauLine >> increment [
 		  yourself
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSdeCasteljauLine >> initialize [
 
 	super initialize.
@@ -202,7 +200,7 @@ RSdeCasteljauLine >> initialize [
 	self samplesLinspace: 2
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> junction: aLine left: aBlock [
 
 	^ self
@@ -217,7 +215,7 @@ RSdeCasteljauLine >> junction: aLine left: aBlock [
 				  c2: obsculatorPoint ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> junction: aLine left: aBlock c0: continuityPoint c1: tangentPoint c2: obsculatorPoint [
 
 	| lineC0 lineC1 lineC2 |
@@ -241,7 +239,7 @@ RSdeCasteljauLine >> junction: aLine left: aBlock c0: continuityPoint c1: tangen
 	^ aBlock value: lineC0 value: lineC1 value: lineC2
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> junction: aLine right: aBlock [
 
 	^ self
@@ -256,7 +254,7 @@ RSdeCasteljauLine >> junction: aLine right: aBlock [
 				  c2: obsculatorPoint ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> junction: aLine right: aBlock c0: continuityPoint c1: tangentPoint c2: obsculatorPoint [
 
 	| lineC0 lineC1 lineC2 |
@@ -280,7 +278,7 @@ RSdeCasteljauLine >> junction: aLine right: aBlock c0: continuityPoint c1: tange
 	^ aBlock value: lineC0 value: lineC1 value: lineC2
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> junction: h_i to: h_succ_i left: aBlock [
 
 	| continuityPoint secondControlPoint thirdControlPoint tangentPoint intervalLengthSum obsculatorPoint a_succ_i ratio ratioInverted |
@@ -314,7 +312,7 @@ RSdeCasteljauLine >> junction: h_i to: h_succ_i left: aBlock [
 		  value: a_succ_i
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> junction: h_i to: h_succ_i right: aBlock [
 
 	| continuityPoint lastButOneControlPoint lastButTwoControlPoint tangentPoint intervalLengthSum obsculatorPoint a_succ_i ratio ratioInverted offset |
@@ -347,7 +345,7 @@ RSdeCasteljauLine >> junction: h_i to: h_succ_i right: aBlock [
 		  value: a_succ_i
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSdeCasteljauLine >> newLine [
 
 	^ super newLine
@@ -355,7 +353,7 @@ RSdeCasteljauLine >> newLine [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> notifyDesignPointsChanged [
 
 	parameterization
@@ -363,7 +361,7 @@ RSdeCasteljauLine >> notifyDesignPointsChanged [
 		overlappingDistancesSum: self overlappingControlPointsDistance
 ]
 
-{ #category : 'draw helpers' }
+{ #category : #'draw helpers' }
 RSdeCasteljauLine >> pen: aBlock [
 
 	"Inspired by https://css-tricks.com/svg-path-syntax-illustrated-guide/"
@@ -375,7 +373,7 @@ RSdeCasteljauLine >> pen: aBlock [
 	self controlPoints: points
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> polar: ratio [
 
 	^ RSdeCasteljauPolarLine new
@@ -385,14 +383,14 @@ RSdeCasteljauLine >> polar: ratio [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> primitiveRefreshDesignPoints: designPoints controlPoints: destControlPoints parameterDomain: domain [
 
-	<primitive: 'primitive_decasteljau' module: 'LuaPlugin'>
+	<primitive: 'primitive_decasteljau' module: 'UtilsPlugin'>
 	^ super refreshControlPoints
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> refreshControlPoints [
 
 	| paramDomain |
@@ -405,7 +403,7 @@ RSdeCasteljauLine >> refreshControlPoints [
 		  parameterDomain: paramDomain
 ]
 
-{ #category : 'accessing - structure variables' }
+{ #category : #'accessing - structure variables' }
 RSdeCasteljauLine >> samplesChebyshev: n [
 
 	self parameterization: (RSChebyshevParameterization new
@@ -413,7 +411,7 @@ RSdeCasteljauLine >> samplesChebyshev: n [
 			 yourself)
 ]
 
-{ #category : 'accessing - structure variables' }
+{ #category : #'accessing - structure variables' }
 RSdeCasteljauLine >> samplesLinspace: n [
 
 	self parameterization: (RSUnaryLinspaceParameterization new
@@ -421,7 +419,7 @@ RSdeCasteljauLine >> samplesLinspace: n [
 			 yourself)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 
 	| left right diagonal last t |
@@ -468,7 +466,7 @@ RSdeCasteljauLine >> splitAt: aParam in: aBlock [
 	^ aBlock value: left value: right value: self
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 RSdeCasteljauLine >> splitWhile: aBlock [
 
 	| pool beziers |
@@ -490,13 +488,13 @@ RSdeCasteljauLine >> splitWhile: aBlock [
 	^ beziers
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> weight: aNumber atIndex: anIndex [
 
 	^ aNumber
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauLine >> weighted: aCollection [
 
 	^ RSdeCasteljauRationalWoznyChudyLine new

@@ -31,20 +31,18 @@ c open
 Adding single line can be complex in some situation. You may want to look at RSLineBuilder arrowedLine
 "
 Class {
-	#name : 'RSArrowedLine',
-	#superclass : 'RSLine',
-	#category : 'Roassal3-Shapes-Lines',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Lines'
+	#name : #RSArrowedLine,
+	#superclass : #RSLine,
+	#category : 'Roassal3-Shapes-Lines'
 }
 
-{ #category : 'border' }
+{ #category : #border }
 RSArrowedLine >> border: aRSBorder [
 	super border: aRSBorder.
 	self markersDo: [ :m | m shape border: aRSBorder ]
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 RSArrowedLine >> copy [
 	| copy head |
 	copy := super copy.
@@ -54,7 +52,7 @@ RSArrowedLine >> copy [
 	^ copy
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSArrowedLine >> defaultHead [
 	^ RSPolygon new
 		privatePoints: { -5@5. 0@0. 5@5. 0@0 };
@@ -62,13 +60,13 @@ RSArrowedLine >> defaultHead [
 		yourself
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSArrowedLine >> initialize [
 	super initialize.
 	self markerEnd: self defaultHead
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 RSArrowedLine >> postCopy [
 	super postCopy.
 	markers := nil.

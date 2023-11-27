@@ -106,20 +106,18 @@ c @ RSCanvasController
 ```
 "
 Class {
-	#name : 'RSNormalizer',
-	#superclass : 'RSObject',
+	#name : #RSNormalizer,
+	#superclass : #RSObject,
 	#instVars : [
 		'scale',
 		'executeBlock',
 		'shapes',
 		'minAndMaxBlock'
 	],
-	#category : 'Roassal3-Shapes-Util',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Util'
+	#category : 'Roassal3-Shapes-Util'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSNormalizer class >> color [
 	"Define a linear color normalizer. For example:
 
@@ -147,7 +145,7 @@ c
 	^ n
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSNormalizer class >> fontSize [
 "Here is example
 ```
@@ -177,7 +175,7 @@ v open
 	^ n
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSNormalizer class >> height [
 	| n |
 	n := self new.
@@ -187,7 +185,7 @@ RSNormalizer class >> height [
 	^ n
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSNormalizer class >> position [
 	"Create a normalizer for position.
 
@@ -257,7 +255,7 @@ v
 	^ n
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSNormalizer class >> size [
 	| n |
 	n := self new.
@@ -267,7 +265,7 @@ RSNormalizer class >> size [
 	^ n
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSNormalizer class >> width [
 	| n |
 	n := self new.
@@ -277,14 +275,14 @@ RSNormalizer class >> width [
 	^ n
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 RSNormalizer >> executeBlock: anOneArgBlock [
 	"Set the block to be executed for the normalizer. The end user should not call this method
 	Instead, it is called from methods on the class side"
 	executeBlock := anOneArgBlock
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSNormalizer >> from: aValue [
 	"Set the lower limit of the normalized value. For example:
 
@@ -315,7 +313,7 @@ v
 	scale from: aValue
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSNormalizer >> initialize [
 	super initialize.
 	scale := NSScale linear.
@@ -323,18 +321,18 @@ RSNormalizer >> initialize [
 	minAndMaxBlock := #yourself
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 RSNormalizer >> key [
 	^ #normalizerValue
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSNormalizer >> minAndMaxBlock: aOneArgBlock [
 	"This method sets the min and the max values for the provided shapes. It is useful to override the value found in the shapes. The argument is evaluated with one argument of a tupple of size 2"
 	minAndMaxBlock := aOneArgBlock
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 RSNormalizer >> minAndMaxFor: anOneArgBlockOrSymbol [
 	| min max |
 	min := SmallInteger maxVal.
@@ -347,7 +345,7 @@ RSNormalizer >> minAndMaxFor: anOneArgBlockOrSymbol [
 	^ minAndMaxBlock rsValue: { min . max }
 ]
 
-{ #category : 'normalizer' }
+{ #category : #normalizer }
 RSNormalizer >> normalize [
 	"Normalize the shapes assuming that each shape refers to a number
 ```Smalltalk
@@ -378,7 +376,7 @@ c openOnce
 	self normalize: #yourself
 ]
 
-{ #category : 'normalizer' }
+{ #category : #normalizer }
 RSNormalizer >> normalize: anOneArgBlockOrSymbol [
 	"Trigger the normalization using a particular metric to normalize.
 The metric is computed on each model of the shapes that are considered.
@@ -420,12 +418,12 @@ c openOnce
 		executeBlock value: shape value: scaledValue ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSNormalizer >> scale [
 	^ scale
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSNormalizer >> scale: aNSScale [
 	"Set the scale of the normalizer. For example
 
@@ -448,20 +446,20 @@ c
 	scale := aNSScale
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSNormalizer >> shapes [
 	"Return the shapes that should be normalized"
 	^ shapes
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSNormalizer >> shapes: someShapes [
 	"Set to the normalizer the elements that should be normalized"
 	someShapes ifNil: [ self error: 'Should not provide nil' ].
 	shapes := someShapes
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSNormalizer >> to: aValue [
 	"Set the upper limit of the normalized value. For example:
 

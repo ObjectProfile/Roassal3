@@ -78,14 +78,12 @@ b open
 ```
 "
 Class {
-	#name : 'RSBezier',
-	#superclass : 'RSAbstractControlPointsLine',
-	#category : 'Roassal3-Shapes-Lines',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Lines'
+	#name : #RSBezier,
+	#superclass : #RSAbstractControlPointsLine,
+	#category : 'Roassal3-Shapes-Lines'
 }
 
-{ #category : 'converting' }
+{ #category : #converting }
 RSBezier >> asDeCasteljauLine [
 
 	^ RSdeCasteljauLine new
@@ -93,7 +91,7 @@ RSBezier >> asDeCasteljauLine [
 		  yourself
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSBezier >> basicIncludesPoint: aPoint [
 	"Not perfect but close enough"
 	| cp lines ir |
@@ -118,12 +116,12 @@ RSBezier >> basicIncludesPoint: aPoint [
 		 ]
 ]
 
-{ #category : 'visiting' }
+{ #category : #visiting }
 RSBezier >> buildPathOn: visitor [
 	visitor buildBezierPath: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBezier >> controlPoints: anArrayOfPoints [
 	self
 		assert: anArrayOfPoints notNil
@@ -133,19 +131,19 @@ RSBezier >> controlPoints: anArrayOfPoints [
 	super controlPoints: anArrayOfPoints
 ]
 
-{ #category : 'composing' }
+{ #category : #composing }
 RSBezier >> firstC1Point [
 
 	^ self controlPoints second reflectedAbout: self controlPoints first
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSBezier >> initialize [
 	super initialize.
 	controlPoints := { 0@0. 100@100 }
 ]
 
-{ #category : 'composing' }
+{ #category : #composing }
 RSBezier >> joinC1Last: aBezier [
 
 	^ self class new
@@ -157,14 +155,14 @@ RSBezier >> joinC1Last: aBezier [
 		  yourself
 ]
 
-{ #category : 'composing' }
+{ #category : #composing }
 RSBezier >> lastC1Point [
 
 	^ (self controlPoints atLast: 1) reflectedAbout:
 		  self controlPoints last
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RSBezier >> lines [
 	| c b a via1 via2 start end cp |
 	cp := controlPoints.
@@ -184,7 +182,7 @@ RSBezier >> lines [
 		]
 ]
 
-{ #category : 'composing' }
+{ #category : #composing }
 RSBezier >> reversed [
 
 	^ self class new
@@ -192,7 +190,7 @@ RSBezier >> reversed [
 		  yourself
 ]
 
-{ #category : 'composing' }
+{ #category : #composing }
 RSBezier >> split: aBlock [
 
 	| a b linspace firstLine secondLine thirdLine |
@@ -226,7 +224,7 @@ RSBezier >> split: aBlock [
 			  thirdLine } ]
 ]
 
-{ #category : 'composing' }
+{ #category : #composing }
 RSBezier >> splitXrandom: random convex: direction lessThanBound: aBound [
 
 	^ self split: [ :a :b | 
@@ -246,7 +244,7 @@ RSBezier >> splitXrandom: random convex: direction lessThanBound: aBound [
 					  x @ (ys at: i) ] ] ]
 ]
 
-{ #category : 'composing' }
+{ #category : #composing }
 RSBezier >> splitYrandom: random convex: direction lessThanBound: aBound [
 
 	^ self split: [ :a :b | 

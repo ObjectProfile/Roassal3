@@ -4,20 +4,18 @@ I apply the attach point, then I return an array with the control points for the
 - controlPointsFrom:to: is an abstract method, recives 2 points and it should return a collection of points
 "
 Class {
-	#name : 'RSAbstractCPAPController',
-	#superclass : 'RSAbstractCPController',
-	#category : 'Roassal3-Shapes-ControlPoints',
-	#package : 'Roassal3-Shapes',
-	#tag : 'ControlPoints'
+	#name : #RSAbstractCPAPController,
+	#superclass : #RSAbstractCPController,
+	#category : 'Roassal3-Shapes-ControlPoints'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSAbstractCPAPController class >> isAbstract [
 
 	^ self == RSAbstractCPAPController
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSAbstractCPAPController >> controlPointsFor: aLine [
 	| ap |
 	ap := aLine attachPoint.
@@ -26,7 +24,7 @@ RSAbstractCPAPController >> controlPointsFor: aLine [
 		to: (ap endingPointOf: aLine)
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSAbstractCPAPController >> controlPointsFrom: fromPoint to: toPoint [
 	^ self subclassResponsibility
 ]

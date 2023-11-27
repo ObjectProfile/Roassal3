@@ -3,17 +3,15 @@ I am a custom control points controller to define crazy things with controls poi
 I am more like an example and not for applications
 "
 Class {
-	#name : 'RSCustomCPController',
-	#superclass : 'RSAbstractCPController',
+	#name : #RSCustomCPController,
+	#superclass : #RSAbstractCPController,
 	#instVars : [
 		'models'
 	],
-	#category : 'Roassal3-Shapes-ControlPoints',
-	#package : 'Roassal3-Shapes',
-	#tag : 'ControlPoints'
+	#category : 'Roassal3-Shapes-ControlPoints'
 }
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSCustomCPController >> controlPointFor: model at: aLine [
 	| point |
 	model isPoint ifTrue: [ ^ model ].
@@ -24,17 +22,17 @@ RSCustomCPController >> controlPointFor: model at: aLine [
 	^ point
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSCustomCPController >> controlPointsFor: aLine [
 	^ self models collect: [ :m | self controlPointFor: m at: aLine ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSCustomCPController >> models [
 	^ models
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSCustomCPController >> models: aCollection [
 	models := aCollection
 ]

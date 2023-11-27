@@ -9,8 +9,8 @@ My subclasses are: `RSBitmap`, `RSBox`, `RSCircularShape`, `RSComposite`, `RSLab
 - shouldUpdateLines, 
 "
 Class {
-	#name : 'RSBoundingShape',
-	#superclass : 'RSShape',
+	#name : #RSBoundingShape,
+	#superclass : #RSShape,
 	#traits : 'RSTPositionable',
 	#classTraits : 'RSTPositionable classTrait',
 	#instVars : [
@@ -19,17 +19,15 @@ Class {
 		'connectedLines',
 		'shouldUpdateLines'
 	],
-	#category : 'Roassal3-Shapes-Bounding',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Bounding'
+	#category : 'Roassal3-Shapes-Bounding'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSBoundingShape class >> isAbstract [
 	^ self == RSBoundingShape
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBoundingShape class >> models: someObjects size: aOneArgBlockOrSymbol [
 	"Create a RSGroup made of shapes. Each shape has an element of the argument as model and a size.
 
@@ -64,26 +62,26 @@ c open
 		  as: RSGroup
 ]
 
-{ #category : 'visitor' }
+{ #category : #visitor }
 RSBoundingShape >> accept: visitor [
 	visitor visitBoundingShape: self
 ]
 
-{ #category : 'edges - deprecated' }
+{ #category : #'edges - deprecated' }
 RSBoundingShape >> addConnectedEdge: anEdge [
 	self assert: anEdge isEdge.
 	(self connectedEdges includes: anEdge)
 		ifFalse: [ self connectedEdges add: anEdge ]
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> addConnectedLine: aLine [
 	self assert: [ aLine isLine ] description: 'Only a line can be added'.
 	(self connectedLines includes: aLine)
 		ifFalse: [ self connectedLines add: aLine ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBoundingShape >> allRecursiveConnectedShapes [
 	"Return the set of all recursively connected shapes."
 	| r |
@@ -92,7 +90,7 @@ RSBoundingShape >> allRecursiveConnectedShapes [
 	^ r
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RSBoundingShape >> allRecursiveConnectedShapesIn: aCollection [
 	"Private method"
 
@@ -105,52 +103,52 @@ RSBoundingShape >> allRecursiveConnectedShapesIn: aCollection [
 	self outgoingShapes do: [ :s | s allRecursiveConnectedShapesIn: aCollection ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBoundingShape >> baseRectangle [
 	^ baseRectangle
 ]
 
-{ #category : 'transforming' }
+{ #category : #transforming }
 RSBoundingShape >> basicTranslateBy: delta [
 	self updateLinesOFF.
 	self position: self position + delta.
 	self updateLinesON
 ]
 
-{ #category : 'accessing - computed' }
+{ #category : #'accessing - computed' }
 RSBoundingShape >> computeEncompassingRectangle [
 	^ self computeEncompassingRectangleFor: self baseRectangle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBoundingShape >> computeEncompassingRectangleFor: rect [
 	^ self computeEncompassingRectangleFor: rect matrix: self matrix
 ]
 
-{ #category : 'edges - deprecated' }
+{ #category : #'edges - deprecated' }
 RSBoundingShape >> connectedEdges [
 	"Return the list of connected egdes (i.e., incoming and outgoing edges)"
 	^ self connectedLines
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> connectedLines [
 	"Return the list of connected egdes (i.e., incoming and outgoing edges)"
 	connectedLines ifNil: [ connectedLines := RSGroup new ].
 	^ connectedLines
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> connectedLines: aCollection [
 	connectedLines := aCollection
 ]
 
-{ #category : 'defaults' }
+{ #category : #defaults }
 RSBoundingShape >> defaultExtent [
 	^ 10@10
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBoundingShape >> extent: aPoint [
 	| oldExtent extent |
 	extent := baseRectangle extent.
@@ -165,7 +163,7 @@ RSBoundingShape >> extent: aPoint [
 		newExtent: extent ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSBoundingShape >> fromRectangle: aRectangle [
 	"Set the position and extent of the shape, using a rectangle as argument.
 For example:
@@ -182,7 +180,7 @@ c
 		extent: aRectangle extent
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 RSBoundingShape >> geometry [
 	| rect e |
 	rect := self encompassingRectangle.
@@ -193,30 +191,30 @@ RSBoundingShape >> geometry [
 		corner: rect corner
 ]
 
-{ #category : 'accessing - computed' }
+{ #category : #'accessing - computed' }
 RSBoundingShape >> globalEncompassingRectangle [
 	^ self
 		computeEncompassingRectangleFor: self baseRectangle
 		matrix: self globalMatrix
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> globalMatrix [
 	^ parent globalMatrix multiplyBy: matrix
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSBoundingShape >> hasEdges [
 	"Return true if the shape has any outgoing or incoming edge"
 	^ connectedLines notNil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBoundingShape >> height: aNumber [
 	self extent: self extent x @ aNumber
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSBoundingShape >> includesPoint: aPoint [
 	"Return true if the provided point is included in the shape"
 
@@ -227,27 +225,27 @@ RSBoundingShape >> includesPoint: aPoint [
 	^ self preciseIncludesPoint: aPoint
 ]
 
-{ #category : 'edges - deprecated' }
+{ #category : #'edges - deprecated' }
 RSBoundingShape >> incomingEdges [
 	"Return the list of incoming edges from the node"
 	connectedLines ifNil: [ ^ #() ].
 	^ self connectedEdges select: [ :e | e to == self ]
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> incomingLines [
 	"Return the list of incoming edges from the node"
 	connectedLines ifNil: [ ^ #() ].
 	^ self connectedLines select: [ :e | e to == self ]
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> incomingShapes [
 	"Return the shapes that goes to the shape"
 	^ self incomingLines collect: #from
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSBoundingShape >> initialize [
 	super initialize.
 	self initializeMatrix; updateEdgesON.
@@ -256,12 +254,12 @@ RSBoundingShape >> initialize [
 	self extent: self defaultExtent
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSBoundingShape >> initializeMatrix [
 	matrix := AthensAffineTransform new
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSBoundingShape >> intersects: aRectangle [
 	| rect |
 	self isInACanvas ifFalse: [ ^ false ].
@@ -269,76 +267,76 @@ RSBoundingShape >> intersects: aRectangle [
 	^ rect intersects: aRectangle
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> isDirectlyConnectedTo: aShape [
 	connectedLines ifNil: [ ^ false ].
 	^ connectedLines anySatisfy: [ :edge | edge to == aShape ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSBoundingShape >> isNode [
 	^ true
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> loadIdentity [
 	matrix loadIdentity
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> matrix [
 	^ matrix
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> matrix: aMatrix [
 	matrix := aMatrix
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> matrixDo: aBlock [
 	aBlock value: matrix.
 	self resetBBox
 ]
 
-{ #category : 'metrics' }
+{ #category : #metrics }
 RSBoundingShape >> numberOfIncomingLines [
 	"Return the number of lines incoming to the shape"
 	^ self incomingLines size
 ]
 
-{ #category : 'metrics' }
+{ #category : #metrics }
 RSBoundingShape >> numberOfOutgoingLines [
 	"Return the number of lines incoming to the shape"
 	^ self outgoingLines size
 ]
 
-{ #category : 'edges - deprecated' }
+{ #category : #'edges - deprecated' }
 RSBoundingShape >> outgoingEdges [
 	"Return the list of outgoing edges from the node"
 	connectedLines ifNil: [ ^ #() ].
 	^ self connectedEdges select: [ :e | e from == self ]
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> outgoingLines [
 	"Return the list of outgoing edges from the node"
 	connectedLines ifNil: [ ^ #() ].
 	^ self connectedLines select: [ :e | e from == self ]
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> outgoingShapes [
 	"Return the shapes that leaves the shape"
 	^ self outgoingLines collect: #to
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> position [
 	^ matrix translation
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> position: aPoint [
 	"This method is private. Use #translateTo: instead."
 	self
@@ -349,18 +347,18 @@ RSBoundingShape >> position: aPoint [
 	self updateConnectedLines
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBoundingShape >> positionInCanvas [
 	^ self globalMatrix transform: 0@0
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 RSBoundingShape >> postCopy [
 	super postCopy.
 	self matrix: self matrix copy
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSBoundingShape >> preciseIncludesPoint: aPoint [
 
 	"Return true if the provided point is precisily included in the shape. Taking care of the transformation (aka scaling, position, rotation)"
@@ -371,7 +369,7 @@ RSBoundingShape >> preciseIncludesPoint: aPoint [
 	^ self baseRectangle containsPoint: invertedPoint
 ]
 
-{ #category : 'actions' }
+{ #category : #actions }
 RSBoundingShape >> remove [
 	parent ifNil: [ ^ self ].
 	parent removeNode: self.
@@ -379,36 +377,36 @@ RSBoundingShape >> remove [
 	super remove
 ]
 
-{ #category : 'edges - deprecated' }
+{ #category : #'edges - deprecated' }
 RSBoundingShape >> removeConnectedEdge: anEdge [
 	[  anEdge isEdge ] assert.
 	self connectedEdges remove: anEdge ifAbsent: [ ]
 ]
 
-{ #category : 'edges - deprecated' }
+{ #category : #'edges - deprecated' }
 RSBoundingShape >> removeConnectedEdges [
 	"Remove all the edges connected (incoming and outgoing)."
 	self connectedEdges copy do: [ :edge | edge remove ]
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> removeConnectedLine: aLine [
 	self assert: [  aLine isLine ].
 	self connectedLines remove: aLine ifAbsent: [ ]
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> removeConnectedLines [
 	"Remove all the edges connected (incoming and outgoing)."
 	self connectedLines copy do: [ :aLine | aLine remove ]
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 RSBoundingShape >> renderOn: aCanvas [
 	aCanvas addNode: self
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> rotateByDegrees: angle [
 	"Rotate the shape. Here is an example:
 ```
@@ -443,7 +441,7 @@ c open
 	matrix rotateByDegrees: angle
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> rotateByRadians: angle [
 	"Rotate the shape. Here is an exanmple:
 -=-=-=
@@ -458,12 +456,12 @@ c
 	matrix rotateByRadians: angle
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> scale [
 	^ matrix scale
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> scaleBy: scale [
 	"Scale the shape. For example:
 
@@ -484,31 +482,31 @@ c
 	self resetBBox
 ]
 
-{ #category : 'edges - deprecated' }
+{ #category : #'edges - deprecated' }
 RSBoundingShape >> shouldUpdateEdges [
 	"Moving a shape around usually involve recomputing the original of the connected egdes. This may be disabled. This method indicates whether edges are updated when the shape is moved."
 	^ shouldUpdateLines and: [ connectedLines notNil ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSBoundingShape >> shouldUpdateLines [
 	"Moving a shape around usually involve recomputing the original of the connected egdes. This may be disabled. This method indicates whether edges are updated when the shape is moved."
 	^ shouldUpdateLines and: [ connectedLines notNil ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBoundingShape >> size: anInteger [
 	"Set the size of the shape by providing a number."
 	self extent: anInteger asPoint
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> transform: aPoint [
 	"useful for attachpoints"
 	^ matrix transform: aPoint
 ]
 
-{ #category : 'actions' }
+{ #category : #actions }
 RSBoundingShape >> translateBottomLeftTo: aPositionAsPoint [
 	"Translate the shape to make the top left corner at a given position
 
@@ -528,7 +526,7 @@ c open
 	self translateTo: aPositionAsPoint + ((self extent / 2) * (1 @ -1))
 ]
 
-{ #category : 'actions' }
+{ #category : #actions }
 RSBoundingShape >> translateBottomRightTo: aPositionAsPoint [
 	"Translate the shape to make the top left corner at a given position
 
@@ -548,7 +546,7 @@ c open
 	self translateTo: aPositionAsPoint + ((self extent / 2) * (-1 @ -1))
 ]
 
-{ #category : 'actions' }
+{ #category : #actions }
 RSBoundingShape >> translateMiddleRightTo: aPositionAsPoint [
 	"Translate the shape to make the middle right position at a given position
 
@@ -570,7 +568,7 @@ c open
 	self translateTo: aPositionAsPoint - ((self extent x / 2) @ 0)
 ]
 
-{ #category : 'actions' }
+{ #category : #actions }
 RSBoundingShape >> translateTopLeftTo: aPositionAsPoint [
 	"Translate the shape to make the top left corner at a given position
 
@@ -587,7 +585,7 @@ c open
 	self translateTo: aPositionAsPoint + (self extent / 2)
 ]
 
-{ #category : 'actions' }
+{ #category : #actions }
 RSBoundingShape >> translateTopRightTo: aPositionAsPoint [
 	"Translate the shape to make the top left corner at a given position
 
@@ -607,52 +605,52 @@ c open
 	self translateTo: aPositionAsPoint + ((self extent / 2) * (-1 @ 1))
 ]
 
-{ #category : 'edges - deprecated' }
+{ #category : #'edges - deprecated' }
 RSBoundingShape >> updateConnectedEdges [
 	self shouldUpdateEdges
 		ifFalse: [ ^ self ].
 	self connectedEdges do: [ :edge | edge update ]
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> updateConnectedLines [
 	self shouldUpdateLines
 		ifFalse: [ ^ self ].
 	self connectedLines do: [ :line | line update ]
 ]
 
-{ #category : 'edges - deprecated' }
+{ #category : #'edges - deprecated' }
 RSBoundingShape >> updateEdgesOFF [
 	shouldUpdateLines := false
 ]
 
-{ #category : 'edges - deprecated' }
+{ #category : #'edges - deprecated' }
 RSBoundingShape >> updateEdgesON [
 	shouldUpdateLines := true
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> updateLinesOFF [
 	shouldUpdateLines := false
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBoundingShape >> updateLinesON [
 	shouldUpdateLines := true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBoundingShape >> width: aNumber [
 	self extent: aNumber @ self extent y
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> x: aNumber [
 	"Set the x position"
 	self position: aNumber @ self position y
 ]
 
-{ #category : 'matrix' }
+{ #category : #matrix }
 RSBoundingShape >> y: aNumber [
 	"Set the y position"
 	self position: self position x @ aNumber

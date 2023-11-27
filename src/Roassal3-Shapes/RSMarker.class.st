@@ -2,36 +2,34 @@
 I represent a marker for RSLine, RSPolygon and RSBezier
 "
 Class {
-	#name : 'RSMarker',
-	#superclass : 'RSObject',
+	#name : #RSMarker,
+	#superclass : #RSObject,
 	#instVars : [
 		'shape',
 		'offset',
 		'offsetRatio'
 	],
-	#category : 'Roassal3-Shapes-Border',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Border'
+	#category : 'Roassal3-Shapes-Border'
 }
 
-{ #category : 'converting' }
+{ #category : #converting }
 RSMarker >> asMarker [
 	^ self
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSMarker >> initialize [
 	super initialize.
 	offset := 0.
 	offsetRatio := 0
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSMarker >> offset [
 	^ offset
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSMarker >> offset: aNumber [
 	"Set the offset in pixel. Consider:
 ```
@@ -60,12 +58,12 @@ c open
 	offset := aNumber
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSMarker >> offsetRatio [
 	^ offsetRatio
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSMarker >> offsetRatio: aFloat [
 	"Set the offset ratio of the marker. The argument is a float and has to range from 0 to 1.
 
@@ -96,12 +94,12 @@ c open
 	offsetRatio := aFloat
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 RSMarker >> postCopy [
 	shape := shape copy
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 RSMarker >> setPositionTo: from vector: vector do: aBlock [
 	| angle pos |
 	angle := vector angle.
@@ -120,17 +118,17 @@ RSMarker >> setPositionTo: from vector: vector do: aBlock [
 	aBlock value: shape
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSMarker >> shape [
 	^ shape
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSMarker >> shape: anObject [
 	shape := anObject
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 RSMarker >> withEnd: controlPoints do: aBlock [
 	| from to |
 	controlPoints size < 2 ifTrue: [ ^ self ].
@@ -139,7 +137,7 @@ RSMarker >> withEnd: controlPoints do: aBlock [
 	self setPositionTo: to vector: to-from do: aBlock
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 RSMarker >> withMid: controlPoints do: aBlock [
 	controlPoints size < 3 ifTrue: [ ^ self ].
 	1 to: controlPoints size - 2 do: [ :i | | a b |
@@ -148,7 +146,7 @@ RSMarker >> withMid: controlPoints do: aBlock [
 		self setPositionTo: b vector: b - a do: aBlock ]
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 RSMarker >> withStart: controlPoints do: aBlock [
 	| from to |
 	controlPoints size < 2 ifTrue: [ ^ self ].

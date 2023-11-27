@@ -1,12 +1,10 @@
 Class {
-	#name : 'RSChebyshevParameterization',
-	#superclass : 'RSIntervalParameterization',
-	#category : 'Roassal3-Shapes-Util',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Util'
+	#name : #RSChebyshevParameterization,
+	#superclass : #RSIntervalParameterization,
+	#category : 'Roassal3-Shapes-Util'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSChebyshevParameterization >> from: from to: to samples: samples [
 
 	domain := (from to: to) chebyshevInclusive: samples.

@@ -2,14 +2,12 @@
 this attach point uses the angle between shapes
 "
 Class {
-	#name : 'RSSmartHorizontalCPController',
-	#superclass : 'RSAbstractCPController',
-	#category : 'Roassal3-Shapes-ControlPoints',
-	#package : 'Roassal3-Shapes',
-	#tag : 'ControlPoints'
+	#name : #RSSmartHorizontalCPController,
+	#superclass : #RSAbstractCPController,
+	#category : 'Roassal3-Shapes-ControlPoints'
 }
 
-{ #category : 'utilities' }
+{ #category : #utilities }
 RSSmartHorizontalCPController >> attachPointForRectangle: aRectangle lineAngle: anAngle [
 
 	| angleInDegrees |
@@ -30,7 +28,7 @@ RSSmartHorizontalCPController >> attachPointForRectangle: aRectangle lineAngle: 
 	^ aRectangle floatCenter
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSSmartHorizontalCPController >> controlPointsFor: aLine [
 	"return an array of points generated from the line"
 	| fromShape fromRectangle toShape toRectangle angle from to mid firstAnglePoint secondAnglePoint |

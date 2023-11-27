@@ -1,22 +1,20 @@
 Class {
-	#name : 'RSParameterization',
-	#superclass : 'RSObject',
+	#name : #RSParameterization,
+	#superclass : #RSObject,
 	#instVars : [
 		'domain',
 		'cumulativeArcLengths'
 	],
-	#category : 'Roassal3-Shapes-Util',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Util'
+	#category : 'Roassal3-Shapes-Util'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSParameterization >> arcLength [
 
 	^ cumulativeArcLengths last
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 RSParameterization >> collect: aBlock [
 
 	"I enumerate the domain, just avoid to expose it through an accessor."
@@ -24,31 +22,31 @@ RSParameterization >> collect: aBlock [
 	^ domain collect: aBlock
 ]
 
-{ #category : 'dispatching' }
+{ #category : #dispatching }
 RSParameterization >> controlPointsChanged: points overlappingDistancesSum: controlPolygonLength [
 
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSParameterization >> domain [
 
 	^ domain
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSParameterization >> from [
 
 	^ domain first
 ]
 
-{ #category : 'dispatching' }
+{ #category : #dispatching }
 RSParameterization >> parameterize_RSParametricLine: aLine [
 
 	self subclassResponsibility
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 RSParameterization >> postCopy [
 
 	domain := domain copy.
@@ -56,25 +54,25 @@ RSParameterization >> postCopy [
 	cumulativeArcLengths := cumulativeArcLengths copy
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSParameterization >> size [
 
 	^ domain size
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSParameterization >> to [
 
 	^ domain last
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSParameterization >> unitAt: aNumber [
 
 	^ domain unitAt: aNumber
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 RSParameterization >> withIndexDo: aBlock [
 
 	| lastPoint arcLength |

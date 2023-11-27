@@ -1,12 +1,10 @@
 Class {
-	#name : 'RSdeCasteljauDerivativeLine',
-	#superclass : 'RSdeCasteljauLine',
-	#category : 'Roassal3-Shapes-Lines',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Lines'
+	#name : #RSdeCasteljauDerivativeLine,
+	#superclass : #RSdeCasteljauLine,
+	#category : 'Roassal3-Shapes-Lines'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSdeCasteljauDerivativeLine >> deCasteljau: aSequenceableOfPoints at: t [
 
 	| aPoint |

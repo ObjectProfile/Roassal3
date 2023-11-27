@@ -1,12 +1,10 @@
 Class {
-	#name : 'RSIntervalParameterization',
-	#superclass : 'RSParameterization',
-	#category : 'Roassal3-Shapes-Util',
-	#package : 'Roassal3-Shapes',
-	#tag : 'Util'
+	#name : #RSIntervalParameterization,
+	#superclass : #RSParameterization,
+	#category : 'Roassal3-Shapes-Util'
 }
 
-{ #category : 'dispatching' }
+{ #category : #dispatching }
 RSIntervalParameterization >> controlPointsChanged: points overlappingDistancesSum: controlPolygonLength [
 
 	| samples |
@@ -16,13 +14,13 @@ RSIntervalParameterization >> controlPointsChanged: points overlappingDistancesS
 	self from: domain first to: domain last samples: samples
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSIntervalParameterization >> from: from to: to samples: samples [
 
 	cumulativeArcLengths := Array new: samples
 ]
 
-{ #category : 'dispatching' }
+{ #category : #dispatching }
 RSIntervalParameterization >> parameterize_RSParametricLine: aLine [
 
 	aLine parameterized_RSIntervalParameterization: self
