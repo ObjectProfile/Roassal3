@@ -1,6 +1,6 @@
-Extension { #name : #ConfigurationOf }
+Extension { #name : 'ConfigurationOf' }
 
-{ #category : #'*Roassal-UML-Calypso' }
+{ #category : '*Roassal-UML-Calypso' }
 ConfigurationOf class >> shouldUseUMLClassTab [
 	^ false
 ]

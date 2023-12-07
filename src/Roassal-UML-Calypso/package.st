@@ -1,1 +1,1 @@
-Package { #name : #'Roassal-UML-Calypso' }
+Package { #name : 'Roassal-UML-Calypso' }
