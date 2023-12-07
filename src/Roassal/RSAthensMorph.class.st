@@ -63,7 +63,8 @@ RSAthensMorph >> checkSession [
 { #category : 'surface management' }
 RSAthensMorph >> createSurface [
 	surface := AthensCairoSurface extent: self extent asIntegerPoint.
-	session := Smalltalk session
+	session := Smalltalk session.
+	roassalCanvas ifNotNil: [ roassalCanvas invalidate ]
 ]
 
 { #category : 'drawing' }
