@@ -36,11 +36,8 @@ RSTMarkeable >> markerEnd [
 
 { #category : 'accessing - markers' }
 RSTMarkeable >> markerEnd: marker [
-	| m |
-	marker ifNil: [ ^ nil ].
-	m := marker asMarker.
-	self markers at: 3 put: m.
-	^ m
+	^ self setMarker: 3 with: marker.
+
 ]
 
 { #category : 'accessing - markers' }
@@ -52,11 +49,7 @@ RSTMarkeable >> markerMid [
 
 { #category : 'accessing - markers' }
 RSTMarkeable >> markerMid: marker [
-	| m |
-	marker ifNil: [ ^ nil ].
-	m := marker asMarker.
-	self markers at: 2 put: m.
-	^ m
+	^ self setMarker: 2 with: marker
 ]
 
 { #category : 'public' }
@@ -77,11 +70,7 @@ RSTMarkeable >> markerStart [
 
 { #category : 'accessing - markers' }
 RSTMarkeable >> markerStart: marker [
-	| m |
-	marker ifNil: [ ^ nil ].
-	m := marker asMarker.
-	self markers at: 1 put: m.
-	^ m
+	^ self setMarker: 1 with: marker
 ]
 
 { #category : 'accessing - markers' }
@@ -130,4 +119,13 @@ RSTMarkeable >> privateMarkers: array [
 { #category : 'public' }
 RSTMarkeable >> resetMarkers [
 	self privateMarkers: nil
+]
+
+{ #category : 'private' }
+RSTMarkeable >> setMarker: index with: marker [
+	| m |
+	m := marker.
+	marker ifNotNil: [ m := marker asMarker ].
+	self markers at: index put: m.
+	^ m
 ]
