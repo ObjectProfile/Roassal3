@@ -2,8 +2,8 @@
 Default host for roassal is MorphicHost, but you can add other one.
 "
 Class {
-	#name : 'RSMorphicHost',
-	#superclass : 'RSHost',
+	#name : #RSMorphicHost,
+	#superclass : #RSHost,
 	#instVars : [
 		'morph',
 		'antialiasing',
@@ -12,47 +12,45 @@ Class {
 	#pools : [
 		'AthensCairoDefinitions'
 	],
-	#category : 'Roassal-Core',
-	#package : 'Roassal',
-	#tag : 'Core'
+	#category : 'Roassal-Core'
 }
 
-{ #category : 'antialiasing' }
+{ #category : #antialiasing }
 RSMorphicHost >> aaBest [
 	self setAA: CAIRO_ANTIALIAS_BEST
 ]
 
-{ #category : 'antialiasing' }
+{ #category : #antialiasing }
 RSMorphicHost >> aaDefault [
 	self setAA: CAIRO_ANTIALIAS_DEFAULT
 ]
 
-{ #category : 'antialiasing' }
+{ #category : #antialiasing }
 RSMorphicHost >> aaFast [
 	self setAA: CAIRO_ANTIALIAS_FAST
 ]
 
-{ #category : 'antialiasing' }
+{ #category : #antialiasing }
 RSMorphicHost >> aaGood [
 	self setAA: CAIRO_ANTIALIAS_GOOD
 ]
 
-{ #category : 'antialiasing' }
+{ #category : #antialiasing }
 RSMorphicHost >> aaGray [
 	self setAA: CAIRO_ANTIALIAS_GRAY
 ]
 
-{ #category : 'antialiasing' }
+{ #category : #antialiasing }
 RSMorphicHost >> aaNone [
 	self setAA: CAIRO_ANTIALIAS_NONE
 ]
 
-{ #category : 'antialiasing' }
+{ #category : #antialiasing }
 RSMorphicHost >> antialiasing [
 	^ antialiasing
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 RSMorphicHost >> createMorph [
 	"Create a Morph that contains myself. This is a private method"
 
@@ -62,12 +60,12 @@ RSMorphicHost >> createMorph [
 	^ morph
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSMorphicHost >> dirtyRectangle [
 	^ dirtyRectangle
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSMorphicHost >> dirtyRectangle: aRectangleOrNil [
 	| visibleRectangle |
 	dirtyRectangle := aRectangleOrNil.
@@ -76,54 +74,54 @@ RSMorphicHost >> dirtyRectangle: aRectangleOrNil [
 	dirtyRectangle := dirtyRectangle intersect: visibleRectangle
 ]
 
-{ #category : 'antialiasing' }
+{ #category : #antialiasing }
 RSMorphicHost >> disableAntialiasing [
 	self hasAntialiasing: false
 ]
 
-{ #category : 'antialiasing' }
+{ #category : #antialiasing }
 RSMorphicHost >> enableAntialiasing [
 	self hasAntialiasing: true
 ]
 
-{ #category : 'antialiasing' }
+{ #category : #antialiasing }
 RSMorphicHost >> hasAntialiasing [
 	^ self antialiasing ~= CAIRO_ANTIALIAS_NONE
 ]
 
-{ #category : 'antialiasing' }
+{ #category : #antialiasing }
 RSMorphicHost >> hasAntialiasing: aBoolean [
 	aBoolean
 		ifTrue: [ self aaGood ]
 		ifFalse: [ self aaNone ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSMorphicHost >> initialize [
 	super initialize.
 	self aaBest
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSMorphicHost >> lastMousePosition [
 	^ morph lastMousePosition - morph bounds origin
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSMorphicHost >> morph [
 	"Return the Athens morph used by the canvas to render the visualization"
 
 	^ morph
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSMorphicHost >> morph: aMorph [
 	"Set the RSAthensMorph. The canvas will directly render in the morph"
 
 	morph := aMorph
 ]
 
-{ #category : 'opening' }
+{ #category : #opening }
 RSMorphicHost >> openWithTitle: aTitleAsString [
 	"Open a canvas with a given title"
 
@@ -135,19 +133,19 @@ RSMorphicHost >> openWithTitle: aTitleAsString [
 	^ window
 ]
 
-{ #category : 'antialiasing' }
+{ #category : #antialiasing }
 RSMorphicHost >> setAA: aNumber [
 	antialiasing := aNumber
 ]
 
-{ #category : 'signalling' }
+{ #category : #signalling }
 RSMorphicHost >> signalUpdate [
 	"Signal a platform signal that the canvas should be refreshed. This is important when some shapes are modified (color or position)."
 
 	morph changed
 ]
 
-{ #category : 'update' }
+{ #category : #update }
 RSMorphicHost >> updateDirtyRectangleWith: aRectangle [
 	self dirtyRectangle: (dirtyRectangle
 			 ifNil: [ aRectangle ]

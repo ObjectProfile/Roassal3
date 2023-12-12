@@ -1,6 +1,6 @@
-Extension { #name : 'RTNode' }
+Extension { #name : #RTNode }
 
-{ #category : '*Roassal-Global-Tests' }
+{ #category : #'*Roassal-Global-Tests' }
 RTNode class >> example [
 	| root left right |
 	"you can manually manipulate the RNode, but you should use RSRTreeShapeCollection"
@@ -16,7 +16,7 @@ RTNode class >> example [
 	^ StInspectorPresenter openOn: root
 ]
 
-{ #category : '*Roassal-Global-Tests' }
+{ #category : #'*Roassal-Global-Tests' }
 RTNode class >> exampleAdd [
 	| root |
 	"same result but with balance"

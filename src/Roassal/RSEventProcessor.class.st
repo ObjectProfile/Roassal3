@@ -2,8 +2,8 @@
 Class `RSEventProcessor` is designed to be a bridge between Morphic events and Roassal shapes, allowing you to register event handlers for specific events and process them in Roassal context.
 "
 Class {
-	#name : 'RSEventProcessor',
-	#superclass : 'RSObject',
+	#name : #RSEventProcessor,
+	#superclass : #RSObject,
 	#instVars : [
 		'eventBeginingDragging',
 		'shapeBeingPointed',
@@ -11,12 +11,10 @@ Class {
 		'athensMorph',
 		'lastMousePosition'
 	],
-	#category : 'Roassal-Core',
-	#package : 'Roassal',
-	#tag : 'Core'
+	#category : 'Roassal-Core'
 }
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventKeyDown: aMorphicEvent [
 	| rsEvent |
 	rsEvent := self eventOfClass: RSKeyDown from: aMorphicEvent.
@@ -27,7 +25,7 @@ RSEventProcessor >> eventKeyDown: aMorphicEvent [
 	rsEvent shape announce: rsEvent
 ]
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventKeyUp: aMorphicEvent [
 	| rsEvent |
 	rsEvent := self eventOfClass: RSKeyUp from: aMorphicEvent.
@@ -38,7 +36,7 @@ RSEventProcessor >> eventKeyUp: aMorphicEvent [
 	rsEvent shape announce: rsEvent
 ]
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventMouseClick: aMorphicEvent [
 	| rsEvent |
 	rsEvent := self
@@ -50,7 +48,7 @@ RSEventProcessor >> eventMouseClick: aMorphicEvent [
 	rsEvent shape announce: rsEvent
 ]
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventMouseDoubleClick: aMorphicEvent [
 	| rsEvent |
 	rsEvent := self
@@ -62,7 +60,7 @@ RSEventProcessor >> eventMouseDoubleClick: aMorphicEvent [
 	rsEvent shape announce: rsEvent
 ]
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventMouseDragEnd: aMorphicEvent [
 	| rsEvent |
 	rsEvent := self eventOfClass: RSMouseDragEnd from: aMorphicEvent.
@@ -72,7 +70,7 @@ RSEventProcessor >> eventMouseDragEnd: aMorphicEvent [
 	eventBeginingDragging := nil
 ]
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventMouseDragStart: aMorphicEvent [
 	| rsEvent rsEventClass |
 	eventBeginingDragging := aMorphicEvent copy.
@@ -90,7 +88,7 @@ RSEventProcessor >> eventMouseDragStart: aMorphicEvent [
 	shapeBeingPointed announce: rsEvent
 ]
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventMouseDragging: aMorphicEvent [
 	| rsEvent step |
 	eventBeginingDragging ifNil: [ ^ self ].
@@ -111,14 +109,14 @@ RSEventProcessor >> eventMouseDragging: aMorphicEvent [
 	eventBeginingDragging := aMorphicEvent copy
 ]
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventMouseEnter: aMorphicEvent [
 	| rsEvent |
 	rsEvent := self eventOfClass: RSMouseEnter from: aMorphicEvent.
 	rsEvent shape announce: rsEvent
 ]
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventMouseLeave: aMorphicEvent [
 	| rsEvent |
 	rsEvent := self eventOfClass: RSMouseLeave from: aMorphicEvent.
@@ -127,7 +125,7 @@ RSEventProcessor >> eventMouseLeave: aMorphicEvent [
 	rsEvent shape announce: rsEvent
 ]
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventMouseMove: aMorphicEvent [
 	| rsEvent |
 	rsEvent := self eventOfClass: RSMouseMove from: aMorphicEvent.
@@ -135,7 +133,7 @@ RSEventProcessor >> eventMouseMove: aMorphicEvent [
 	rsEvent shape announce: rsEvent
 ]
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventMouseOver: aMorphicEvent [
 	| currentShape rsEvent |
 	shapeBeingPointed ifNil: [
@@ -154,7 +152,7 @@ RSEventProcessor >> eventMouseOver: aMorphicEvent [
 	shapeBeingPointed announce: rsEvent
 ]
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventMouseUp: aMorphicEvent [
 	| rsEvent |
 	rsEvent := self
@@ -166,7 +164,7 @@ RSEventProcessor >> eventMouseUp: aMorphicEvent [
 	rsEvent shape announce: rsEvent
 ]
 
-{ #category : 'events - processed' }
+{ #category : #'events - processed' }
 RSEventProcessor >> eventMouseWheel: aMorphicEvent [
 	| rsEvent |
 	rsEvent := self eventOfClass: RSMouseWheelEvent from: aMorphicEvent.
@@ -176,7 +174,7 @@ RSEventProcessor >> eventMouseWheel: aMorphicEvent [
 	rsEvent shape announce: rsEvent
 ]
 
-{ #category : 'event type' }
+{ #category : #'event type' }
 RSEventProcessor >> eventOfClass: anEventClass actionClass: anActionClass from: aMorphicEvent [
 	| relativePosition rsEvent shape |
 	"this method search for a shape in the canvas"
@@ -188,42 +186,42 @@ RSEventProcessor >> eventOfClass: anEventClass actionClass: anActionClass from: 
 	
 ]
 
-{ #category : 'event type' }
+{ #category : #'event type' }
 RSEventProcessor >> eventOfClass: anEventClass from: aMorphicEvent [
 	^ self eventOfClass: anEventClass actionClass: anEventClass from: aMorphicEvent
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSEventProcessor >> hasEvents [
 	^ eventBeginingDragging isNotNil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSEventProcessor >> isDragging [
 	^ eventBeginingDragging isNotNil
 ]
 
-{ #category : 'lastMousePosition' }
+{ #category : #lastMousePosition }
 RSEventProcessor >> lastMousePosition [
 	^ lastMousePosition
 ]
 
-{ #category : 'lastMousePosition' }
+{ #category : #lastMousePosition }
 RSEventProcessor >> lastMousePosition: aPoint [
 	lastMousePosition := aPoint
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSEventProcessor >> morph [
 	^ athensMorph
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSEventProcessor >> morph: aRSAthensMorph [
 	athensMorph := aRSAthensMorph
 ]
 
-{ #category : 'event type' }
+{ #category : #'event type' }
 RSEventProcessor >> mouseEventOfClass: defaultClass ifLeftButton: leftButtonClass ifRightButton: rightButtonClass from: aMorphicEvent [
 	| rsEventClass |
 	rsEventClass := defaultClass.
@@ -234,7 +232,7 @@ RSEventProcessor >> mouseEventOfClass: defaultClass ifLeftButton: leftButtonClas
 	^ self eventOfClass: rsEventClass actionClass: defaultClass from: aMorphicEvent
 ]
 
-{ #category : 'event type' }
+{ #category : #'event type' }
 RSEventProcessor >> newEventOfClass: anEventClass from: aMorphicEvent [
 	| relativePosition rsEvent |
 	"this method does not search for a shape in the canvas"
@@ -247,28 +245,28 @@ RSEventProcessor >> newEventOfClass: anEventClass from: aMorphicEvent [
 	^ rsEvent
 ]
 
-{ #category : 'accessing - shapes' }
+{ #category : #'accessing - shapes' }
 RSEventProcessor >> relativePositionFor: evt [
 	^ evt position - athensMorph bounds origin
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSEventProcessor >> roassalCanvas [
 	^ roassalCanvas
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSEventProcessor >> roassalCanvas: aRSCanvas [
 	roassalCanvas := aRSCanvas
 ]
 
-{ #category : 'accessing - shapes' }
+{ #category : #'accessing - shapes' }
 RSEventProcessor >> shapeForEvent: anEvent [
 	"Return the roassal shape for the event provided as argument"
 	^ roassalCanvas shapeWithActionForPositionInPixels: (self relativePositionFor: anEvent)
 ]
 
-{ #category : 'events - processing' }
+{ #category : #'events - processing' }
 RSEventProcessor >> transformedFrom: aMorph [
 	"method used by MouseClickState"
 	^ athensMorph transformedFrom: aMorph

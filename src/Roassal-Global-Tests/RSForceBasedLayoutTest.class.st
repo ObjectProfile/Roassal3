@@ -1,16 +1,14 @@
 Class {
-	#name : 'RSForceBasedLayoutTest',
-	#superclass : 'RSTest',
+	#name : #RSForceBasedLayoutTest,
+	#superclass : #RSTest,
 	#instVars : [
 		'canvas',
 		'boxes'
 	],
-	#category : 'Roassal-Global-Tests-Layouts',
-	#package : 'Roassal-Global-Tests',
-	#tag : 'Layouts'
+	#category : 'Roassal-Global-Tests-Layouts'
 }
 
-{ #category : 'running' }
+{ #category : #running }
 RSForceBasedLayoutTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new.
@@ -23,7 +21,7 @@ RSForceBasedLayoutTest >> setUp [
 	canvas addAll: boxes
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSForceBasedLayoutTest >> testAddNodesAndEdges [
 
 	| groups |
@@ -36,7 +34,7 @@ RSForceBasedLayoutTest >> testAddNodesAndEdges [
 	self assert: boxes size equals: groups size
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSForceBasedLayoutTest >> testAttributes [
 	RSForceBasedLayout new
 		length: 100;
@@ -86,7 +84,7 @@ RSForceBasedLayoutTest >> testAttributes [
 131 @ 426}
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSForceBasedLayoutTest >> testAutoRepulse [
 	self assert: RSForceBasedLayout new autoRepulse equals: false.
 	RSForceBasedLayout new
@@ -135,7 +133,7 @@ RSForceBasedLayoutTest >> testAutoRepulse [
 -20 @ 40}
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSForceBasedLayoutTest >> testBasic [
 	RSForceBasedLayout new
 		doNotUseProgressBar;
@@ -183,7 +181,7 @@ RSForceBasedLayoutTest >> testBasic [
 -18 @ 38}
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSForceBasedLayoutTest >> testBasic02 [
 	RSForceBasedLayout on: boxes.
 	self assertIntegerPosition: boxes equals: {0 @ -44.

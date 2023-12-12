@@ -2,14 +2,12 @@
 I have basic animation examples
 "
 Class {
-	#name : 'RSBasicAnimationExamples',
-	#superclass : 'RSAbstractExamples',
-	#category : 'Roassal-Examples-Basic',
-	#package : 'Roassal-Examples',
-	#tag : 'Basic'
+	#name : #RSBasicAnimationExamples,
+	#superclass : #RSAbstractExamples,
+	#category : 'Roassal-Examples-Basic'
 }
 
-{ #category : 'examples' }
+{ #category : #examples }
 RSBasicAnimationExamples >> example01Basic [
 
 	<script: 'self new example01Basic open'>
@@ -42,7 +40,7 @@ RSBasicAnimationExamples >> example01Basic [
 	^ c
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 RSBasicAnimationExamples >> example02Sequential [
 
 	<script: 'self new example02Sequential open'>
@@ -76,7 +74,7 @@ RSBasicAnimationExamples >> example02Sequential [
 	^ c
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 RSBasicAnimationExamples >> example03Ramp [
 
 	<script: 'self new example03Ramp open'>
@@ -103,7 +101,7 @@ RSBasicAnimationExamples >> example03Ramp [
 	^ c
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBasicAnimationExamples >> example04DashAnimation [
 
 	<script: 'self new example04DashAnimation open'>
@@ -139,7 +137,7 @@ RSBasicAnimationExamples >> example04DashAnimation [
 	^ c
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBasicAnimationExamples >> example05LoopEvent [
 
 	<script: 'self new example05LoopEvent open'>
@@ -162,7 +160,7 @@ RSBasicAnimationExamples >> example05LoopEvent [
 	^ canvas
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBasicAnimationExamples >> example06Parallel [
 
 	<script: 'self new example06Parallel open'>
@@ -208,7 +206,7 @@ RSBasicAnimationExamples >> example06Parallel [
 	^ canvas
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBasicAnimationExamples >> example07CornerRadius [
 	<script: 'self new example07CornerRadius open'>
 	| c paint b from to |
@@ -238,7 +236,7 @@ RSBasicAnimationExamples >> example07CornerRadius [
 	^ c
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBasicAnimationExamples >> example08Markers [
 	<script: 'self new example08Markers open'>
 	| canvas line radius marker red |
@@ -287,7 +285,7 @@ RSBasicAnimationExamples >> example08Markers [
 	^ canvas
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBasicAnimationExamples >> example09Easing [
 	<script: 'self new example09Easing open'>
 	| canvas radius numberOfCircles circles innerRadius |
@@ -328,7 +326,7 @@ RSBasicAnimationExamples >> example09Easing [
 	^ canvas
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSBasicAnimationExamples >> example10Scales [
 
 	<script: 'self new example10Scales open'>
@@ -459,7 +457,7 @@ RSBasicAnimationExamples >> example10Scales [
 	^ c
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBasicAnimationExamples >> order [
 	^ 10
 ]

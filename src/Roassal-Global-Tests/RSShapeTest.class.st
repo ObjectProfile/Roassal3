@@ -1,12 +1,10 @@
 Class {
-	#name : 'RSShapeTest',
-	#superclass : 'RSTest',
-	#category : 'Roassal-Global-Tests-Shapes',
-	#package : 'Roassal-Global-Tests',
-	#tag : 'Shapes'
+	#name : #RSShapeTest,
+	#superclass : #RSTest,
+	#category : 'Roassal-Global-Tests-Shapes'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testAllConnectedShapes [
 	| canvas shapes lb node1 node2 node3 node5 node6 |
 	canvas := RSCanvas new.
@@ -37,7 +35,7 @@ RSShapeTest >> testAllConnectedShapes [
 	self assert: node5 allRecursiveConnectedNodes equals: node6 allRecursiveConnectedNodes
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testBorderDoUpdatesInvalidateShape [
 
 	| tmp1 tmp3 |
@@ -56,7 +54,7 @@ RSShapeTest >> testBorderDoUpdatesInvalidateShape [
 		equals: ( -16 asPoint corner: 16 asPoint)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testChangeBorderUpdatesEncompassingRectangle [
 	| box |
 	box := RSBox new
@@ -73,7 +71,7 @@ RSShapeTest >> testChangeBorderUpdatesEncompassingRectangle [
 		equals: (-14 asPoint corner: 14 asPoint)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testChangeBorderWidthUpdatesEncompassingRectangle [
 	| box |
 	box := RSBox new
@@ -91,7 +89,7 @@ RSShapeTest >> testChangeBorderWidthUpdatesEncompassingRectangle [
 		equals: (-16 asPoint corner: 16 asPoint)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testEmptyIndexesArray [
 
 	| box |
@@ -99,7 +97,7 @@ RSShapeTest >> testEmptyIndexesArray [
 	self assert: box indexesFromRoot isEmpty
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testEncompassingRectangleContainsBorderWidth [
 	| box |
 	box := RSBox new
@@ -111,7 +109,7 @@ RSShapeTest >> testEncompassingRectangleContainsBorderWidth [
 	self assert: box encompassingRectangle equals: (-7 asPoint corner: 7 asPoint)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testExtent [
 	| extent box |
 	extent := 100@100.
@@ -120,7 +118,7 @@ RSShapeTest >> testExtent [
 	self assert: box extent equals: extent
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testExtentWithBorder [
 	| extent box |
 	extent := 100@100.
@@ -130,7 +128,7 @@ RSShapeTest >> testExtentWithBorder [
 	self assert: box extent equals: extent
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testExtentWithBorderMin [
 	| extent box borderWidth|
 	extent := 1@1.
@@ -141,7 +139,7 @@ RSShapeTest >> testExtentWithBorderMin [
 	self assert: box extent equals: borderWidth asPoint.
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testHasModel [
 
 	self deny: RSCircle new hasModel.
@@ -150,7 +148,7 @@ RSShapeTest >> testHasModel [
 	self deny: RSLine new hasModel
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testIncomingAndOutgoingShapes [
 
 	| c shapes lb node1 node5 |
@@ -176,7 +174,7 @@ RSShapeTest >> testIncomingAndOutgoingShapes [
 	self assert: node5 outgoingShapes equals: (c shapesFromModels: #(10 11))
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testIndexesArray [
 
 	| box canvas |
@@ -188,7 +186,7 @@ RSShapeTest >> testIndexesArray [
 	self assert: box indexesFromRoot first equals: 1
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testIndexesArrayWithComposites [
 
 	| box canvas comp box1 comp1 |
@@ -210,7 +208,7 @@ RSShapeTest >> testIndexesArrayWithComposites [
 	self assert: box1 indexesFromRoot second equals: 1
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testInvert [
 
 	| rectangle canvas positionBefore |
@@ -225,7 +223,7 @@ RSShapeTest >> testInvert [
 	self assert: rectangle position equals: (positionBefore y @ positionBefore x)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testModelForIt [
 
 	| s |
@@ -235,7 +233,7 @@ RSShapeTest >> testModelForIt [
 	self assert: s color equals: Color pink
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testModels [
 
 	| shapes |
@@ -246,7 +244,7 @@ RSShapeTest >> testModels [
 	self assert: (shapes collect: #width) asSet asArray equals: #(10)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testModelsSize [
 
 	| shapes |
@@ -258,7 +256,7 @@ RSShapeTest >> testModelsSize [
 	self assert: (shapes collect: #height) asArray equals: (1 to: 10) asArray
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSShapeTest >> testTranslateMiddleRightTo [
 
 	| c center lbl |

@@ -1,12 +1,10 @@
 Class {
-	#name : 'RSDSMTest',
-	#superclass : 'RSTest',
-	#category : 'Roassal-Global-Tests-DSM',
-	#package : 'Roassal-Global-Tests',
-	#tag : 'DSM'
+	#name : #RSDSMTest,
+	#superclass : #RSTest,
+	#category : 'Roassal-Global-Tests-DSM'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSDSMTest >> testColor [
 	| b |
 
@@ -17,7 +15,7 @@ RSDSMTest >> testColor [
 	b build
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSDSMTest >> testDefault [
 
 	| dsm |
@@ -25,7 +23,7 @@ RSDSMTest >> testDefault [
 	self assert: dsm numberOfObjects equals: 0
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSDSMTest >> testDep [
 
 	| dsm v ts |
@@ -41,7 +39,7 @@ RSDSMTest >> testDep [
 	self assert: ts size equals: 2
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSDSMTest >> testExample01 [
 	| dsm |
 	dsm := RSDSM new.
@@ -50,7 +48,7 @@ RSDSMTest >> testExample01 [
 	dsm build
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSDSMTest >> testExample02 [
 
 	| dsm shapes column5 row5 |
@@ -77,7 +75,7 @@ RSDSMTest >> testExample02 [
 	column5 first announce: (RSMouseEnter new shape: column5 first)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSDSMTest >> testLabelShapeColor [
 	| b shapes |
 	b := RSDSM new.
@@ -93,7 +91,7 @@ RSDSMTest >> testLabelShapeColor [
 	self assert: shapes second color equals: Color red
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSDSMTest >> testLabelShapeHeight [
 	| b |
 	b := RSDSM new.
@@ -104,7 +102,7 @@ RSDSMTest >> testLabelShapeHeight [
 	self assert: b labelsX first color equals: Color blue
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSDSMTest >> testLabelsLeftPosition [
 	| b shapes firstColumn |
 	b := RSDSM new.
@@ -119,7 +117,7 @@ RSDSMTest >> testLabelsLeftPosition [
 		self assert: box position y equals: label position y  ]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSDSMTest >> testLabelsTopPosition [
 	| b labels firstRow |
 	b := RSDSM new.
@@ -141,7 +139,7 @@ RSDSMTest >> testLabelsTopPosition [
 		 ]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSDSMTest >> testUsingXAndY [
 	| b |
 

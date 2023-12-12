@@ -1,17 +1,15 @@
 Class {
-	#name : 'RSCollectionTest',
-	#superclass : 'ParametrizedTestCase',
+	#name : #RSCollectionTest,
+	#superclass : #ParametrizedTestCase,
 	#instVars : [
 		'shapeCollection',
 		'shapeCollectionClass',
 		'canvas'
 	],
-	#category : 'Roassal-Global-Tests-Rendering',
-	#package : 'Roassal-Global-Tests',
-	#tag : 'Rendering'
+	#category : 'Roassal-Global-Tests-Rendering'
 }
 
-{ #category : 'building suites' }
+{ #category : #'building suites' }
 RSCollectionTest class >> testParameters [
 	| m classesToConsider |
 	m := ParametrizedTestMatrix new.
@@ -22,7 +20,7 @@ RSCollectionTest class >> testParameters [
 	^ m
 ]
 
-{ #category : 'running' }
+{ #category : #running }
 RSCollectionTest >> setUp [
 	super setUp.
 	shapeCollection := self shapeCollectionClass new.
@@ -30,29 +28,29 @@ RSCollectionTest >> setUp [
 	canvas shapeCollection: shapeCollection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSCollectionTest >> shapeCollection [
 	^ shapeCollection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSCollectionTest >> shapeCollection: anObject [
 
 	shapeCollection := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSCollectionTest >> shapeCollectionClass [
 
 	^ shapeCollectionClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSCollectionTest >> shapeCollectionClass: anObject [
 	shapeCollectionClass := anObject
 ]
 
-{ #category : 'tests - adding' }
+{ #category : #'tests - adding' }
 RSCollectionTest >> testAdd [
 	canvas add: RSBox new.
 	self assert: canvas shapes size equals: 1.
@@ -83,7 +81,7 @@ RSCollectionTest >> testAdd [
 	self assert: shapeCollection size equals: 3
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSCollectionTest >> testContainsPoint [
 	| box shape position |
 	position := 1000 asPoint.
@@ -102,7 +100,7 @@ RSCollectionTest >> testContainsPoint [
 	self assert: shape equals: box
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSCollectionTest >> testContainsPointInComposite [
 	| box shapes position composite |
 	position := 1000 asPoint.
@@ -121,7 +119,7 @@ RSCollectionTest >> testContainsPointInComposite [
 	self assert: shapes size equals: 2
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSCollectionTest >> testContainsShapeWithInteractions [
 	| box shape position |
 	position := 1000 asPoint.
@@ -140,7 +138,7 @@ RSCollectionTest >> testContainsShapeWithInteractions [
 	self assert: shape equals: box
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSCollectionTest >> testGetEntriesFromRectangleInParent [
 
 	| listOfShapes box composite |
@@ -157,7 +155,7 @@ RSCollectionTest >> testGetEntriesFromRectangleInParent [
 	self assert: listOfShapes asArray equals: { composite }
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSCollectionTest >> testGetShapeFromRectangle [
 
 	| listOfShapes |
@@ -169,7 +167,7 @@ RSCollectionTest >> testGetShapeFromRectangle [
 	self assert: (listOfShapes includes: shapeCollection anyOne)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSCollectionTest >> testGetShapesFromRectangle [
 
 	| listOfShapes box1 box2 box3 |
@@ -198,7 +196,7 @@ RSCollectionTest >> testGetShapesFromRectangle [
 			box3 }
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSCollectionTest >> testGetShapesFromRectangleInCompositeWithChildOutside [
 
 	| listOfShapes box composite |
@@ -216,14 +214,14 @@ RSCollectionTest >> testGetShapesFromRectangleInCompositeWithChildOutside [
 	self assert: listOfShapes asArray isEmpty
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSCollectionTest >> testOneElement [
 
 	shapeCollection add: (RSBox new size: 10).
 	self deny: shapeCollection isEmpty
 ]
 
-{ #category : 'tests - removing' }
+{ #category : #'tests - removing' }
 RSCollectionTest >> testRemoveOneElement [
 	| box |
 	box := RSBox new.
@@ -233,7 +231,7 @@ RSCollectionTest >> testRemoveOneElement [
 	self assert: shapeCollection isEmpty
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSCollectionTest >> testSortResultArray [
 
 	| shapes a b c d tree e |
