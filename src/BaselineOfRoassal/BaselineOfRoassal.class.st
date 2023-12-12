@@ -28,19 +28,22 @@ BaselineOfRoassal >> baseline: spec [
 	<baseline>
 	"https://github.com/pharo-graphics/Roassal"
 	"pharo7 not supported"
-	spec for: #'pharo8.x' do: [ self baselineForPharo8: spec ].
-	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
-	spec for: #'pharo10.x' do: [ self baselineForPharo10: spec ].
-	spec for: #'pharo11.x' do: [ self baselineForPharo11: spec ].
-	spec for: #'common' do: [ self baselineForCommon: spec ].
+	spec 
+		for: #'pharo8.x' do: [ self baselineForPharo8: spec ];
+		for: #'pharo9.x' do: [ self baselineForPharo9: spec ];
+		for: #'pharo10.x' do: [ self baselineForPharo10: spec ];
+		for: #'pharo11.x' do: [ self baselineForPharo11: spec ];
+		for: #'pharo12.x' do: [ self baselineForPharo12: spec ];
+		for: #'common' do: [ self baselineForCommon: spec ].
 ]
 
 { #category : 'baselines' }
 BaselineOfRoassal >> baselineForCommon: spec [
 	self dependencies: spec.
 	self registerPackages: spec.
+	spec package: #'Roassal-Pharo12'.
 	self roassalGroups: spec 
-		core: self corePackagesNames
+		core: self corePackagesNames, #('Roassal-Pharo12')
 		examples: self examplePackagesNames
 		tests: self testPackagesNames.
 ]
@@ -66,6 +69,11 @@ BaselineOfRoassal >> baselineForPharo11: spec [
 		core: self corePackagesNames, #('Roassal-Pharo')
 		examples: self examplePackagesNames
 		tests: self testPackagesNames.
+]
+
+{ #category : 'baselines' }
+BaselineOfRoassal >> baselineForPharo12: spec [
+	self baselineForCommon: spec
 ]
 
 { #category : 'baselines' }
