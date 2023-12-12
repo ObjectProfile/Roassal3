@@ -271,3 +271,23 @@ RSBarChartExample >> example07DoubleBar [
 		when: RSMouseClick do: [ :evt | classes inspect ] for: self.
 	^ plot canvas
 ]
+
+{ #category : 'examples' }
+RSBarChartExample >> example08DisplayErrorLines [
+
+	<script: 'self new example08DisplayErrorLines open'>
+	| aluminium copper steel metals plot |
+	aluminium := #(6.4e-5 3.01e-5 2.36e-5 3.0e-5 7.0e-5 4.5e-5 3.8e-5 4.2e-5 2.62e-5 3.6e-5).
+	copper := #(4.5e-5 1.97e-5 1.6e-5 1.97e-5 4.0e-5 2.4e-5 1.9e-5 2.41e-5 1.85e-5 3.3e-5).
+	steel := #(3.3e-5 1.2e-5 0.9e-5 1.2e-5 1.3e-5 1.6e-5 1.4e-5 1.58e-5 1.32e-5 2.1e-5).
+	metals := { aluminium. copper. steel }.
+	plot := (RSBarPlot barHeights: (metals collect: #average))
+		errors: (metals collect: #stdev).
+	plot horizontalTick
+		fromNames: #(Aluminium Cooper Steel).
+	plot verticalTick
+		labelConversion: [ :val | val asFloat printShowingDecimalPlaces: 5 ].
+	plot title: 'Coefficent of Thermal Expansion (CTE) of Three Metals'.
+	plot extent: 400@300.
+	^ plot
+]

@@ -205,6 +205,7 @@ RSBoundingShape >> globalEncompassingRectangle [
 
 { #category : 'matrix' }
 RSBoundingShape >> globalMatrix [
+	parent ifNil: [ ^ nil ].
 	^ parent globalMatrix multiplyBy: matrix
 ]
 

@@ -302,7 +302,9 @@ RSAbstractLine >> initialize [
 RSAbstractLine >> intersects: aRectangle [
 	| rect res globalMatrix |
 	self isInACanvas ifFalse: [ ^ false ].
-	globalMatrix := self parent globalMatrix.
+	parent ifNil: [ ^ true ].
+	globalMatrix := parent globalMatrix.
+	globalMatrix ifNil: [ ^ true ].
 	rect := self
 		computeEncompassingRectangleFor: self encompassingRectangle
 		matrix: globalMatrix.
