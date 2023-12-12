@@ -1,11 +1,11 @@
-Extension { #name : 'RPackage' }
+Extension { #name : 'Package' }
 
 { #category : '*Roassal' }
-RPackage >> dependentPackages [
+Package >> dependentPackages [
 	"
 	Return the list of packages that I depend on
 
-	(RPackageOrganizer default packageNamed: 'Roassal') dependentPackages
+	(PackageOrganizer default packageNamed: 'Roassal') dependentPackages
 	"
 	^ (self definedClasses flatCollect: #dependentClasses), self extendedClasses collect: #package as: Set
 ]
