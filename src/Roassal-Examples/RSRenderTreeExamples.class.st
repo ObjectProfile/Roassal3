@@ -3,14 +3,12 @@ This class is used to customize the render collection of roassal
 check RSAbstractRenderCollection
 "
 Class {
-	#name : 'RSRenderTreeExamples',
-	#superclass : 'RSAbstractExamples',
-	#category : 'Roassal-Examples-Basic',
-	#package : 'Roassal-Examples',
-	#tag : 'Basic'
+	#name : #RSRenderTreeExamples,
+	#superclass : #RSAbstractExamples,
+	#category : 'Roassal-Examples-Basic'
 }
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSRenderTreeExamples >> example01BigVisualization131k [
 	<script: 'self new example01BigVisualization131k open
 		setLabel: ''131K'' '>
@@ -35,7 +33,7 @@ RSRenderTreeExamples >> example01BigVisualization131k [
 	^ c
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 	<script: 'self new example02BigVisualizationHalfMillion open'>
 	<noTest>
@@ -60,7 +58,7 @@ RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 	^ c
 ]
 
-{ #category : 'lines' }
+{ #category : #lines }
 RSRenderTreeExamples >> example03RTree [
 	<script: 'self new example03RTree inspect'>
 	<noTest>

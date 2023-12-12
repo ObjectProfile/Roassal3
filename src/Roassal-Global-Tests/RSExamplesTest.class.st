@@ -1,12 +1,10 @@
 Class {
-	#name : 'RSExamplesTest',
-	#superclass : 'RSTest',
-	#category : 'Roassal-Global-Tests-Examples',
-	#package : 'Roassal-Global-Tests',
-	#tag : 'Examples'
+	#name : #RSExamplesTest,
+	#superclass : #RSTest,
+	#category : 'Roassal-Global-Tests-Examples'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSExamplesTest class >> validMethods: methods [
 	| result |
 	result := methods select: [ :met |
@@ -17,7 +15,7 @@ RSExamplesTest class >> validMethods: methods [
 	^ result
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSExamplesTest >> executeTest: method in: exampleClass [
 	| res |
 	res := exampleClass perform: method selector.
@@ -26,7 +24,7 @@ RSExamplesTest >> executeTest: method in: exampleClass [
 		description: '''' , method selector, ''', should return a canvas or view.'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSExamplesTest >> testClassSideExamples [
 	| methods errors noSystemWindow |
 	self timeLimit: 10 minutes.
@@ -49,7 +47,7 @@ RSExamplesTest >> testClassSideExamples [
 	self assert: noSystemWindow isEmpty description: 'Some errors in class side examples'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSExamplesTest >> testExamples [
 	"This tests execute all the examples of Roassal. Introspectively, it looks for subclasses of RSAbstractExamples"
 	| clazz withErrors sameResult |

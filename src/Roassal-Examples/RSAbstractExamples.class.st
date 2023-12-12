@@ -5,19 +5,17 @@ The goal is to make the examples part of the tests.
 If you wish to add examples to Roassal, then you need to subclass me.
 "
 Class {
-	#name : 'RSAbstractExamples',
-	#superclass : 'RSObject',
-	#category : 'Roassal-Examples-Core',
-	#package : 'Roassal-Examples',
-	#tag : 'Core'
+	#name : #RSAbstractExamples,
+	#superclass : #RSObject,
+	#category : 'Roassal-Examples-Core'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSAbstractExamples >> label [
 	^ self className
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSAbstractExamples >> order [
 	^ 100
 ]

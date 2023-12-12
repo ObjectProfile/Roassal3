@@ -1,6 +1,6 @@
-Extension { #name : 'RSGroup' }
+Extension { #name : #RSGroup }
 
-{ #category : '*Roassal' }
+{ #category : #'*Roassal' }
 RSGroup >> entriesAtRectangle: aRectangle [
 	^ self select: [ :each | each encompassingRectangle intersects: aRectangle ]
 ]

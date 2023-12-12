@@ -1,12 +1,10 @@
 Class {
-	#name : 'RSRoassalTest',
-	#superclass : 'RSTest',
-	#category : 'Roassal-Global-Tests-Core',
-	#package : 'Roassal-Global-Tests',
-	#tag : 'Core'
+	#name : #RSRoassalTest,
+	#superclass : #RSTest,
+	#category : 'Roassal-Global-Tests-Core'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSRoassalTest >> testInitializeInRoassal [
 
 	| pkgs methods violating |
@@ -16,7 +14,7 @@ RSRoassalTest >> testInitializeInRoassal [
 	self assert: violating isEmpty description: 'Roassal initialize methods should be categorized in initialization'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSRoassalTest >> testOpen [
 
 	| v |
@@ -25,7 +23,7 @@ RSRoassalTest >> testOpen [
 	v delete
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSRoassalTest >> testOpenOnce [
 
 	| v |
@@ -34,7 +32,7 @@ RSRoassalTest >> testOpenOnce [
 	v delete
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSRoassalTest >> testRemoveInteractionIfPresent [
 	| box |
 	box := RSBox new.
@@ -53,7 +51,7 @@ RSRoassalTest >> testRemoveInteractionIfPresent [
 	self assert: (box announcer handleEventClass: RSMouseMove)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSRoassalTest >> testSubscriberClass [
 	| box |
 	box := RSBox new.
@@ -65,7 +63,7 @@ RSRoassalTest >> testSubscriberClass [
 	{RSPopup activationEvent}, RSPopup removeEvents do: [ :evt | self assert:  (box announcer handleEventClass: evt). ]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 RSRoassalTest >> testsRsValue [
 	| myCutomObjectValueProvider posiblesValuesForRoassal model colors |
 	myCutomObjectValueProvider := NSScale category10.

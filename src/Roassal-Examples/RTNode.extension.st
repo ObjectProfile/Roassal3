@@ -1,6 +1,6 @@
-Extension { #name : 'RTNode' }
+Extension { #name : #RTNode }
 
-{ #category : '*Roassal-Examples' }
+{ #category : #'*Roassal-Examples' }
 RTNode >> bulkLoad: aCollection from: a to: b [
 	"a and b are indeces, used to copy part of the boxes"
 	b < a ifTrue: [ ^ self error: 'should not' ].

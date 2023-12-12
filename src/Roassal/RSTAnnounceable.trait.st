@@ -2,13 +2,11 @@
 Used for objects and shapes with an announcer
 "
 Trait {
-	#name : 'RSTAnnounceable',
-	#category : 'Roassal-Core',
-	#package : 'Roassal',
-	#tag : 'Core'
+	#name : #RSTAnnounceable,
+	#category : 'Roassal-Core'
 }
 
-{ #category : 'announcer' }
+{ #category : #announcer }
 RSTAnnounceable >> announce: anEvent [
 	| a |
 	a := self privateAnnouncer.
@@ -16,13 +14,13 @@ RSTAnnounceable >> announce: anEvent [
 	a announce: anEvent value
 ]
 
-{ #category : 'announcer' }
+{ #category : #announcer }
 RSTAnnounceable >> announcementClasses [
 	"must return a collection of Announcement classes"
 	^ self explicitRequirement
 ]
 
-{ #category : 'announcer' }
+{ #category : #announcer }
 RSTAnnounceable >> announcer [
 	^ self privateAnnouncer ifNil: [
 		| a |
@@ -31,12 +29,12 @@ RSTAnnounceable >> announcer [
 		a ]
 ]
 
-{ #category : 'announcer' }
+{ #category : #announcer }
 RSTAnnounceable >> announcer: anAnnouncer [
 	self explicitRequirement
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 RSTAnnounceable >> click [
 	"Simulate a click.
 
@@ -58,7 +56,7 @@ c
 		yourself)
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 RSTAnnounceable >> executeWithoutAnnouncer: aBlock [
 	| ann |
 	ann := self privateAnnouncer.
@@ -67,13 +65,13 @@ RSTAnnounceable >> executeWithoutAnnouncer: aBlock [
 	self announcer: ann
 ]
 
-{ #category : 'announcer' }
+{ #category : #announcer }
 RSTAnnounceable >> getInteractionsForClass: anInteractionClass [
 	"Return the Announcement subscriptions for the interaction"
 	^ self announcer subscriptions getInteractionsForClass: anInteractionClass
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSTAnnounceable >> handleAnnouncementClass: aClass [
 	| subscriptions evt |
 	evt := aClass new.
@@ -82,7 +80,7 @@ RSTAnnounceable >> handleAnnouncementClass: aClass [
 	^ subscriptions subscriptions anySatisfy: [ :each | each handlesAnnouncement: evt ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSTAnnounceable >> hasInteraction: anInteractionClass [
 	"Return true or false if the receiver has an interaction. Note that the argument has to be an interaction class. And not an event"
 	| subscriptions |
@@ -91,7 +89,7 @@ RSTAnnounceable >> hasInteraction: anInteractionClass [
 	^ subscriptions handleSubscriberClass: anInteractionClass
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 RSTAnnounceable >> leftClick [
 
 	self announce: (RSMouseLeftClick new
@@ -100,19 +98,19 @@ RSTAnnounceable >> leftClick [
 		yourself)
 ]
 
-{ #category : 'announcer' }
+{ #category : #announcer }
 RSTAnnounceable >> privateAnnouncer [
 	^ self explicitRequirement
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 RSTAnnounceable >> removeInteractionIfPresent: anInteractionClass [
 	"Remove all the callbacks associated to the interaction."
 	(self hasInteraction: anInteractionClass) ifFalse: [ ^ self ].
 	(self getInteractionsForClass: anInteractionClass) do: [ :int | self announcer unsubscribe: int ]
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 RSTAnnounceable >> shiftLeftClick [
 
 	self announce: (RSMouseLeftClick new
@@ -122,7 +120,7 @@ RSTAnnounceable >> shiftLeftClick [
 			 yourself)
 ]
 
-{ #category : 'announcer' }
+{ #category : #announcer }
 RSTAnnounceable >> subscriptions [
 	| anAnnouncer |
 	anAnnouncer := self privateAnnouncer.
@@ -130,7 +128,7 @@ RSTAnnounceable >> subscriptions [
 	^ anAnnouncer subscriptions
 ]
 
-{ #category : 'protocol' }
+{ #category : #protocol }
 RSTAnnounceable >> when: anAnnouncementClass do: aValuable [
 
 	| subscriberForDeprecation |
@@ -153,13 +151,13 @@ RSTAnnounceable >> when: anAnnouncementClass do: aValuable [
 	self when: anAnnouncementClass do: aValuable for: aValuable receiver
 ]
 
-{ #category : 'announcer' }
+{ #category : #announcer }
 RSTAnnounceable >> when: event do: aBlock for: aSubscriber [
 
 	self announcer when: event do: aBlock for: aSubscriber
 ]
 
-{ #category : 'announcer' }
+{ #category : #announcer }
 RSTAnnounceable >> when: anAnnouncementClass send: aSelector to: anObject [
 	self announcer when: anAnnouncementClass send: aSelector to: anObject
 ]

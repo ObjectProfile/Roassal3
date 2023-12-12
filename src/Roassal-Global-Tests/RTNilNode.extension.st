@@ -1,6 +1,6 @@
-Extension { #name : 'RTNilNode' }
+Extension { #name : #RTNilNode }
 
-{ #category : '*Roassal-Global-Tests' }
+{ #category : #'*Roassal-Global-Tests' }
 RTNilNode class >> example [
 	| null |
 	null := self new.
