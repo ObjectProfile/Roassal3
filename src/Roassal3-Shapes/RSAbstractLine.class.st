@@ -61,7 +61,7 @@ Class {
 		'to',
 		'markers'
 	],
-	#category : #'Roassal3-Shapes-Lines'
+	#category : 'Roassal3-Shapes-Lines'
 }
 
 { #category : #testing }
@@ -163,6 +163,12 @@ RSAbstractLine >> dashArray: arrayOfNumbers [
 { #category : #'style - dashes' }
 RSAbstractLine >> dashed [
 	self dashArray: #(4)
+]
+
+{ #category : #'style - dashes' }
+RSAbstractLine >> dotted [
+
+	self dashArray: { Float goldenRatio }
 ]
 
 { #category : #accessing }

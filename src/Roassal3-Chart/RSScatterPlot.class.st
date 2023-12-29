@@ -44,35 +44,37 @@ p canvas
 
 "
 Class {
-	#name : #RSScatterPlot,
-	#superclass : #RSAbstractPlot,
+	#name : 'RSScatterPlot',
+	#superclass : 'RSAbstractPlot',
 	#instVars : [
 		'ellipses'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : 'Roassal3-Chart-Core',
+	#package : 'Roassal3-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSScatterPlot >> createdShapes [
 	^ ellipses
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSScatterPlot >> defaultShape [
 	^ RSEllipse new noPaint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSScatterPlot >> ellipses [
 	^ ellipses
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSScatterPlot >> isScatterPlot [
 	^ true
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSScatterPlot >> renderIn: canvas [
 	| newPoint color |
 	super renderIn: canvas.

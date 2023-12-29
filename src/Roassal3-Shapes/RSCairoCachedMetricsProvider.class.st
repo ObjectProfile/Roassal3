@@ -36,7 +36,7 @@ Class {
 	#instVars : [
 		'cache'
 	],
-	#category : #'Roassal3-Shapes-TextMetrics'
+	#category : 'Roassal3-Shapes-TextMetrics'
 }
 
 { #category : #hooks }

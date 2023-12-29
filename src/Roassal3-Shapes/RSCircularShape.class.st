@@ -4,7 +4,7 @@ Each of my subclasses describes a circular shape
 Class {
 	#name : #RSCircularShape,
 	#superclass : #RSBoundingShape,
-	#category : #'Roassal3-Shapes-Bounding'
+	#category : 'Roassal3-Shapes-Bounding'
 }
 
 { #category : #testing }

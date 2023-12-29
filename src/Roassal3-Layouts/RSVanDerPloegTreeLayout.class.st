@@ -1,32 +1,52 @@
 "
-I am the vertical tree layout algorithm described in the publication ""Drawing non-layered tidy trees in linear time"" by Atze van der Ploeg [1] (companion repo at [2]).
+I am the vertical tree layout algorithm described in the publication [Drawing non-layered tidy trees in linear time](https://www.semanticscholar.org/paper/Drawing-non-layered-tidy-trees-in-linear-time-Ploeg/d45f66231e053590c64c9d901fb7b028dbc5c923) by Atze van der Ploeg  ([GitHub companion repo](https://github.com/cwi-swat/non-layered-tidy-trees)).
 
 I use the trait `RSTWalkBasedRegularTreeLayout` to get the main behavior and fullfil the explicit requirements to have a tree layout growing toward the vertical dimension.
-
-[1]: https://www.semanticscholar.org/paper/Drawing-non-layered-tidy-trees-in-linear-time-Ploeg/d45f66231e053590c64c9d901fb7b028dbc5c923
-[2]: https://github.com/cwi-swat/non-layered-tidy-trees
 "
 Class {
-	#name : #RSVanDerPloegTreeLayout,
-	#superclass : #RSTreeLayout,
+	#name : 'RSVanDerPloegTreeLayout',
+	#superclass : 'RSTreeLayout',
 	#traits : 'RSTWalkBasedRegularTreeLayout + RSTWalkBasedRegularTreeLayoutOnShapeProperties + RSTWalkBasedRegularVerticalTreeLayout',
 	#classTraits : 'RSTWalkBasedRegularTreeLayout classTrait + RSTWalkBasedRegularTreeLayoutOnShapeProperties classTrait + RSTWalkBasedRegularVerticalTreeLayout classTrait',
 	#instVars : [
 		'root'
 	],
-	#category : #'Roassal3-Layouts-Tree'
+	#category : 'Roassal3-Layouts-Core',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Core'
 }
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSVanDerPloegTreeLayout >> doInitialize: elements [
 
 	super doInitialize: elements.
 
-	root := self initialize: elements lineEdges: self edges
+	root := self
+		        initialize: elements
+		        lines: self edges
+		        ifMultipleRoots: [ :roots | RSComposite new ]
 ]
 
-{ #category : #'private - hook' }
+{ #category : 'positioning' }
+RSVanDerPloegTreeLayout >> horizontalGapAmong: aShape and: anotherShape [
+
+	^ self horizontalGap
+]
+
+{ #category : 'private - hook' }
 RSVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
 	^ self layout: root depth: aPoint y breadth: aPoint x
+]
+
+{ #category : 'positioning' }
+RSVanDerPloegTreeLayout >> ongoing: aShape depth: aDepth breadth: aBreadth [
+
+	
+]
+
+{ #category : 'positioning' }
+RSVanDerPloegTreeLayout >> verticalGapAmongParent: aShapeParent andChild: aShape [
+
+	^ self verticalGap
 ]

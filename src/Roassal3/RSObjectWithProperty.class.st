@@ -9,18 +9,20 @@ My subclasses have attributes useful to add extra data to each component
 *Collaborators*: subclasses
 "
 Class {
-	#name : #RSObjectWithProperty,
-	#superclass : #RSObject,
+	#name : 'RSObjectWithProperty',
+	#superclass : 'RSObject',
 	#traits : 'RSTAnnounceable',
 	#classTraits : 'RSTAnnounceable classTrait',
 	#instVars : [
 		'announcer',
 		'properties'
 	],
-	#category : #'Roassal3-Core'
+	#category : 'Roassal3-Core',
+	#package : 'Roassal3',
+	#tag : 'Core'
 }
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 RSObjectWithProperty >> @ anInteractionClassOrInstance [
 	"Add an interaction to the canvas or a shape.
 Here is an example that illustrate two interactions, one for a shape and another for the canvas:
@@ -36,28 +38,28 @@ c @ RSCanvasController
 	self addInteraction: anInteractionClassOrInstance
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 RSObjectWithProperty >> addInteraction: anInteractionClassOrInstance [
  	anInteractionClassOrInstance onShape: self
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 RSObjectWithProperty >> announcementClasses [
 	"must return a collection of Announcement classes"
 	^ self subclassResponsibility
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 RSObjectWithProperty >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSObjectWithProperty >> canvas [
 	^ self subclassResponsibility
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSObjectWithProperty >> click [
 	"Simulate a click. 
 	
@@ -79,81 +81,81 @@ c
 		yourself).
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 RSObjectWithProperty >> hasInteraction: anInteractionClass [
 	"Return true or false if the receiver has an interaction. Note that the argument has to be an interaction class. And not an event"
 	self announcer subscriptions ifNil: [ ^ false ].
 	^ self announcer subscriptions handleSubscriberClass: anInteractionClass
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> hasProperties [
 	^ properties notNil and: [ properties notEmpty ]
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> hasProperty: aKey [
 	^ properties notNil and: [ properties includesKey: aKey ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSObjectWithProperty >> isShape [
 	"Useful to lookup the canvas in a hierarchy of nested shapes"
 	^ false
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 RSObjectWithProperty >> privateAnnouncer [
 	^ announcer
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> properties [
 	^ properties ifNil: [ properties := Dictionary new ]
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> properties: aDictionary [
 	properties := aDictionary
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> propertiesDo: block [
 	self hasProperties ifFalse: [ ^ self ].
 	block value: self properties
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> propertyAt: aKey [
 	^ self properties at: aKey ifAbsent: [ nil ]
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> propertyAt: aKey ifAbsent: anAbsentBlock [
 	^ self properties at: aKey ifAbsent: anAbsentBlock
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> propertyAt: aKey ifAbsentPut: anAbsentBlock [
 	^ self properties at: aKey ifAbsentPut: anAbsentBlock
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> propertyAt: aKey ifPresent: aPresentBlock [
 	^ self properties at: aKey ifPresent: aPresentBlock
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> propertyAt: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
 	^ self properties at: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> propertyAt: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock [
 	^ self properties at: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> propertyAt: aKey put: value [
 	"Keep a value under a key. The key is usually a symbol.
 For example:
@@ -166,12 +168,12 @@ return World
 	^ self properties at: aKey put: value
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSObjectWithProperty >> release [
 	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> removeKey: aKey [
 	| prop |
 	prop := self properties.
@@ -180,12 +182,12 @@ RSObjectWithProperty >> removeKey: aKey [
 	prop ifEmpty: [ prop := nil ]
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> removePropertyAt: aKey [
 	^ self properties removeKey: aKey
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RSObjectWithProperty >> removePropertyAt: aKey ifAbsent: anErrorBlock [
 	^ self properties removeKey: aKey ifAbsent: anErrorBlock
 ]

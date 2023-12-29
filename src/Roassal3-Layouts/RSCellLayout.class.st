@@ -7,27 +7,29 @@ Note with elements of different size each line will have different size also.
 
 "
 Class {
-	#name : #RSCellLayout,
-	#superclass : #RSAbstractGridLayout,
+	#name : 'RSCellLayout',
+	#superclass : 'RSAbstractGridLayout',
 	#instVars : [
 		'alignment'
 	],
-	#category : #'Roassal3-Layouts-Grid'
+	#category : 'Roassal3-Layouts-Grid',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Grid'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCellLayout >> alignment [
 
 	^ alignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCellLayout >> alignment: anObject [
 
 	alignment := anObject
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSCellLayout >> doExecute: shapes [
 
 	| pointer lineItemCount lineItemSize maxLastLineHeight originalGapLeft 
@@ -61,7 +63,7 @@ RSCellLayout >> doExecute: shapes [
 	alignment value: align
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCellLayout >> initialize [
 	super initialize.
 	self alignment: #none

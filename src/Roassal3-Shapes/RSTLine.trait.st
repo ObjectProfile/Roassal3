@@ -6,7 +6,7 @@ Trait {
 	#instVars : [
 		'formatString'
 	],
-	#category : #'Roassal3-Shapes-Graph'
+	#category : 'Roassal3-Shapes-Graph'
 }
 
 { #category : #'public - shape' }
@@ -72,6 +72,12 @@ RSTLine >> dashArray: anArray [
 { #category : #'public - shape' }
 RSTLine >> dashed [
 	self shape dashed
+]
+
+{ #category : #'public - shape' }
+RSTLine >> dotted [
+
+	self dashArray: { Float goldenRatio }
 ]
 
 { #category : #'public - shape' }

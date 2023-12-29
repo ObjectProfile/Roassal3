@@ -1,10 +1,12 @@
 Class {
-	#name : #RSShapeCollectionTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Rendering'
+	#name : 'RSShapeCollectionTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-Global-Tests-Rendering',
+	#package : 'Roassal3-Global-Tests',
+	#tag : 'Rendering'
 }
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 RSShapeCollectionTest >> testAdd [
 	| canvas collection |
 	canvas := RSCanvas new.
@@ -38,7 +40,7 @@ RSShapeCollectionTest >> testAdd [
 	self assert: canvas shapeCollection size equals: 3.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeCollectionTest >> testBasic [
 	| canvas collection |
 	canvas := RSCanvas new.
@@ -49,7 +51,7 @@ RSShapeCollectionTest >> testBasic [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeCollectionTest >> testContainsPoint [
 	| canvas collection box shape position |
 	canvas := RSCanvas new.
@@ -70,7 +72,7 @@ RSShapeCollectionTest >> testContainsPoint [
 	self assert: shape equals: box
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeCollectionTest >> testContainsPointInComposite [
 	| canvas collection box shapes position composite |
 	canvas := RSCanvas new.
@@ -91,7 +93,7 @@ RSShapeCollectionTest >> testContainsPointInComposite [
 	self assert: shapes size equals: 2.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeCollectionTest >> testContainsPointInRTree [
 	| canvas collection box shape position |
 	canvas := RSCanvas new.
@@ -113,7 +115,7 @@ RSShapeCollectionTest >> testContainsPointInRTree [
 	self assert: shape equals: box
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 RSShapeCollectionTest >> testRemoveOneElement [
 	| canvas collection box |
 	canvas := RSCanvas new.
@@ -125,7 +127,7 @@ RSShapeCollectionTest >> testRemoveOneElement [
 	self assert: collection isEmpty.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeCollectionTest >> testSortResultArray [
 
 	| shapes a b c d tree e |
@@ -146,7 +148,7 @@ RSShapeCollectionTest >> testSortResultArray [
 			a }
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 RSShapeCollectionTest >> testUpdateExtentShouldUpdateTreeRectangle [
 	| canvas collection box oldExtent newExtent |
 	canvas := RSCanvas new.

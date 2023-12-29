@@ -7,26 +7,49 @@ I use the trait `RSTWalkBasedRegularTreeLayout` to get the main behavior and ful
 [2]: https://github.com/cwi-swat/non-layered-tidy-trees
 "
 Class {
-	#name : #RSHorizontalVanDerPloegTreeLayout,
-	#superclass : #RSHorizontalTreeLayout,
+	#name : 'RSHorizontalVanDerPloegTreeLayout',
+	#superclass : 'RSHorizontalTreeLayout',
 	#traits : 'RSTWalkBasedRegularTreeLayout + RSTWalkBasedRegularTreeLayoutOnShapeProperties + RSTWalkBasedRegularHorizontalTreeLayout',
 	#classTraits : 'RSTWalkBasedRegularTreeLayout classTrait + RSTWalkBasedRegularTreeLayoutOnShapeProperties classTrait + RSTWalkBasedRegularHorizontalTreeLayout classTrait',
 	#instVars : [
 		'root'
 	],
-	#category : #'Roassal3-Layouts-Tree'
+	#category : 'Roassal3-Layouts-Tree',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Tree'
 }
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSHorizontalVanDerPloegTreeLayout >> doInitialize: elements [
 
 	super doInitialize: elements.
 
-	root := self initialize: elements lineEdges: self edges
+	root := self
+		        initialize: elements
+		        lines: self edges
+		        ifMultipleRoots: [ :roots | RSComposite new ]
 ]
 
-{ #category : #hook }
+{ #category : 'accessing' }
+RSHorizontalVanDerPloegTreeLayout >> horizontalGapAmongParent: aShapeParent andChild: aShape [
+
+	^ self horizontalGap
+]
+
+{ #category : 'hook' }
 RSHorizontalVanDerPloegTreeLayout >> layout: rootNodes atPoint: aPoint atLayer: aLayer [
 
 	^ self layout: root depth: aPoint x breadth: aPoint y
+]
+
+{ #category : 'positioning' }
+RSHorizontalVanDerPloegTreeLayout >> ongoing: aShape depth: aDepth breadth: aBreadth [
+
+	
+]
+
+{ #category : 'accessing' }
+RSHorizontalVanDerPloegTreeLayout >> verticalGapAmong: aShapeParent and: aShape [
+
+	^ self verticalGap
 ]

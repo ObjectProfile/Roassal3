@@ -1,10 +1,12 @@
 Class {
-	#name : #RSShapeTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-Global-Tests-Shapes'
+	#name : 'RSShapeTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-Global-Tests-Shapes',
+	#package : 'Roassal3-Global-Tests',
+	#tag : 'Shapes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeTest >> testAllConnectedShapes [
 	| canvas shapes lb node1 node2 node3 node5 node6 |
 	canvas := RSCanvas new.
@@ -35,7 +37,7 @@ RSShapeTest >> testAllConnectedShapes [
 	self assert: node5 allRecursiveConnectedShapes equals: node6 allRecursiveConnectedShapes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeTest >> testEmptyIndexesArray [
 
 	| box |
@@ -43,7 +45,7 @@ RSShapeTest >> testEmptyIndexesArray [
 	self assert: box indexesArray isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeTest >> testHasModel [
 
 	self deny: RSCircle new hasModel.
@@ -52,7 +54,7 @@ RSShapeTest >> testHasModel [
 	self deny: RSLine new hasModel
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeTest >> testIncomingAndOutgoingShapes [
 
 	| c shapes lb node1 node5 |
@@ -78,7 +80,7 @@ RSShapeTest >> testIncomingAndOutgoingShapes [
 	self assert: node5 outgoingShapes equals: (c shapesFromModels: #(10 11))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeTest >> testIndexesArray [
 
 	| box canvas |
@@ -90,7 +92,7 @@ RSShapeTest >> testIndexesArray [
 	self assert: box indexesArray first equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeTest >> testIndexesArrayWithComposites [
 
 	| box canvas comp box1 comp1 |
@@ -112,7 +114,7 @@ RSShapeTest >> testIndexesArrayWithComposites [
 	self assert: box1 indexesArray second equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeTest >> testInvert [
 
 	| rectangle canvas positionBefore |
@@ -127,7 +129,7 @@ RSShapeTest >> testInvert [
 	self assert: rectangle position equals: (positionBefore y @ positionBefore x).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeTest >> testModelForIt [
 
 	| s |
@@ -137,7 +139,7 @@ RSShapeTest >> testModelForIt [
 	self assert: s color equals: Color pink
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeTest >> testModels [
 
 	| shapes |
@@ -148,7 +150,7 @@ RSShapeTest >> testModels [
 	self assert: (shapes collect: #width) asSet asArray equals: #(10)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeTest >> testModelsSize [
 
 	| shapes |
@@ -160,7 +162,7 @@ RSShapeTest >> testModelsSize [
 	self assert: (shapes collect: #height) asArray equals: (1 to: 10) asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSShapeTest >> testTranslateMiddleRightTo [
 
 	| c center lbl |

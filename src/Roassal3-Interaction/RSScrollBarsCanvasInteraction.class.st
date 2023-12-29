@@ -16,8 +16,8 @@ Instance variables
 Use this class with `RSDraggableCanvasInteraction` and `RSKeyNavigationCanvasInteraction`
 "
 Class {
-	#name : #RSScrollBarsCanvasInteraction,
-	#superclass : #RSAbstractControlCanvasInteraction,
+	#name : 'RSScrollBarsCanvasInteraction',
+	#superclass : 'RSAbstractControlCanvasInteraction',
 	#instVars : [
 		'barShape',
 		'vertical',
@@ -25,10 +25,12 @@ Class {
 		'animation',
 		'hideAnimation'
 	],
-	#category : #'Roassal3-Interaction-Controls'
+	#category : 'Roassal3-Interaction-Controls',
+	#package : 'Roassal3-Interaction',
+	#tag : 'Controls'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSScrollBarsCanvasInteraction >> addScrollBars: aCanvas [
 	vertical := self barShapeCopy.
 	horizontal := self barShapeCopy.
@@ -36,7 +38,7 @@ RSScrollBarsCanvasInteraction >> addScrollBars: aCanvas [
 	aCanvas addShape: vertical; addShape: horizontal
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSScrollBarsCanvasInteraction >> barShapeCopy [
 	^ barShape copy
 		announcer: barShape announcer;
@@ -47,7 +49,7 @@ RSScrollBarsCanvasInteraction >> barShapeCopy [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSScrollBarsCanvasInteraction >> color: color1 border: color2 [
 	| c1 c2 extent |
 	c1 := color1.
@@ -67,13 +69,13 @@ RSScrollBarsCanvasInteraction >> color: color1 border: color2 [
 		borderColor: c2
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSScrollBarsCanvasInteraction >> initialize [
 	super initialize.
 	self initializeShape
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSScrollBarsCanvasInteraction >> initializeHideAnimation [
 	| sc1 sc2 |
 	sc1 := NSScale linear range: { self scrollColor. Color transparent }.
@@ -87,7 +89,7 @@ RSScrollBarsCanvasInteraction >> initializeHideAnimation [
 			vertical signalUpdate. ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSScrollBarsCanvasInteraction >> initializeShape [
 	barShape := RSBox new
 		cornerRadius: (RSCornerRadius new radius: 5);
@@ -100,12 +102,12 @@ RSScrollBarsCanvasInteraction >> initializeShape [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSScrollBarsCanvasInteraction >> minBarSize [
 	^ 5
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSScrollBarsCanvasInteraction >> mouseEnter: evt [
 	"used when the mouse enter in one scroll bar"
 	| shape |
@@ -118,7 +120,7 @@ RSScrollBarsCanvasInteraction >> mouseEnter: evt [
 	hideAnimation stop 
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSScrollBarsCanvasInteraction >> mouseLeave: evt [
 	"used when the mouse leave the on bar shape"
 	| shape |
@@ -129,7 +131,7 @@ RSScrollBarsCanvasInteraction >> mouseLeave: evt [
 	vertical parent addAnimation: animation
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSScrollBarsCanvasInteraction >> moveScroll: evt [
 	| shape delta position camera canvasExtent shapesRect correct target |
 	shape := evt shape.
@@ -155,7 +157,7 @@ RSScrollBarsCanvasInteraction >> moveScroll: evt [
 	evt signalUpdate
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSScrollBarsCanvasInteraction >> onShape: aCanvas [
 	self addScrollBars: aCanvas.
 	aCanvas 
@@ -164,27 +166,27 @@ RSScrollBarsCanvasInteraction >> onShape: aCanvas [
 		when: RSExtentChangedEvent send: #updateScrollbars to: self
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSScrollBarsCanvasInteraction >> renderLegendOn: lb [
 	lb text: '' description: 'Use scroll bars to navigate'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSScrollBarsCanvasInteraction >> scrollBorderColor [
 	^ Color lightGray translucent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSScrollBarsCanvasInteraction >> scrollColor [
 	^ Color lightGray translucent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSScrollBarsCanvasInteraction >> shape [
 	^ barShape
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSScrollBarsCanvasInteraction >> updateAnimation [
 	| canvas |
 	canvas := vertical canvas.
@@ -202,7 +204,7 @@ RSScrollBarsCanvasInteraction >> updateAnimation [
 		for: self
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSScrollBarsCanvasInteraction >> updateBasicScrollbars [
 	| canvas canvasRect shapesRect p pd ext scrollExtent |
 	canvas := vertical canvas.
@@ -219,7 +221,7 @@ RSScrollBarsCanvasInteraction >> updateBasicScrollbars [
 	
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSScrollBarsCanvasInteraction >> updateScrollbars [
 	self updateBasicScrollbars.
 	self color: self scrollColor border: self scrollBorderColor.

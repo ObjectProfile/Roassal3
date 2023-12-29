@@ -3,12 +3,14 @@ A RSHorizontalFlowLayout is a FlowLayout horizontaly arranged, right queued at d
 
 "
 Class {
-	#name : #RSHorizontalFlowLayout,
-	#superclass : #RSAbstractFlowLayout,
-	#category : #'Roassal3-Layouts-Flow'
+	#name : 'RSHorizontalFlowLayout',
+	#superclass : 'RSAbstractFlowLayout',
+	#category : 'Roassal3-Layouts-Flow',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Flow'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSHorizontalFlowLayout class >> exampleLabel [
 	
 	| string characterShapes c |
@@ -25,43 +27,43 @@ RSHorizontalFlowLayout class >> exampleLabel [
 	^ c open
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSHorizontalFlowLayout >> alignCenter [
 	self alignment: #center
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSHorizontalFlowLayout >> alignLeft [
 	self alignment: #left
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSHorizontalFlowLayout >> alignRight [
 	self alignment: #right
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSHorizontalFlowLayout >> initialize [
 	super initialize.
 	self alignLeft
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSHorizontalFlowLayout >> isAlignCenter [
 	^ alignment = #center
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSHorizontalFlowLayout >> isAlignLeft [
 	^ alignment = #left
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSHorizontalFlowLayout >> isAlignRight [
 	^ alignment = #right
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSHorizontalFlowLayout >> linesFor: shapes [
 	| hgap vgap y x maxLastLineWidth lines currentLine maxHeight nextElement |
 	hgap := self horizontalGap.

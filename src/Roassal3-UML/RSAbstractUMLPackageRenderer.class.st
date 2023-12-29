@@ -2,22 +2,24 @@
 Abstract renderer for UML packages
 "
 Class {
-	#name : #RSAbstractUMLPackageRenderer,
-	#superclass : #RSAbstractUMLRenderer,
+	#name : 'RSAbstractUMLPackageRenderer',
+	#superclass : 'RSAbstractUMLRenderer',
 	#instVars : [
 		'classColor',
 		'packageColor'
 	],
-	#category : #'Roassal3-UML-Rendering'
+	#category : 'Roassal3-UML-Rendering',
+	#package : 'Roassal3-UML',
+	#tag : 'Rendering'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractUMLPackageRenderer class >> isAbstract [
 
 	^self name = #RSAbstractUMLPackageRenderer
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLPackageRenderer >> classBoxFor: aClass and: classNameShape [
 	^ RSBox new
 		cornerRadius: 5;
@@ -28,17 +30,17 @@ RSAbstractUMLPackageRenderer >> classBoxFor: aClass and: classNameShape [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLPackageRenderer >> classColor [
 	^ classColor ifNil: [ classColor := self defaultClassColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLPackageRenderer >> classColor: aColor [
 	classColor := aColor
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLPackageRenderer >> classFor: aClass [
 	| box className |
 	className := self classNameFor: aClass.
@@ -51,14 +53,14 @@ RSAbstractUMLPackageRenderer >> classFor: aClass [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLPackageRenderer >> classNameFor: aClass [
 	^ RSLabel new
 		text: (modelDescriptor classname rsValue: aClass);
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLPackageRenderer >> classesFor: aPackage [
 	| classes shapes |
 	classes := modelDescriptor classes rsValue: aPackage.
@@ -69,12 +71,12 @@ RSAbstractUMLPackageRenderer >> classesFor: aPackage [
 		yourself
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSAbstractUMLPackageRenderer >> defaultClassColor [
 	^ Color colorFrom: 'DEEBF7'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLPackageRenderer >> defaultLayout [
 
 	| defaultLayout |
@@ -85,12 +87,12 @@ RSAbstractUMLPackageRenderer >> defaultLayout [
 	^defaultLayout
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSAbstractUMLPackageRenderer >> defaultPackageColor [
 	^ Color colorFrom: '9ECAE1'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLPackageRenderer >> packageBoxFor: title and: classes [
 	| boxTitle boxClasses rect cradius |
 	RSVerticalLineLayout new gapSize: 0; on: { title. classes }.
@@ -118,17 +120,17 @@ RSAbstractUMLPackageRenderer >> packageBoxFor: title and: classes [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLPackageRenderer >> packageColor [
 	^ packageColor ifNil: [ packageColor := self defaultPackageColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractUMLPackageRenderer >> packageColor: aColor [
 	packageColor := aColor
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractUMLPackageRenderer >> packageNameFor: aPackage [
 	| shape |
 	shape := RSLabel new

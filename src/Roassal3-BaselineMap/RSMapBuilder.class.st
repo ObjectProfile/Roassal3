@@ -2,35 +2,37 @@
 I am a builder that can be used to generate dependencies between baselines
 "
 Class {
-	#name : #RSMapBuilder,
-	#superclass : #RSBuilder,
+	#name : 'RSMapBuilder',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'models',
 		'baseline',
 		'context'
 	],
-	#category : #'Roassal3-BaselineMap-UI'
+	#category : 'Roassal3-BaselineMap-UI',
+	#package : 'Roassal3-BaselineMap',
+	#tag : 'UI'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMapBuilder >> adjustWidth: aMaxNumber [
 	shapes do: [ :shape |
 		shape children first width: aMaxNumber.
 		shape adjustToChildren ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMapBuilder >> baseline [
 	^ baseline
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMapBuilder >> baseline: aBaselineClass [
 	baseline := aBaselineClass.
 	self computeModels
 ]
 
-{ #category : #'hooks - model' }
+{ #category : 'hooks - model' }
 RSMapBuilder >> computeModels [
 	| todo rootModel |
 	models := OrderedCollection new.
@@ -40,34 +42,34 @@ RSMapBuilder >> computeModels [
 	self findModels: todo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMapBuilder >> context [
 	^ context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMapBuilder >> context: aClyFullBrowserClassContext [
 	context := aClyFullBrowserClassContext
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSMapBuilder >> cornerRadius [
 	^ 10
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSMapBuilder >> defaultContainer [
 	^ RSCanvas new @ RSCanvasController
 ]
 
-{ #category : #'hooks - model' }
+{ #category : 'hooks - model' }
 RSMapBuilder >> dependenciesFrom: aBMBaselineModel [
 	^ aBMBaselineModel baselineClass version projects
 		collect: #constructClassName
 		thenSelect: #notNil
 ]
 
-{ #category : #'hooks - model' }
+{ #category : 'hooks - model' }
 RSMapBuilder >> findDependencies: aBMBaselineModel todoList: todoList [
 	| dependencies newModels |
 	dependencies := nil.
@@ -80,7 +82,7 @@ RSMapBuilder >> findDependencies: aBMBaselineModel todoList: todoList [
 	^ dependencies
 ]
 
-{ #category : #'hooks - model' }
+{ #category : 'hooks - model' }
 RSMapBuilder >> findModels: todoList [
 	| model |
 	todoList ifEmpty: [ ^ self ].
@@ -93,12 +95,12 @@ RSMapBuilder >> findModels: todoList [
 	self findModels: todoList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMapBuilder >> groupsOfBaselines [
 	^ models groupedBy: [ :model | model level ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMapBuilder >> layoutOn: aCanvas [
 	RSHorizontalTreeLayout new
 		horizontalGap: 50;
@@ -106,23 +108,23 @@ RSMapBuilder >> layoutOn: aCanvas [
 		on: aCanvas nodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSMapBuilder >> models [
 	^ models
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSMapBuilder >> newBorderFor: anObject [
 	^ nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSMapBuilder >> newBox [
 	^ RSBox new
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSMapBuilder >> newLabelFor: model [
 	^ RSLabel new
 		text: model name;
@@ -130,7 +132,7 @@ RSMapBuilder >> newLabelFor: model [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSMapBuilder >> newLineBuilder [
 	^ RSLineBuilder arrowedLine
 		withBorderAttachPoint;
@@ -138,12 +140,12 @@ RSMapBuilder >> newLineBuilder [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSMapBuilder >> newModel [
 	^ RSBaselineModel new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSMapBuilder >> newModelFor: anObject [
 	^ self newModel
 		name: anObject name;
@@ -151,7 +153,7 @@ RSMapBuilder >> newModelFor: anObject [
 		yourself
 ]
 
-{ #category : #'hooks - model' }
+{ #category : 'hooks - model' }
 RSMapBuilder >> newModelFromDependency: aString level: level [
 	| class |
 	class := Smalltalk globals at: aString asSymbol
@@ -165,7 +167,7 @@ RSMapBuilder >> newModelFromDependency: aString level: level [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSMapBuilder >> newShapeFor: model [
 	| label box |
 	label := self newLabelFor: model.
@@ -179,7 +181,7 @@ RSMapBuilder >> newShapeFor: model [
 		yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSMapBuilder >> renderIn: aCanvas [
 	| modelsByGroup |
 	models ifNil: [ ^ self ].
@@ -190,7 +192,7 @@ RSMapBuilder >> renderIn: aCanvas [
 	self layoutOn: aCanvas
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMapBuilder >> renderLayer: layerGroup level: key in: aCanvas [
 	| max |
 	max := 0.
@@ -202,7 +204,7 @@ RSMapBuilder >> renderLayer: layerGroup level: key in: aCanvas [
 	aCanvas addAll: shapes
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSMapBuilder >> renderLinesOn: aCanvas [
 	self newLineBuilder
 		canvas: aCanvas;

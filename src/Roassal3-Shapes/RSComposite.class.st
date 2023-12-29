@@ -123,7 +123,7 @@ Class {
 		'clipChildren',
 		'lines'
 	],
-	#category : #'Roassal3-Shapes-Bounding'
+	#category : 'Roassal3-Shapes-Bounding'
 }
 
 { #category : #'public - creation' }

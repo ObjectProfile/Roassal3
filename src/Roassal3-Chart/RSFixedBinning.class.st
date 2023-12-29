@@ -2,32 +2,34 @@
 I am class used to bins: in RSHistogramPlot
 "
 Class {
-	#name : #RSFixedBinning,
-	#superclass : #RSAbstractBinning,
+	#name : 'RSFixedBinning',
+	#superclass : 'RSAbstractBinning',
 	#instVars : [
 		'bins'
 	],
-	#category : #'Roassal3-Chart-Strategy'
+	#category : 'Roassal3-Chart-Strategy',
+	#package : 'Roassal3-Chart',
+	#tag : 'Strategy'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFixedBinning >> bins [
 
 	^ bins
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSFixedBinning >> bins: aCollection [
 
 	bins := aCollection
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSFixedBinning >> computeNumberOfBinsFor: aCollection [
 	^ bins size
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSFixedBinning >> createBinsFor: aCollection [
 	^ bins
 ]

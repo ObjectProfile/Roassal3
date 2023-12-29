@@ -10,7 +10,7 @@ Class {
 		'dashArray',
 		'dashOffset'
 	],
-	#category : #'Roassal3-Shapes-Border'
+	#category : 'Roassal3-Shapes-Border'
 }
 
 { #category : #'instance creation' }

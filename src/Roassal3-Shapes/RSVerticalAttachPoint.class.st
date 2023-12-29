@@ -28,7 +28,7 @@ c @ RSControlsCanvas
 Class {
 	#name : #RSVerticalAttachPoint,
 	#superclass : #RSOffsetAttachPoint,
-	#category : #'Roassal3-Shapes-AttachPoint'
+	#category : 'Roassal3-Shapes-AttachPoint'
 }
 
 { #category : #'public - hooks' }

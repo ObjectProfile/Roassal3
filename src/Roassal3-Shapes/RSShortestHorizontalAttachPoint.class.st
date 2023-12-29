@@ -4,7 +4,7 @@ I am similar to RSHorizontalAttachPoint, with the different that I want to find 
 Class {
 	#name : #RSShortestHorizontalAttachPoint,
 	#superclass : #RSOffsetAttachPoint,
-	#category : #'Roassal3-Shapes-AttachPoint'
+	#category : 'Roassal3-Shapes-AttachPoint'
 }
 
 { #category : #'public - hooks' }

@@ -4,24 +4,26 @@ The `RSAbstractVerticalTreeLayout` class is an abstract base class that provides
 Instances of `RSAbstractVerticalTreeLayout` can be used with `RSVerticalTree`
 "
 Class {
-	#name : #RSAbstractVerticalTreeLayout,
-	#superclass : #RSAbstractRegularTreeLayout,
-	#category : #'Roassal3-Layouts-Tree'
+	#name : 'RSAbstractVerticalTreeLayout',
+	#superclass : 'RSAbstractRegularTreeLayout',
+	#category : 'Roassal3-Layouts-Tree',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Tree'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractVerticalTreeLayout class >> isAbstract [
 	^ self = RSAbstractVerticalTreeLayout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSAbstractVerticalTreeLayout >> initialize [
 	super initialize.
 	verticalGap := 20.
 	horizontalGap := 3
 ]
 
-{ #category : #'private - hook' }
+{ #category : 'private - hook' }
 RSAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer: aNumber [
 	| treeSize childrenPosition x y middleOfTree |
 	aNodeCollection isEmpty ifTrue: [ ^ 0 ].
@@ -49,7 +51,7 @@ RSAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer:
 	^ x - aPoint x - self horizontalGap
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSAbstractVerticalTreeLayout >> rearrangeByLayers: aGraph [
 	| cursor layerDepthSize |
 	cursor := self topGap.
@@ -60,7 +62,7 @@ RSAbstractVerticalTreeLayout >> rearrangeByLayers: aGraph [
 		cursor := cursor + layerDepthSize + self verticalGap ]
 ]
 
-{ #category : #'private - hook' }
+{ #category : 'private - hook' }
 RSAbstractVerticalTreeLayout >> translate: aNodeCollection by: delta [
 	aNodeCollection ifEmpty: [ ^ self ].
 	aNodeCollection do: [ :each |

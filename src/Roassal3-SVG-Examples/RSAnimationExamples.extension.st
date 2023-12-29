@@ -1,6 +1,6 @@
-Extension { #name : #RSAnimationExamples }
+Extension { #name : 'RSAnimationExamples' }
 
-{ #category : #'*Roassal3-SVG-Examples' }
+{ #category : '*Roassal3-SVG-Examples' }
 RSAnimationExamples >> example04Phyco [
 
 	<script: 'self new example04Phyco open'>

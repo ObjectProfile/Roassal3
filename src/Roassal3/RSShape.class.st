@@ -30,8 +30,8 @@ Although most of the configuration may be carried out by directly sending an obj
 
 "
 Class {
-	#name : #RSShape,
-	#superclass : #RSObjectWithProperty,
+	#name : 'RSShape',
+	#superclass : 'RSObjectWithProperty',
 	#instVars : [
 		'paint',
 		'path',
@@ -42,16 +42,18 @@ Class {
 		'model',
 		'shapeIndex'
 	],
-	#category : #'Roassal3-Core'
+	#category : 'Roassal3-Core',
+	#package : 'Roassal3',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape class >> model: anObject [
 	"Create an instance of myself with anObject as model"
 	^ self new model: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape class >> model: anObject forIt: aTwoArgBlock [
 	"Create an instance of myself with anObject as model. The second argument is a one arg block that is used to initialize the shape"
 	| r |
@@ -61,13 +63,13 @@ RSShape class >> model: anObject forIt: aTwoArgBlock [
 	^ r
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape class >> models: someObjects [
 	"Create a RSGroup made of shapes. Each shape has an element of the argument as model."
 	^ someObjects collect: [ :obj | self model: obj ] as: RSGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape class >> models: someObjects forEach: twoArgBlock [
 	"Create a RSGroup made of shapes. Each shape has an element of the argument as model. The second argument is used to initialize the shape.
 
@@ -89,12 +91,12 @@ c @ RSCanvasController
 	^ r
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RSShape >> accept: aVisitor [
 	self subclassResponsibility
 ]
 
-{ #category : #'private - adding' }
+{ #category : 'private - adding' }
 RSShape >> addPendingAnimationsIn: aShapeOrCanvas [
 	| key myAnimations parentAnimations |
 	key := #todoAnimations.
@@ -109,18 +111,18 @@ RSShape >> addPendingAnimationsIn: aShapeOrCanvas [
 	self removeKey: key
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSShape >> addRecursivelyIn: aCollection [
 	aCollection add: self
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSShape >> addShapesIn: aCollection position: position [
 	(self includesPoint: position)
 		ifTrue: [ aCollection add: self ]
 ]
 
-{ #category : #'private - adding' }
+{ #category : 'private - adding' }
 RSShape >> addedIn: aCanvas [
 	"This is a private method"
 	| evt |
@@ -136,7 +138,7 @@ RSShape >> addedIn: aCanvas [
 	self announce: evt
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 RSShape >> announce: anEventOrAnEventClassOrABlock [
 
 	"Send an event. The event is provided as argument, and may be either an event object, an event class, or a block (taking no argument) that returns an event object. These different way of specifying events addresses some performance concern."
@@ -150,33 +152,33 @@ RSShape >> announce: anEventOrAnEventClassOrABlock [
 	announcer announce: theEventToSend
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 RSShape >> announcementClasses [
 	^ RSShapeEvent withAllSubclasses
 		reject: [ :subcls| subcls hasSubclasses ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RSShape >> basicTranslateBy: delta [
 	^ self subclassResponsibility
 ]
 
-{ #category : #border }
+{ #category : 'border' }
 RSShape >> border [
 	^ border
 ]
 
-{ #category : #border }
+{ #category : 'border' }
 RSShape >> border: aBorder [
 	border := aBorder
 ]
 
-{ #category : #border }
+{ #category : 'border' }
 RSShape >> borderColor [
 	^ self border color
 ]
 
-{ #category : #border }
+{ #category : 'border' }
 RSShape >> borderColor: aColor [
 	"Set a border with the provided color. For example:
 
@@ -197,13 +199,13 @@ c open
 	self border color: aColor
 ]
 
-{ #category : #border }
+{ #category : 'border' }
 RSShape >> borderWidth: aNumber [
 	border ifNil: [ self withBorder ].
 	self border width: aNumber
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSShape >> canvas [
 	"Return the canvas in which I belong to. Can return nil if the shape is not added to a canvas"
 	parent ifNil: [ ^ nil ].
@@ -212,18 +214,18 @@ RSShape >> canvas [
 		ifFalse: [ parent ]
 ]
 
-{ #category : #composite }
+{ #category : 'composite' }
 RSShape >> children [
 	"only RSComposite can use children"
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> color [
 	^ paint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> color: aColor [
 	"Set the color of the shape.
 
@@ -244,12 +246,12 @@ c
 	paint := Color colorFrom: aColor
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSShape >> computeEncompassingRectangle [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSShape >> computeEncompassingRectangleFor: rect matrix: aMatrix [
 	| groupOfPoints |
 	groupOfPoints := #(topLeft topRight bottomRight bottomLeft)
@@ -257,7 +259,7 @@ RSShape >> computeEncompassingRectangleFor: rect matrix: aMatrix [
 	^ Rectangle encompassing: groupOfPoints
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSShape >> computeInverseEncompassingRectangleFor: rect matrix: aMatrix [
 	| groupOfPoints |
 	groupOfPoints := #(topLeft topRight bottomRight bottomLeft)
@@ -265,7 +267,7 @@ RSShape >> computeInverseEncompassingRectangleFor: rect matrix: aMatrix [
 	^ Rectangle encompassing: groupOfPoints
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RSShape >> copyWithAnnouncer [
 	"Answer a copy of this shape that shares the same instance of announcer (The default #postCopy cleans it).
 	This means that interactions and subscription handlers to any RSEvent will be shared between both instances.
@@ -294,115 +296,115 @@ RSShape >> copyWithAnnouncer [
 		yourself
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RSShape >> copyWithoutAnnouncer [
 	^ self copy
 ]
 
-{ #category : #'looking up shapes' }
+{ #category : 'looking up shapes' }
 RSShape >> deepShapeFromModel: anObject result: result [
 	self model = anObject ifTrue: [ result add: self ]
 ]
 
-{ #category : #'looking up shapes' }
+{ #category : 'looking up shapes' }
 RSShape >> deepShapesFromModel: anObject result: result [
 	self model = anObject ifTrue: [ result add: self ]
 ]
 
-{ #category : #'looking up shapes' }
+{ #category : 'looking up shapes' }
 RSShape >> deepShapesFromModels: someObjects result: result [
 	(someObjects includes: self model) ifTrue: [ result add: self ]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSShape >> defaultColor [
 	^ Color lightGray
 ]
 
-{ #category : #'accessing - attributes' }
+{ #category : 'accessing - attributes' }
 RSShape >> depth [
 	^ self propertyAt: #depth
 ]
 
-{ #category : #'accessing - attributes' }
+{ #category : 'accessing - attributes' }
 RSShape >> depth: anObject [
 	"depth is used by tree builders usefull to relationate hierarchy visualizations"
 	self propertyAt: #depth put: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> encompassingRectangle [
 	^ encompassingRectangle ifNil: [
 		encompassingRectangle := self computeEncompassingRectangle ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> encompassingRectangle: aRectangle [
 	encompassingRectangle := aRectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> extent [
 	^ self encompassingRectangle extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> fill: aColor [
 	self color: (aColor isNumber ifTrue: [ Color r: aColor g: aColor b: aColor range: 255 ])
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSShape >> globalEncompassingRectangle [
 	^ self encompassingRectangle
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> hasBorder [
 	^ border notNil and: [ border width > 0 ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> hasChildren [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> hasEventCallback [
 	"Return true if at least one event callback has been added to the shape"
 
 	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> hasModel [
 	"Return true if a model is set in the shape. Return false otherwise"
 	^ model notNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> height [
 	^ self extent y
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> includesPoint: aPoint [
 	"Answer whether this shape includes aPoint."
 
 	^ false
 ]
 
-{ #category : #'accessing - attributes' }
+{ #category : 'accessing - attributes' }
 RSShape >> index [
 	^ self propertyAt: #index
 ]
 
-{ #category : #'accessing - attributes' }
+{ #category : 'accessing - attributes' }
 RSShape >> index: anObject [
 	"the current index of this object in an object collection"
 	self propertyAt: #index put: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSShape >> indexesArray [
 
 	| vector |
@@ -411,7 +413,7 @@ RSShape >> indexesArray [
 	^ vector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSShape >> indexesArrayIn: aCollection [
 
 	parent ifNil: [ ^ self ].
@@ -420,14 +422,14 @@ RSShape >> indexesArrayIn: aCollection [
 	aCollection add: shapeIndex
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSShape >> initialize [
 	super initialize.
 	paint := self defaultColor.
 	isFixed := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> intersects: aRectangle [
 	"used in drawing operation
 	aRectangle is the visible rectangle of the canvas, then this method is used
@@ -435,122 +437,122 @@ RSShape >> intersects: aRectangle [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> isComposite [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> isEdge [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> isFixed [
 	^ isFixed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> isFixed: aBool [
 	isFixed := aBool
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> isInACanvas [
 	^ parent notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> isLabel [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> isLine [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> isNode [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSShape >> isShape [
 	"Useful to lookup the canvas in a hierarchy of nested shapes"
 	^ true
 ]
 
-{ #category : #'accessing - attributes' }
+{ #category : 'accessing - attributes' }
 RSShape >> model [
 	"Return the model object of the shape. If no model has been set, it return `nil`"
 	^ model
 ]
 
-{ #category : #'accessing - attributes' }
+{ #category : 'accessing - attributes' }
 RSShape >> model: anObject [
 	"Set the model of the shape. A shape represents a visual description of the model object. In case no model is specified, the value is nil. A model is used when using interaction (e.g., popup, labeled) and normalizations."
 	model := anObject
 ]
 
-{ #category : #border }
+{ #category : 'border' }
 RSShape >> noBorder [
 	border := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> noPaint [
 	paint := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> paint [
 	^ paint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> paint: aPaint [
 	"Receive a Color or an Athens paint object"
 	paint := aPaint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> paintOn: visitor [
 	^ visitor paintFor: self form: self paint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> parent [
 	^ parent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> parent: aCanvasOrComposite [
 	parent := aCanvasOrComposite
 ]
 
-{ #category : #path }
+{ #category : 'path' }
 RSShape >> path [
 	^ path
 ]
 
-{ #category : #path }
+{ #category : 'path' }
 RSShape >> path: aPath [
 	"Set the path of the shape. It set an AthensCairoPath. Note that this value is set to nil when the Pharo image is restarted"
 	path := aPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> position [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> position: aPoint [
 	^ self subclassResponsibility
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RSShape >> postCopy [
 	self
 		parent: nil;
@@ -559,38 +561,38 @@ RSShape >> postCopy [
 		resetBBox
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSShape >> printOn: stream [
 	super printOn: stream.
 	model ifNil: [ ^ self ].
 	stream << '('; << model asString; << ')'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSShape >> pushBack [
 	"Move the element behind. This method can be called only if the shape is in a canvas"
 	self assert: [ parent notNil ] description: 'Should add the shape in a canvas first'.
 	parent pushBack: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSShape >> pushFront [
 	parent pushFront: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSShape >> remove [
 	"Do nothing if the line is not already in a canvas"
 	self isInACanvas ifFalse: [ ^ self ].
 	parent removeShape: self
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSShape >> renderOn: aCanvas [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSShape >> resetBBox [
 	| shouldUpdate |
 	shouldUpdate := parent notNil and: [ self isFixed not ].
@@ -599,22 +601,22 @@ RSShape >> resetBBox [
 		ifFalse: [ encompassingRectangle := nil ]
 ]
 
-{ #category : #composite }
+{ #category : 'composite' }
 RSShape >> resetChildren [
 ]
 
-{ #category : #path }
+{ #category : 'path' }
 RSShape >> resetPath [
 	path := nil
 ]
 
-{ #category : #path }
+{ #category : 'path' }
 RSShape >> sessionChanged [
 	"This method releases all the native graphical resources. This method is typically invoked when starting a Pharo image with a visualization that was previously open"
 	self resetPath
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSShape >> setAsFixed [
 	"Per default, a shape is subject to the camera mouvement. If the camera is relocated, shapes appears to be relocated. This behavior can be avoided by sending the message #setAsFixed to a shape, which makes the shape fixed in the canvas. This is useful to define menus.
 
@@ -624,23 +626,23 @@ RSShape >> setAsFixed [
 	isFixed := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> shape [
 	^ self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSShape >> shapeIndex [
 	^ shapeIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSShape >> shapeIndex: aNumber [
 	"used by shapeCollection, do not use this method"
 	shapeIndex := aNumber
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSShape >> shapeWithAction: eventClass forPosition: position [
 	^ (self hasEventCallback and: [
 		(self announcer handleEventClass: eventClass)
@@ -649,26 +651,26 @@ RSShape >> shapeWithAction: eventClass forPosition: position [
 			ifFalse: [ nil ]
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSShape >> shapeWithActionForPosition: position [
 	^ (self hasEventCallback and: [ self includesPoint: position ] )
 			ifTrue: [ self ]
 			ifFalse: [ nil ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RSShape >> signalUpdate [
 	"Refresh the canvas"
 	parent ifNil: [ ^ self ].
 	parent signalUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> width [
 	^ self extent x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShape >> width: aNumber [
 	self subclassResponsibility
 ]

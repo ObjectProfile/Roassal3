@@ -2,42 +2,44 @@
 A class to change the system coordinates in `RSCanvas` and `RSCamera`
 "
 Class {
-	#name : #RSCoordinates,
-	#superclass : #RSObject,
-	#category : #'Roassal3-Camera'
+	#name : 'RSCoordinates',
+	#superclass : 'RSObject',
+	#category : 'Roassal3-Camera',
+	#package : 'Roassal3',
+	#tag : 'Camera'
 }
 
-{ #category : #coordinates }
+{ #category : 'coordinates' }
 RSCoordinates class >> originCenterMiddle [
 	^ RSCenterMiddleCoordinates new
 ]
 
-{ #category : #coordinates }
+{ #category : 'coordinates' }
 RSCoordinates class >> originTopLeft [
 	^ RSTopLeftCoordinates new
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSCoordinates >> fromPixelToSpace: aPoint camera: camera [
 	^ (self matrixFor: camera) inverseTransform: aPoint
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSCoordinates >> fromSpaceToPixel: aPoint camera: camera [
 	^ (self matrixFor: camera) transform: aPoint
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCoordinates >> gapDistance: anRSCamera [
 	^ 0@0
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSCoordinates >> gapToCenter: camera [
 	^ 0@0
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSCoordinates >> matrixFor: anRSCamera [
 	^ AthensAffineTransform new
 		translateBy: (self gapDistance: anRSCamera);
@@ -45,7 +47,7 @@ RSCoordinates >> matrixFor: anRSCamera [
 		yourself
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSCoordinates >> visibleRectangleFor: anRSCamera [
 
 	| rectangle |
@@ -55,7 +57,7 @@ RSCoordinates >> visibleRectangleFor: anRSCamera [
 	^ self visibleRectangleFor: anRSCamera rectangle: rectangle
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSCoordinates >> visibleRectangleFor: anRSCamera rectangle: aRectangle [
 
 	| matrix |

@@ -38,7 +38,7 @@ Class {
 	#instVars : [
 		'block'
 	],
-	#category : #'Roassal3-Shapes-ControlPoints'
+	#category : 'Roassal3-Shapes-ControlPoints'
 }
 
 { #category : #accessing }

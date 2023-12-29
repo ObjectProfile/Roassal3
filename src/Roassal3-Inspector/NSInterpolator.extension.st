@@ -1,6 +1,6 @@
-Extension { #name : #NSInterpolator }
+Extension { #name : 'NSInterpolator' }
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : '*Roassal3-Inspector' }
 NSInterpolator >> canvasForInspector [
 	| canvas theme boxes posScale rect line cp label loc s |
  	canvas := RSCanvas new.
@@ -73,7 +73,7 @@ NSInterpolator >> canvasForInspector [
 	^ canvas
 ]
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : '*Roassal3-Inspector' }
 NSInterpolator >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
 	^ SpRoassal3InspectorPresenter new

@@ -8,7 +8,7 @@ Class {
 		'startOffset',
 		'endOffset'
 	],
-	#category : #'Roassal3-Shapes-AttachPoint'
+	#category : 'Roassal3-Shapes-AttachPoint'
 }
 
 { #category : #testing }

@@ -1,6 +1,6 @@
-Extension { #name : #RSLine }
+Extension { #name : 'RSLine' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSLine class >> exampleFMT [
 	| line |
 	line := self new.
@@ -16,7 +16,7 @@ RSLine class >> exampleFMT [
 		open
 ]
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSLine class >> exampleLine [
 	| line |
 	line := self new.

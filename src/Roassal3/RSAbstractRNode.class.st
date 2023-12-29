@@ -2,73 +2,75 @@
 based on nil pattern
 "
 Class {
-	#name : #RSAbstractRNode,
-	#superclass : #RSObject,
-	#category : #'Roassal3-Rendering'
+	#name : 'RSAbstractRNode',
+	#superclass : 'RSObject',
+	#category : 'Roassal3-Rendering',
+	#package : 'Roassal3',
+	#tag : 'Rendering'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAbstractRNode >> accept: visitor [
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSAbstractRNode >> addChild: newObject [
 	^ self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractRNode >> computeHeight [
 	^ 0
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RSAbstractRNode >> do: aBlock [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRNode >> height [
 	^ 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractRNode >> isBalanced [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractRNode >> isEmpty [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractRNode >> isNilNode [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAbstractRNode >> isTotalBalanced [
 	^ true
 ]
 
-{ #category : #'finding/searching' }
+{ #category : 'finding/searching' }
 RSAbstractRNode >> nodesIntersetcsRectangle: aRectangle list: list [
 ]
 
-{ #category : #'finding/searching' }
+{ #category : 'finding/searching' }
 RSAbstractRNode >> nodesWithPoint: aPoint list: list [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractRNode >> rectangle [
 	^ 0@0 corner: 0@0
 ]
 
-{ #category : #'finding/searching' }
+{ #category : 'finding/searching' }
 RSAbstractRNode >> searchPath: anObject [
 	^ #()
 ]
 
-{ #category : #'accessing - children' }
+{ #category : 'accessing - children' }
 RSAbstractRNode >> withAllChildren [
 	^ #()
 ]

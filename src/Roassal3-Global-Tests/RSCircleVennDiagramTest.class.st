@@ -1,20 +1,22 @@
 Class {
-	#name : #RSCircleVennDiagramTest,
-	#superclass : #RSTest,
+	#name : 'RSCircleVennDiagramTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'vennDiagram'
 	],
-	#category : #'Roassal3-Global-Tests-Builder'
+	#category : 'Roassal3-Global-Tests-Builder',
+	#package : 'Roassal3-Global-Tests',
+	#tag : 'Builder'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSCircleVennDiagramTest >> setUp [
 	super setUp.
 
 	vennDiagram := RSCircleVennDiagram new.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCircleVennDiagramTest >> testBasicVennDiagramOpen [
 
 	| window |
@@ -22,7 +24,7 @@ RSCircleVennDiagramTest >> testBasicVennDiagramOpen [
 	window delete
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCircleVennDiagramTest >> testVennDiagramConvertsBigSetInputToSet [
 	
 	vennDiagram bigSet: { 1 . 2 }.
@@ -30,7 +32,7 @@ RSCircleVennDiagramTest >> testVennDiagramConvertsBigSetInputToSet [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCircleVennDiagramTest >> testVennDiagramConvertsSmallSetInputToSet [
 	
 	vennDiagram smallSet: { 1 . 2 }.
@@ -38,7 +40,7 @@ RSCircleVennDiagramTest >> testVennDiagramConvertsSmallSetInputToSet [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCircleVennDiagramTest >> testVennDiagramOneSet [
 
 	vennDiagram bigSet:  { 3 . 2 }.
@@ -47,7 +49,7 @@ RSCircleVennDiagramTest >> testVennDiagramOneSet [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCircleVennDiagramTest >> testVennDiagramTwoSets [
 
 	vennDiagram bigSet:  { 3 . 2 }.

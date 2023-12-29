@@ -4,7 +4,7 @@ I can create shapes in order that the client can modify it
 Class {
 	#name : #RSShapeFactory,
 	#superclass : #RSObject,
-	#category : #'Roassal3-Shapes-Util'
+	#category : 'Roassal3-Shapes-Util'
 }
 
 { #category : #shapes }

@@ -80,8 +80,16 @@ b open
 Class {
 	#name : #RSBezier,
 	#superclass : #RSAbstractControlPointsLine,
-	#category : #'Roassal3-Shapes-Lines'
+	#category : 'Roassal3-Shapes-Lines'
 }
+
+{ #category : #converting }
+RSBezier >> asDeCasteljauLine [
+
+	^ RSdeCasteljauLine new
+		  controlPoints: self controlPoints;
+		  yourself
+]
 
 { #category : #testing }
 RSBezier >> basicIncludesPoint: aPoint [
@@ -123,10 +131,35 @@ RSBezier >> controlPoints: anArrayOfPoints [
 	super controlPoints: anArrayOfPoints
 ]
 
+{ #category : #composing }
+RSBezier >> firstC1Point [
+
+	^ self controlPoints second reflectedAbout: self controlPoints first
+]
+
 { #category : #initialization }
 RSBezier >> initialize [
 	super initialize.
 	controlPoints := { 0@0. 100@100 }
+]
+
+{ #category : #composing }
+RSBezier >> joinC1Last: aBezier [
+
+	^ self class new
+		  controlPoints: { 
+				  self controlPoints last.
+				  self lastC1Point.
+				  aBezier firstC1Point.
+				  aBezier controlPoints first };
+		  yourself
+]
+
+{ #category : #composing }
+RSBezier >> lastC1Point [
+
+	^ (self controlPoints atLast: 1) reflectedAbout:
+		  self controlPoints last
 ]
 
 { #category : #private }
@@ -147,4 +180,86 @@ RSBezier >> lines [
 	^ (0 to: 1 by: 0.2) collect: [ :t |
 		a * (t raisedTo: 3) + (b * (t * t)) + (c * t) + start.
 		]
+]
+
+{ #category : #composing }
+RSBezier >> reversed [
+
+	^ self class new
+		  controlPoints: self controlPoints reversed;
+		  yourself
+]
+
+{ #category : #composing }
+RSBezier >> split: aBlock [
+
+	| a b linspace firstLine secondLine thirdLine |
+	a := self controlPoints second.
+	b := self controlPoints third.
+
+	linspace := aBlock value: a value: b.
+
+	^ linspace ifNotEmpty: [ 
+		  firstLine := self class new
+			               controlPoints: { 
+					               self controlPoints first.
+					               a.
+					               linspace second.
+					               linspace third };
+			               yourself.
+
+		  thirdLine := self class new
+			               controlPoints: { 
+					               (linspace atLast: 3).
+					               (linspace atLast: 2).
+					               b.
+					               self controlPoints last };
+			               yourself.
+
+		  secondLine := firstLine joinC1Last: thirdLine.
+
+		  { 
+			  firstLine.
+			  secondLine.
+			  thirdLine } ]
+]
+
+{ #category : #composing }
+RSBezier >> splitXrandom: random convex: direction lessThanBound: aBound [
+
+	^ self split: [ :a :b | 
+		  (a x - b x) abs < aBound
+			  ifTrue: [ {  } ]
+			  ifFalse: [ 
+				  | y ys n |
+				  n := 7.
+
+				  y := (a y + b y) halved.
+
+				  ys := ((1 to: n) collect: [ :i | 
+					         random next y abs * direction + y ]) 
+					        exponentiallyWeighted: 0.5.
+
+				  ((a x to: b x) linspace: n) withIndexCollect: [ :x :i | 
+					  x @ (ys at: i) ] ] ]
+]
+
+{ #category : #composing }
+RSBezier >> splitYrandom: random convex: direction lessThanBound: aBound [
+
+	^ self split: [ :a :b | 
+		  (a y - b y) abs < aBound
+			  ifTrue: [ {  } ]
+			  ifFalse: [ 
+				  | x xs n |
+				  n := 7.
+
+				  x := (a x + b x) halved.
+
+				  xs := ((1 to: n) collect: [ :i | 
+					         random next x abs * direction + x ]) 
+					        exponentiallyWeighted: 0.5.
+
+				  ((a y to: b y) linspace: n) withIndexCollect: [ :y :i | 
+					  (xs at: i) @ y ] ] ]
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #RSShape }
+Extension { #name : 'RSShape' }
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : '*Roassal3-Inspector' }
 RSShape >> canvasForInspector [
 	| canvas copy |
 	canvas := RSCanvas new.
@@ -10,12 +10,12 @@ RSShape >> canvasForInspector [
 	^ canvas
 ]
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : '*Roassal3-Inspector' }
 RSShape >> inspectorShadowFor: padding color: aColor [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'*Roassal3-Inspector' }
+{ #category : '*Roassal3-Inspector' }
 RSShape >> inspectorShape [
 	<inspectorPresentationOrder: 90 title: 'Shape'>
 

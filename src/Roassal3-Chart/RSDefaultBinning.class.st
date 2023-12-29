@@ -2,36 +2,38 @@
 TODO
 "
 Class {
-	#name : #RSDefaultBinning,
-	#superclass : #RSAbstractBinning,
+	#name : 'RSDefaultBinning',
+	#superclass : 'RSAbstractBinning',
 	#instVars : [
 		'numberOfBins'
 	],
-	#category : #'Roassal3-Chart-Strategy'
+	#category : 'Roassal3-Chart-Strategy',
+	#package : 'Roassal3-Chart',
+	#tag : 'Strategy'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDefaultBinning >> computeNumberOfBinsFor: aCollection [
 	^ self numberOfBins
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSDefaultBinning >> defaultNumberOfBins [
 	^ 10
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDefaultBinning >> initialize [
 	super initialize.
 	self numberOfBins: self defaultNumberOfBins
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDefaultBinning >> numberOfBins [
 	^ numberOfBins
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDefaultBinning >> numberOfBins: aNumber [
 	numberOfBins := aNumber
 ]

@@ -14,8 +14,8 @@ If you wish to add a new rendering engine (to produce a PDF file or use an alter
 
 "
 Class {
-	#name : #RSAthensRenderer,
-	#superclass : #RSRenderer,
+	#name : 'RSAthensRenderer',
+	#superclass : 'RSRenderer',
 	#instVars : [
 		'builder',
 		'matrix',
@@ -23,10 +23,12 @@ Class {
 		'showRectangles',
 		'originMatrix'
 	],
-	#category : #'Roassal3-Rendering'
+	#category : 'Roassal3-Rendering',
+	#package : 'Roassal3',
+	#tag : 'Rendering'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAthensRenderer >> applyRadius: radius on: controlPoints from: start to: end [
 	"based on https://riptutorial.com/html5-canvas/example/18766/render-a-rounded-polygon-"
 	| cp p1 p2 p3 arc v1 len1 a1 v2 len2 a2 sinA sin90
@@ -89,7 +91,7 @@ RSAthensRenderer >> applyRadius: radius on: controlPoints from: start to: end [
 		(p1 = p2 or: [p2 = p3]) ifFalse: [ arc value ] ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAthensRenderer >> arcCornerTangets: p0 p1: p1 r: r1 rc: rc cw: cw [
 	| x01 y01 lo ox oy x1 y1 x2 y2 x3 y3 dx dy d2 r d D cx0 cy0 cx1 cy1 dx0 dy0 dx1 dy1 |
 	x01 := p0 x - p1 x.
@@ -123,14 +125,14 @@ RSAthensRenderer >> arcCornerTangets: p0 p1: p1 r: r1 rc: rc cw: cw [
 	^  (cx0 - ox)@ (cy0 - oy) negated -> ((cx0 * r1 / r)@(cy0 * r1/r) negated)
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAthensRenderer >> arcSweep: p1 and: p2 [
 	^ ((p1 x - p2 x)* p1 y) - ((p1 y - p2 y) * p1 x) > 0
 		ifTrue: [ 1 ]
 		ifFalse: [ 0 ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAthensRenderer >> asin: x [
 	^ x >= 1
 	ifTrue: [ 1.5707963267948966 ]
@@ -139,7 +141,7 @@ RSAthensRenderer >> asin: x [
 		ifFalse: [ x arcSin ] ]
 ]
 
-{ #category : #'creating path' }
+{ #category : 'creating path' }
 RSAthensRenderer >> buildBezierPath: bezier [
 	| points |
 	points := bezier controlPoints.
@@ -165,12 +167,27 @@ RSAthensRenderer >> buildBezierPath: bezier [
 				to: points fourth  ]
 ]
 
-{ #category : #'creating path' }
+{ #category : 'creating path' }
+RSAthensRenderer >> buildBezierPathWithoutMoving: bezier [
+
+	| points |
+	points := bezier controlPoints.
+	points size = 2 ifTrue: [ 
+		builder lineTo: points second.
+		^ self ].
+	points size = 3 ifTrue: [ 
+		builder curveVia: points second to: points third.
+		^ self ].
+	points size = 4 ifTrue: [ 
+		builder curveVia: points second and: points third to: points fourth ]
+]
+
+{ #category : 'creating path' }
 RSAthensRenderer >> buildBoxPath: box [
 	self buildCornerBoxPath: box
 ]
 
-{ #category : #'creating path' }
+{ #category : 'creating path' }
 RSAthensRenderer >> buildCornerBoxPath: box [
 	| c rectangle e w2 h2 tl tr bl br min |
 	c := box cornerRadius.
@@ -198,7 +215,7 @@ RSAthensRenderer >> buildCornerBoxPath: box [
 		closePath
 ]
 
-{ #category : #'creating path' }
+{ #category : 'creating path' }
 RSAthensRenderer >> buildEllipsePath: ellipse [
 	| extent halfWidth halfHeight |
 	extent := ellipse baseRectangle extent.
@@ -224,7 +241,7 @@ RSAthensRenderer >> buildEllipsePath: ellipse [
 			to: halfWidth negated @ halfHeight negated
 ]
 
-{ #category : #'creating path' }
+{ #category : 'creating path' }
 RSAthensRenderer >> buildLinePath: line [
 	builder
 		absolute;
@@ -232,7 +249,95 @@ RSAthensRenderer >> buildLinePath: line [
 		lineTo: line endPoint
 ]
 
-{ #category : #'creating path' }
+{ #category : 'creating path' }
+RSAthensRenderer >> buildNotePath: aNoteShape [
+
+	| n rectangle random left lPoints bPoints rPoints tPoints bottom right top coin block m nSamples mSamples finalLine radius ratio |
+	rectangle := aNoteShape baseRectangle.
+
+	random := RandomGaussian new.
+
+	coin := RandomBernoulli new
+		        p: 0.6;
+		        yourself.
+
+	block := [ :c0 :c1 :c2 | coin ifHead: [ c1 ] ifTail: [ c2 ] ].
+
+	radius := aNoteShape hasCornerRadius
+		          ifTrue: [ aNoteShape cornerRadius ]
+		          ifFalse: [ 
+			          RSCornerRadius new
+				          radius: 0;
+				          yourself ].
+
+	n := rectangle height max: 1.
+	m := rectangle width max: 1.
+
+	n > m
+		ifTrue: [ 
+			ratio := n / m.
+			m := (m log: 2) ceiling max: 4.
+			n := ratio ceiling * m ]
+		ifFalse: [ 
+			ratio := m / n.
+			n := (n log: 2) ceiling max: 4.
+			m := ratio ceiling * n ].
+
+	lPoints := ((rectangle top + radius topLeft to:
+	             rectangle bottom - radius bottomLeft) chebyshev: n) 
+		           collect: [ :each | rectangle left + random next @ each ].
+
+	rPoints := ((rectangle bottom - radius bottomRight to:
+	             rectangle top + radius topRight) chebyshev: n) collect: [ 
+		           :each | rectangle right + random next @ each ].
+
+	bPoints := ((rectangle left + radius bottomLeft to:
+	             rectangle right - radius bottomRight) chebyshev: m) 
+		           collect: [ :each | 
+		           each @ (rectangle bottom + random next) ].
+
+	tPoints := ((rectangle right - radius topRight to:
+	             rectangle left + radius topLeft) chebyshev: m) collect: [ 
+		           :each | each @ (rectangle top + random next) ].
+
+	nSamples := n << 2.
+	mSamples := m << 2.
+
+	left := RSdeCasteljauLine new
+		        samplesChebyshev: nSamples;
+		        controlPoints: lPoints;
+		        yourself.
+
+	bottom := RSdeCasteljauLine new
+		          samplesChebyshev: mSamples;
+		          controlPoints: bPoints;
+		          yourself.
+
+	right := RSdeCasteljauLine new
+		         samplesChebyshev: nSamples;
+		         controlPoints: rPoints;
+		         yourself.
+
+	top := RSdeCasteljauLine new
+		       samplesChebyshev: mSamples;
+		       controlPoints: tPoints;
+		       yourself.
+
+	bottom := left junction: bottom right: block.
+	right := bottom junction: right right: block.
+	top := right junction: top right: block.
+	left := top junction: left right: block.
+
+	finalLine := RSPolyline new
+		             controlPoints:
+			             left controlPoints , bottom controlPoints
+			             , right controlPoints , top controlPoints;
+		             yourself.
+
+	self buildPolylinePath: finalLine
+]
+
+{ #category : 'creating path' }
 RSAthensRenderer >> buildPolygonPath: polygon [
 	| first radius cp |
 	builder absolute.
@@ -253,7 +358,7 @@ RSAthensRenderer >> buildPolygonPath: polygon [
 	] ensure: [ builder closePath. ]
 ]
 
-{ #category : #'creating path' }
+{ #category : 'creating path' }
 RSAthensRenderer >> buildPolylinePath: line [
 	| first cp radius |
 	builder absolute.
@@ -273,7 +378,7 @@ RSAthensRenderer >> buildPolylinePath: line [
 			builder lineTo: point ] ]
 ]
 
-{ #category : #'creating path' }
+{ #category : 'creating path' }
 RSAthensRenderer >> buildRingPath: ring [
 	| aAngle bAngle xAngle i e center ap epsilon aAngle2 bAngle2
 	rp da da0 da1 rc x1 x2 x3 x4 y1 y2 y3 y4 rc0 rc1 t41 t23  t14 t32 |
@@ -434,12 +539,153 @@ RSAthensRenderer >> buildRingPath: ring [
 	builder close
 ]
 
-{ #category : #accessing }
+{ #category : 'creating path' }
+RSAthensRenderer >> buildSegmentedBeziersPolylinePath: line [
+
+	line splits do: [ :bezier | self buildBezierPath: bezier ]
+]
+
+{ #category : 'creating path' }
+RSAthensRenderer >> buildSimpleBoxPath: box [
+	| rectangle |
+	rectangle := box baseRectangle.
+	builder
+		absolute;
+		moveTo: rectangle topLeft;
+		lineTo: rectangle topRight;
+		lineTo: rectangle bottomRight;
+		lineTo: rectangle bottomLeft;
+		lineTo: rectangle topLeft;
+		closePath
+]
+
+{ #category : 'creating path' }
+RSAthensRenderer >> buildSimplerNotePath: aNoteShape [
+
+	| rectangle random radius topLeftLine topRightLine bottomRightLine bottomLeftLine topLines rightLines bottomLines leftLines |
+	rectangle := aNoteShape baseRectangle.
+
+	random := RandomBoxMullerBivariateGaussian new.
+
+	radius := aNoteShape hasCornerRadius
+		          ifTrue: [ aNoteShape cornerRadius ]
+		          ifFalse: [ 
+			          RSCornerRadius new
+				          radius: random next x abs;
+				          yourself ].
+
+	topLeftLine := radius
+		               asBezierTopLeftPoint: rectangle topLeft
+		               random: random.
+
+	topRightLine := radius
+		                asBezierTopRightPoint: rectangle topRight
+		                random: random.
+
+	bottomRightLine := radius
+		                   asBezierBottomRightPoint: rectangle bottomRight
+		                   random: random.
+
+	bottomLeftLine := radius
+		                  asBezierBottomLeftPoint: rectangle bottomLeft
+		                  random: random.
+
+	topLines := (topLeftLine joinC1Last: topRightLine)
+		            splitXrandom: random
+		            convex: -1
+		            lessThanBound: radius topLeft + radius topRight.
+
+	topLines ifEmpty: [ 
+		| cps |
+		cps := Array new: 4.
+
+		cps
+			at: 1 put: topLeftLine controlPoints last;
+			at: 2 put: topLeftLine lastC1Point;
+			at: 3 put: topRightLine controlPoints third;
+			at: 4 put: topRightLine controlPoints fourth.
+
+		topRightLine controlPoints: cps ].
+
+	rightLines := (topRightLine joinC1Last: bottomRightLine)
+		              splitYrandom: random
+		              convex: 1
+		              lessThanBound: radius topRight + radius bottomRight.
+
+	rightLines ifEmpty: [ 
+		| cps |
+		cps := Array new: 4.
+
+		cps
+			at: 1 put: topRightLine controlPoints last;
+			at: 2 put: topRightLine lastC1Point;
+			at: 3 put: bottomRightLine controlPoints third;
+			at: 4 put: bottomRightLine controlPoints fourth.
+
+		bottomRightLine controlPoints: cps ].
+
+	bottomLines := (bottomRightLine joinC1Last: bottomLeftLine)
+		               splitXrandom: random
+		               convex: 1
+		               lessThanBound: radius bottomRight + radius bottomLeft.
+
+	bottomLines ifEmpty: [ 
+		| cps |
+		cps := Array new: 4.
+
+		cps
+			at: 1 put: bottomRightLine controlPoints last;
+			at: 2 put: bottomRightLine lastC1Point;
+			at: 3 put: bottomLeftLine controlPoints third;
+			at: 4 put: bottomLeftLine controlPoints fourth.
+
+		bottomLeftLine controlPoints: cps ].
+
+	leftLines := (bottomLeftLine joinC1Last: topLeftLine)
+		             splitYrandom: random
+		             convex: -1
+		             lessThanBound: radius bottomLeft + radius topLeft.
+
+	leftLines ifEmpty: [ 
+		| cps |
+		cps := Array new: 4.
+
+		cps
+			at: 1 put: bottomLeftLine controlPoints last;
+			at: 2 put: bottomLeftLine lastC1Point;
+			at: 3 put: topLeftLine controlPoints third;
+			at: 4 put: topLeftLine controlPoints fourth.
+
+		topLeftLine controlPoints: cps ].
+
+	builder
+		absolute;
+		moveTo: topLeftLine controlPoints first.
+
+	"Clockwise order matters."
+	(Array streamContents: [ :aStream | 
+		 aStream
+			 nextPut: topLeftLine;
+			 nextPutAll: topLines;
+			 nextPut: topRightLine;
+			 nextPutAll: rightLines;
+			 nextPut: bottomRightLine;
+			 nextPutAll: bottomLines;
+			 nextPut: bottomLeftLine;
+			 nextPutAll: leftLines ]) do: [ :each | 
+		each joinRound.
+
+		self buildBezierPathWithoutMoving: each ].
+
+	builder closePath
+]
+
+{ #category : 'accessing' }
 RSAthensRenderer >> builder [
 	^ builder
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAthensRenderer >> createStrokePaintFor: border [
 	| stroke style |
 	stroke := (border paint asAthensPaintOn: athensCanvas) asStrokePaintOn: athensCanvas.
@@ -456,7 +702,7 @@ RSAthensRenderer >> createStrokePaintFor: border [
 	^ stroke
 ]
 
-{ #category : #'visiting - helpers' }
+{ #category : 'visiting - helpers' }
 RSAthensRenderer >> drawPathLabel: label [
 	| utf8String act f stroke |
 	utf8String := label path.
@@ -486,7 +732,7 @@ RSAthensRenderer >> drawPathLabel: label [
 	f unlock
 ]
 
-{ #category : #'visiting - helpers' }
+{ #category : 'visiting - helpers' }
 RSAthensRenderer >> drawShadowRectangle: rect [
 	| r |
 	athensCanvas setPaint: (Color blue alpha: 0.1).
@@ -494,7 +740,7 @@ RSAthensRenderer >> drawShadowRectangle: rect [
 	athensCanvas drawShape: r
 ]
 
-{ #category : #'visiting - helpers' }
+{ #category : 'visiting - helpers' }
 RSAthensRenderer >> drawSimpleLabel: label [
 	| font |
 	(label paint isNil or: [ label cairoGlyphs isNil ]) ifTrue: [ ^ self ].
@@ -516,7 +762,7 @@ RSAthensRenderer >> drawSimpleLabel: label [
 	font unlock
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAthensRenderer >> geomPolygonIntersectC: c d: d a: a b: b [
 
 	| x1 x3 x21 x43 y1 y3 y21 y43 ua |
@@ -533,7 +779,7 @@ RSAthensRenderer >> geomPolygonIntersectC: c d: d a: a b: b [
 	(y1 +(ua * y21))
 ]
 
-{ #category : #'creating path' }
+{ #category : 'creating path' }
 RSAthensRenderer >> getOrCreatePathOf: shape [
 	| path |
 	path := shape path.
@@ -548,7 +794,7 @@ RSAthensRenderer >> getOrCreatePathOf: shape [
 	^ path
 ]
 
-{ #category : #paint }
+{ #category : 'paint' }
 RSAthensRenderer >> paintFor: shape form: form [
 	form isForm ifFalse: [ ^ form ].
 
@@ -563,7 +809,7 @@ RSAthensRenderer >> paintFor: shape form: form [
 			paint ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAthensRenderer >> visitBorder: border [
 	| stroke |
 	stroke := self createStrokePaintFor: border.
@@ -571,7 +817,7 @@ RSAthensRenderer >> visitBorder: border [
 	^ stroke
 ]
 
-{ #category : #'visiting - helpers' }
+{ #category : 'visiting - helpers' }
 RSAthensRenderer >> visitBorderIfNecessary: shape [
 	shape hasBorder ifFalse: [ ^ self ].
 	athensCanvas setShape: shape path.
@@ -579,7 +825,7 @@ RSAthensRenderer >> visitBorderIfNecessary: shape [
 	athensCanvas draw
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAthensRenderer >> visitBoundingShape: shape [
 	self visitShapeIfNecessary: shape block: [
 		| path paint |
@@ -596,12 +842,12 @@ RSAthensRenderer >> visitBoundingShape: shape [
 	]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAthensRenderer >> visitCamera: camera [
 	camera setMatrix: matrix
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAthensRenderer >> visitCanvas: aRSCanvas [
 	matrix := AthensAffineTransform new.
 	originMatrix := matrix copy.
@@ -620,7 +866,7 @@ RSAthensRenderer >> visitCanvas: aRSCanvas [
 	aRSCanvas fixedShapes accept: self
 ]
 
-{ #category : #'visiting - helpers' }
+{ #category : 'visiting - helpers' }
 RSAthensRenderer >> visitChildrenIfNecessary: shape [
 	| draw visibleChildren rectangle |
 	shape hasChildren ifFalse: [ ^ self ].
@@ -640,12 +886,12 @@ RSAthensRenderer >> visitChildrenIfNecessary: shape [
 		ifFalse: [ draw value ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAthensRenderer >> visitGroup: aRSGroup [
 	aRSGroup do: [ :roassalShape | roassalShape accept: self ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAthensRenderer >> visitLabel: label [
 	label hasText ifFalse: [ ^ self ].
 	self visitShapeIfNecessary: label block: [
@@ -663,7 +909,7 @@ RSAthensRenderer >> visitLabel: label [
 	]
 ]
 
-{ #category : #'visiting - helpers' }
+{ #category : 'visiting - helpers' }
 RSAthensRenderer >> visitLabelDecoratorsIfNecessary: label [
 	| advance |
 	(label isUnderlined or: [label isStruckOut]) ifFalse: [ ^ self ].
@@ -681,7 +927,7 @@ RSAthensRenderer >> visitLabelDecoratorsIfNecessary: label [
 	athensCanvas drawShape: ((0 @ 1 extent: advance @ 1))
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSAthensRenderer >> visitLine: line [
 	| path paint |
 	(line intersects: canvasRect) ifFalse: [ ^ self ].
@@ -698,19 +944,19 @@ RSAthensRenderer >> visitLine: line [
 	self visitShadowRectLineIfNecessary: line
 ]
 
-{ #category : #'visiting - helpers' }
+{ #category : 'visiting - helpers' }
 RSAthensRenderer >> visitShadowRectLineIfNecessary: line [
 	showRectangles ifFalse: [ ^ self ].
 	self drawShadowRectangle: line encompassingRectangle
 ]
 
-{ #category : #'visiting - helpers' }
+{ #category : 'visiting - helpers' }
 RSAthensRenderer >> visitShadowRectangleIfNecessary: shape [
 	showRectangles ifFalse: [ ^ self ].
 	self drawShadowRectangle: shape baseRectangle
 ]
 
-{ #category : #'visiting - helpers' }
+{ #category : 'visiting - helpers' }
 RSAthensRenderer >> visitShapeIfNecessary: shape block: aBlock [
 	matrix restoreAfter: [
 		| shapeMatrix |

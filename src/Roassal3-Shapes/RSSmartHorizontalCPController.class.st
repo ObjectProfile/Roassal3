@@ -4,7 +4,7 @@ this attach point uses the angle between shapes
 Class {
 	#name : #RSSmartHorizontalCPController,
 	#superclass : #RSAbstractCPController,
-	#category : #'Roassal3-Shapes-ControlPoints'
+	#category : 'Roassal3-Shapes-ControlPoints'
 }
 
 { #category : #utilities }

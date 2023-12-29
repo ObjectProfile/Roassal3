@@ -1,6 +1,6 @@
-Extension { #name : #BaselineOf }
+Extension { #name : 'BaselineOf' }
 
-{ #category : #'*Roassal3-BaselineMap' }
+{ #category : '*Roassal3-BaselineMap' }
 BaselineOf >> inspectionBaselineMap [
 	<inspectorPresentationOrder: 10 title: 'Dependencies Map'>
 	| canvas |

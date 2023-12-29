@@ -1,6 +1,6 @@
-Extension { #name : #RSCanvas }
+Extension { #name : 'RSCanvas' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSCanvas class >> exampleSimple [
 	| canvas |
 	canvas := self new.
@@ -9,7 +9,7 @@ RSCanvas class >> exampleSimple [
 	^ canvas open
 ]
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSCanvas class >> exampleSpec [
 	| canvas spec |
 	canvas := self new.

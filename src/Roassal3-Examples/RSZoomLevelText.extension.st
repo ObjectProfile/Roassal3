@@ -1,6 +1,6 @@
-Extension { #name : #RSZoomLevelText }
+Extension { #name : 'RSZoomLevelText' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSZoomLevelText class >> exampleSimpleUML [
 	| builder |
 	builder := RSUMLClassBuilder new.

@@ -2,59 +2,61 @@
 I am an animation that provides a number interpolating between 0 and 1. and apply it the value to one block
 "
 Class {
-	#name : #RSTransitionAnimation,
-	#superclass : #RSAbstractAnimation,
+	#name : 'RSTransitionAnimation',
+	#superclass : 'RSAbstractAnimation',
 	#instVars : [
 		'stepAction',
 		'duration',
 		'easing',
 		'scale'
 	],
-	#category : #'Roassal3-Animation-Core'
+	#category : 'Roassal3-Animation-Core',
+	#package : 'Roassal3-Animation',
+	#tag : 'Core'
 }
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSTransitionAnimation class >> defaultDuration [
 	^ 2 seconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> duration [
 	^ Duration milliSeconds: duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> duration: aDuration [
 	duration := aDuration asMilliSeconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> easing [
 	^ easing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> easing: anInterpolator [
 	easing := anInterpolator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> from [
 	^ scale range first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> from: anObject [
 	scale from: anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSTransitionAnimation >> initialize [
 	super initialize.
 	self onStepDo: [ :t | ]
 ]
 
-{ #category : #'action handling' }
+{ #category : 'action handling' }
 RSTransitionAnimation >> on: object set: setSelector [
 	"Key method to set an animation. the first argument receives an object, typically a shape, a border, a line. The second argument is a selector that will be used to set the animated value. The selector must take one argument as parameter. Here is an example:
 
@@ -109,23 +111,23 @@ c
 	]
 ]
 
-{ #category : #'action handling' }
+{ #category : 'action handling' }
 RSTransitionAnimation >> onStepDo: aBlock [
 	stepAction := aBlock
 ]
 
-{ #category : #'action handling' }
+{ #category : 'action handling' }
 RSTransitionAnimation >> onStepDo: aBlockClosure with: anObject [
 	self onStepDo: [ :t | aBlockClosure value: t value: anObject ]
 ]
 
-{ #category : #'action handling' }
+{ #category : 'action handling' }
 RSTransitionAnimation >> performStepActionWith: aValue [
 	"Method used to ease the retrieval of the context when debugging from the inspector"
 	stepAction cull: aValue
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSTransitionAnimation >> progress [
 	| progress |
 	self startStep.
@@ -135,7 +137,7 @@ RSTransitionAnimation >> progress [
 	^ progress
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSTransitionAnimation >> progressValue: progress [
 	| value |
 	"interpolate the progress"
@@ -144,19 +146,19 @@ RSTransitionAnimation >> progressValue: progress [
 	^ self scale scale: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> ramp: arrayOfAssociations [
 	scale := NSScale linear
 		domain: (arrayOfAssociations collect: #key);
 		range: (arrayOfAssociations collect: #value)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> range: aTwoArrayOfNumbers [
 	scale range: aTwoArrayOfNumbers
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSTransitionAnimation >> reset [
 	super reset.
 	self duration: self class defaultDuration.
@@ -164,28 +166,28 @@ RSTransitionAnimation >> reset [
 	scale := NSScale linear
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> scale [
 	^ scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> scale: aScale [
 	scale := aScale
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 RSTransitionAnimation >> step [	
 	self stepWithNumber: self progress
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> stepAction [
 	^ stepAction
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 RSTransitionAnimation >> stepWithNumber: progress [
 	"progress shuld be a number between 0 and 1"
 
@@ -196,12 +198,12 @@ RSTransitionAnimation >> stepWithNumber: progress [
 	self updateHasCompleted
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> to [
 	^ scale range last
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTransitionAnimation >> to: aValue [
 	scale to: aValue
 ]

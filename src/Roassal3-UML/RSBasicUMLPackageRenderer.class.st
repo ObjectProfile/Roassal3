@@ -2,12 +2,14 @@
 A basic renderer for UML packages
 "
 Class {
-	#name : #RSBasicUMLPackageRenderer,
-	#superclass : #RSAbstractUMLPackageRenderer,
-	#category : #'Roassal3-UML-Rendering'
+	#name : 'RSBasicUMLPackageRenderer',
+	#superclass : 'RSAbstractUMLPackageRenderer',
+	#category : 'Roassal3-UML-Rendering',
+	#package : 'Roassal3-UML',
+	#tag : 'Rendering'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSBasicUMLPackageRenderer >> shapeFor: aPackage [
 	| title classes box |
 	title := self packageNameFor: aPackage.

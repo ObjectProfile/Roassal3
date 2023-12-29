@@ -2,8 +2,8 @@
 BTree node
 "
 Class {
-	#name : #RSRNode,
-	#superclass : #RSAbstractRNode,
+	#name : 'RSRNode',
+	#superclass : 'RSAbstractRNode',
 	#instVars : [
 		'contents',
 		'left',
@@ -11,22 +11,24 @@ Class {
 		'rectangle',
 		'height'
 	],
-	#category : #'Roassal3-Rendering'
+	#category : 'Roassal3-Rendering',
+	#package : 'Roassal3',
+	#tag : 'Rendering'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSRNode class >> new: anObject [
 	^ self basicNew
 		fromShape: anObject;
 		yourself
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSRNode >> accept: visitor [
 	visitor visitNode: self
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSRNode >> add: anObject path: list [
 
 	self isLeaf ifTrue: [
@@ -43,7 +45,7 @@ RSRNode >> add: anObject path: list [
 	rectangle := Rectangle merging: {left rectangle. right rectangle}
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSRNode >> addChild: newObject [
 	| path |
 	path := OrderedCollection with: self.
@@ -52,7 +54,7 @@ RSRNode >> addChild: newObject [
 	^ self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSRNode >> balanceZ: z y: y x: x [
 	| a b c |
 	c := z value.
@@ -69,12 +71,12 @@ RSRNode >> balanceZ: z y: y x: x [
 	"self notYetImplemented."
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSRNode >> bbox: aShape [
 	^ aShape encompassingRectangle
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RSRNode >> bulkLoad: aCollection from: a to: b [
 	"a and b are indeces, used to copy part of the boxes"
 	b < a ifTrue: [ ^ self error: 'should not' ].
@@ -92,7 +94,7 @@ RSRNode >> bulkLoad: aCollection from: a to: b [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSRNode >> checkPath: aCollection [
 	| recomputeHeight |
 	aCollection size < 3 ifTrue: [ ^ self ].
@@ -115,18 +117,18 @@ RSRNode >> checkPath: aCollection [
 	"recomputeHeight ifTrue: [ root computeHeight ]"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRNode >> children [
 	^ {left. right} copyWithout: nil
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RSRNode >> childrenDo: aBlock [
 	left ifNotNil: aBlock.
 	right ifNotNil: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RSRNode >> collect: aFullBlockClosure [
 	| list |
 	list := OrderedCollection new.
@@ -134,7 +136,7 @@ RSRNode >> collect: aFullBlockClosure [
 	^ list
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSRNode >> computeHeight [
 	height := self isLeaf
 		ifTrue: [ 1 ]
@@ -142,23 +144,23 @@ RSRNode >> computeHeight [
 	^ height
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSRNode >> computeRectangle [
 	rectangle := Rectangle merging: { left rectangle. right rectangle }.
 	height := (left height max: right height) + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRNode >> contents [
 	^ contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRNode >> contents: aRSShape [
 	contents := aRSShape
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RSRNode >> do: aBlock [
 	self isLeaf
 		ifTrue: [ aBlock value: self contents ]
@@ -167,7 +169,7 @@ RSRNode >> do: aBlock [
 			 ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSRNode >> fromNode: aNode [
 	contents := aNode contents.
 	left := aNode left.
@@ -176,24 +178,24 @@ RSRNode >> fromNode: aNode [
 	height := aNode height
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSRNode >> fromShape: aRSShape [
 	contents := aRSShape.
 	height := 1.
 	rectangle := self bbox: aRSShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRNode >> height [
 	^ height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRNode >> height: anInteger [
 	height := anInteger
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 RSRNode >> inspectionTree: aBuilder [
     <inspectorPresentationOrder: 1 title: 'Tree Structure'>
 
@@ -204,34 +206,34 @@ RSRNode >> inspectionTree: aBuilder [
         yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSRNode >> isBalanced [
 	^ self isLeaf or: [ (left height - right height) abs <= 1  ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSRNode >> isEmpty [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSRNode >> isInvalid [
 	^ self isLeaf and: [ self contents isNil ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSRNode >> isLeaf [
 	^ right isNil and: [ left isNil ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSRNode >> isTotalBalanced [
 	^ self isBalanced
 		and: [ (left isNil or: [ left isTotalBalanced ])
 			and: [ right isNil or: [ right isTotalBalanced ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSRNode >> leastEnlargementChild: anRSShape [
 	| minRectangleEnlargement rect leftRect rightRect leftDiff rightDiff area1 area2 |
 	minRectangleEnlargement := nil.
@@ -252,17 +254,17 @@ RSRNode >> leastEnlargementChild: anRSShape [
 				ifFalse: [ right ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRNode >> left [
 	^ left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRNode >> left: aRSRNode [
 	left := aRSRNode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSRNode >> llrotationZ: z y: y x: x [
 	| a3 a4 new |
 	a3 := y right.
@@ -273,7 +275,7 @@ RSRNode >> llrotationZ: z y: y x: x [
 	z left: x; right: new; computeRectangle
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSRNode >> lrrotationZ: z y: y x: x [
 	| a1 a2 a3 new |
 	a1 := y left.
@@ -286,7 +288,7 @@ RSRNode >> lrrotationZ: z y: y x: x [
 	self llrotationZ: z y: y x: new
 ]
 
-{ #category : #'finding/searching' }
+{ #category : 'finding/searching' }
 RSRNode >> nodesIntersetcsRectangle: aRectangle list: aCollection [
 	(self rectangle intersects: aRectangle) ifFalse: [ ^ self ].
 	self isLeaf ifTrue: [ aCollection add: self contents ]
@@ -296,7 +298,7 @@ RSRNode >> nodesIntersetcsRectangle: aRectangle list: aCollection [
 			 ] ]
 ]
 
-{ #category : #'finding/searching' }
+{ #category : 'finding/searching' }
 RSRNode >> nodesWithPoint: aPoint list: aCollection [
 	(self rectangle containsPoint: aPoint)
 		ifFalse: [ ^ self ].
@@ -307,22 +309,22 @@ RSRNode >> nodesWithPoint: aPoint list: aCollection [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRNode >> rectangle [
 	^ rectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRNode >> right [
 	^ right
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSRNode >> right: aRSRNode [
 	right := aRSRNode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSRNode >> rlrotationZ: z y: y x: x [
 	| a1 a2 a3 a4 new |
 	a1 := z left.
@@ -335,7 +337,7 @@ RSRNode >> rlrotationZ: z y: y x: x [
 	self rrrotationZ: z y: y x: new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSRNode >> rrrotationZ: z y: y x: x [
 	"right right rotation"
 	| a1 a2 new |
@@ -346,7 +348,7 @@ RSRNode >> rrrotationZ: z y: y x: x [
 	z left: new; right: x; computeRectangle
 ]
 
-{ #category : #'finding/searching' }
+{ #category : 'finding/searching' }
 RSRNode >> searchPath: aRSShape [
 	| path |
 	path := OrderedCollection new.
@@ -354,7 +356,7 @@ RSRNode >> searchPath: aRSShape [
 	^ path
 ]
 
-{ #category : #'finding/searching' }
+{ #category : 'finding/searching' }
 RSRNode >> searchPath: shape rectangle: shapeRect in: path dir: aBoolean [
 	(self rectangle containsRect: shapeRect)
 		ifFalse: [ ^ self ].
@@ -370,7 +372,7 @@ RSRNode >> searchPath: shape rectangle: shapeRect in: path dir: aBoolean [
 	 ]
 ]
 
-{ #category : #'accessing - children' }
+{ #category : 'accessing - children' }
 RSRNode >> withAllChildren [
 	| children |
 	children := OrderedCollection new.

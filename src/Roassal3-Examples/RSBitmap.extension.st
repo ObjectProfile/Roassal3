@@ -1,6 +1,6 @@
-Extension { #name : #RSBitmap }
+Extension { #name : 'RSBitmap' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSBitmap class >> example [
 	| image |
 	image := self new.

@@ -32,15 +32,17 @@ I provide the following methods.
 
 "
 Class {
-	#name : #RSLayout,
-	#superclass : #RSObject,
+	#name : 'RSLayout',
+	#superclass : 'RSObject',
 	#instVars : [
 		'translator'
 	],
-	#category : #'Roassal3-Layouts-Core'
+	#category : 'Roassal3-Layouts-Core',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Core'
 }
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 RSLayout class >> addDocumentSectionHierarchy: aBuilder [
 
 	aBuilder newLine.
@@ -52,7 +54,7 @@ RSLayout class >> addDocumentSectionHierarchy: aBuilder [
 		buildFor: self
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLayout class >> basicExample [
 	| canvas |
 	canvas := self canvasExample.
@@ -60,13 +62,13 @@ RSLayout class >> basicExample [
 	^ canvas open
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 RSLayout class >> buildMicroDownUsing: aBuilder withComment: aString [
 	super buildMicroDownUsing: aBuilder withComment: aString.
 	self addDocumentSectionHierarchy: aBuilder
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLayout class >> canvasExample [
 	| canvas |
 	canvas := RSCanvas new.
@@ -75,12 +77,12 @@ RSLayout class >> canvasExample [
 	^ canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLayout class >> canvasExampleIn: canvas [
 	self canvasExampleIn: canvas models: Collection withAllSubclasses
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLayout class >> canvasExampleIn: canvas models: aCollection [
 	| shapes colorPalette |
 	self cartensianLinesIn: canvas.
@@ -102,7 +104,7 @@ RSLayout class >> canvasExampleIn: canvas models: aCollection [
 		normalize: #linesOfCode
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSLayout class >> cartensianLinesIn: canvas [
 	| lineX lineY zeroLabel |
 	lineX := RSArrowedLine new
@@ -126,12 +128,12 @@ RSLayout class >> cartensianLinesIn: canvas [
 		addShape: zeroLabel
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSLayout class >> isAbstract [
 	^ self name = #RSLayout
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSLayout class >> on: aCollection [
 	"main entry point of the class"
 
@@ -141,39 +143,39 @@ RSLayout class >> on: aCollection [
 	^ aCollection
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSLayout class >> on: elements edges: edges [
 	"To make all the layout polymorphic"
 
 	^ self on: elements
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSLayout >> applyOn: elements [
 	"Return quickly if there is nothing to do"
 	elements isEmpty ifTrue: [ ^ self ].
 	self executeOnElements: elements
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSLayout >> doExecute: shapes [
 	"Performs the layout"
 
 	self subclassResponsibility
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSLayout >> doInitialize: elements [
 	"Method executed before beginning the layout. Useful when the graph to be ordered need to be prepared"
 	"self announce: (ROLayoutBegin new elements: elements)."
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSLayout >> doPost: elements [
 	"Method executed after performing the layout"
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSLayout >> executeOnElements: elements [
 	"Execute the layout, myself, on the elements"
 
@@ -182,38 +184,38 @@ RSLayout >> executeOnElements: elements [
 	self doPost: elements
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSLayout >> initialize [
 	super initialize.
 	translator := RSLayoutTranslator default
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSLayout >> on: elements [
 	self applyOn: elements
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSLayout >> on: elements edges: edges [
 	self applyOn: elements
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSLayout >> step [
 	"use this method for animations"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayout >> translator [
 	^ translator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSLayout >> translator: aTranslator [
 	translator := aTranslator
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSLayout >> userDefinedLines: aCollectionOfLines [
 	"Do nothing"
 ]

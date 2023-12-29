@@ -2,27 +2,29 @@
 RSVerticalGridLayout places shapes as a grid. Shapes keeps their order, from top to down, and then left to right.
 "
 Class {
-	#name : #RSVerticalCellLayout,
-	#superclass : #RSAbstractGridLayout,
+	#name : 'RSVerticalCellLayout',
+	#superclass : 'RSAbstractGridLayout',
 	#instVars : [
 		'alignment'
 	],
-	#category : #'Roassal3-Layouts-Grid'
+	#category : 'Roassal3-Layouts-Grid',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Grid'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSVerticalCellLayout >> alignment [
 
 	^ alignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSVerticalCellLayout >> alignment: anObject [
 
 	alignment := anObject
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSVerticalCellLayout >> doExecute: shapes [
 	| pointer lineItemCount lineItemSize maxLastLineWidth originalGapLeft originalGapTop vgap hgap align line mocks|
 	
@@ -58,7 +60,7 @@ RSVerticalCellLayout >> doExecute: shapes [
 	line do: [:mock | mock applyToRealElement ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSVerticalCellLayout >> initialize [
 	super initialize.
 	self alignment: #none

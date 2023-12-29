@@ -101,15 +101,17 @@ canvas @ RSCanvasController.
 ```
 "
 Class {
-	#name : #RSPopup,
-	#superclass : #RSAbstractPopupInteraction,
+	#name : 'RSPopup',
+	#superclass : 'RSAbstractPopupInteraction',
 	#instVars : [
 		'shapeBuilder'
 	],
-	#category : #'Roassal3-Interaction-Popup'
+	#category : 'Roassal3-Interaction-Popup',
+	#package : 'Roassal3-Interaction',
+	#tag : 'Popup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPopup class >> text: aStringOrOneArgBlock [
 	"Define a Popup interaction with a particular text. The argument can either be a text, a symbol, or a one-argument block that is evaluated on the model object of the shape. For example:
 ```
@@ -138,12 +140,12 @@ canvas open.
 	^ inst
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPopup class >> theme [
 	^ self themeText: #yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPopup class >> themeText: aBlock [
 	"you can create your own custom popups by adding extention methods for this class"
 	| popup theme |
@@ -158,7 +160,7 @@ RSPopup class >> themeText: aBlock [
 	^ popup
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSPopup >> createPopupFor: aShape event: event [
 	| popupShape |
 	popupShape := shapeBuilder shapeFor: (self modelFor: aShape).
@@ -167,23 +169,23 @@ RSPopup >> createPopupFor: aShape event: event [
 	^ popupShape
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSPopup >> initialize [
 	super initialize.
 	shapeBuilder := RSSimplePopupBuilder new
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSPopup >> releasePopup: popup [
 	popup remove
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPopup >> shapeBuilder [
 	^ shapeBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPopup >> shapeBuilder: aShapeBuilder [
 	"Let one customize the way the popup is generated. The method accept a shape builder or a one-argument-block. For example:
 
@@ -212,13 +214,13 @@ canvas open
 	shapeBuilder := aShapeBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSPopup >> text: oneArgBlock [
 	"The block is evaluated with the model provided as argument"
 	self shapeBuilder textBlock: oneArgBlock
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSPopup >> translatePopup: popup event: evt [
 	| p e extent |
 	p := evt camera fromSpaceToPixel: evt position.

@@ -1,6 +1,6 @@
-Extension { #name : #AthensAffineTransform }
+Extension { #name : 'AthensAffineTransform' }
 
-{ #category : #'*Roassal3-Bloc' }
+{ #category : '*Roassal3-Bloc' }
 AthensAffineTransform >> asBlMatrix [
 	
 	^ BlMatrix2D new

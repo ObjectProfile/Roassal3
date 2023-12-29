@@ -1,6 +1,6 @@
-Extension { #name : #RSGhostDraggable }
+Extension { #name : 'RSGhostDraggable' }
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSGhostDraggable class >> example [
 	| canvas |
 	canvas := self canvasExample.
@@ -9,7 +9,7 @@ RSGhostDraggable class >> example [
 		setLabel: 'Drag and find the ghost'
 ]
 
-{ #category : #'*Roassal3-Examples' }
+{ #category : '*Roassal3-Examples' }
 RSGhostDraggable class >> exampleChangeColor [
 	| canvas int |
 	canvas := self canvasExample.

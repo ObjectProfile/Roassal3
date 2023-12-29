@@ -2,12 +2,14 @@
 `RSEquidistantCircleLayout` is a circle layout in which elements are equidistant from each other: the layout maintains the same distance between elements.
 "
 Class {
-	#name : #RSEquidistantCircleLayout,
-	#superclass : #RSAbstractWeightedCircleLayout,
-	#category : #'Roassal3-Layouts-Circle'
+	#name : 'RSEquidistantCircleLayout',
+	#superclass : 'RSAbstractWeightedCircleLayout',
+	#category : 'Roassal3-Layouts-Circle',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Circle'
 }
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSEquidistantCircleLayout >> computeSeparationFor: elements [
 	"Compute the separation between each element, this separation will always be the same"
 	| sep |
@@ -16,7 +18,7 @@ RSEquidistantCircleLayout >> computeSeparationFor: elements [
 	^ sep
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSEquidistantCircleLayout >> doExecute: shapes [
 	| angle rad center angleInc separation |
 	rad := self computeRadiusFor: shapes.

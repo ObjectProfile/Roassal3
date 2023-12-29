@@ -31,8 +31,8 @@ self assert: (kernelDensity kde: anXValue) closeTo: 0.0495.
 ```
 "
 Class {
-	#name : #RSKernelDensity,
-	#superclass : #RSObject,
+	#name : 'RSKernelDensity',
+	#superclass : 'RSObject',
 	#instVars : [
 		'data',
 		'bandwidth',
@@ -40,15 +40,17 @@ Class {
 		'curveStep',
 		'errorMargin'
 	],
-	#category : #'Roassal3-Chart-Statistics'
+	#category : 'Roassal3-Chart-Statistics',
+	#package : 'Roassal3-Chart',
+	#tag : 'Statistics'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSKernelDensity class >> bandwidth: aNumber [
 	^ self gaussian bandwidth: aNumber.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSKernelDensity class >> data: aCollection [
 	| kernelDensity |
 	kernelDensity := self gaussian.
@@ -56,7 +58,7 @@ RSKernelDensity class >> data: aCollection [
 	^ kernelDensity
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSKernelDensity class >> gaussian [
 	| kernelDensity |
 	kernelDensity := self new.
@@ -64,7 +66,7 @@ RSKernelDensity class >> gaussian [
 	^ kernelDensity
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSKernelDensity class >> kernel: anRSKernelFunction [
 	| kernelDensity |
 	kernelDensity := self new.
@@ -72,7 +74,7 @@ RSKernelDensity class >> kernel: anRSKernelFunction [
 	^ kernelDensity
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSKernelDensity class >> kernel: anRSKernelFunction data: aCollection [
 	| kernelDensity |
 	kernelDensity := self new.
@@ -81,17 +83,17 @@ RSKernelDensity class >> kernel: anRSKernelFunction data: aCollection [
 	^ kernelDensity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKernelDensity >> bandwidth [
 	^ bandwidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKernelDensity >> bandwidth: aNumber [
 	bandwidth := aNumber abs.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSKernelDensity >> computeBandwidth [
 	"Based on https://en.wikipedia.org/wiki/Kernel_density_estimation"
 	| n standardDeviation iqr |
@@ -101,7 +103,7 @@ RSKernelDensity >> computeBandwidth [
 	self bandwidth: (0.9 * (standardDeviation min: (iqr/1.34)) * (n raisedTo: (-1/5))).
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSKernelDensity >> computeCurveStep [
 	| min max diff |
 	min := data min.
@@ -111,22 +113,22 @@ RSKernelDensity >> computeCurveStep [
 	self curveStep: diff * 0.01.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKernelDensity >> curveStep [
 	^ curveStep
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKernelDensity >> curveStep: aNumber [
 	curveStep := aNumber abs.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKernelDensity >> data [
 	^ data.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKernelDensity >> data: aCollection [
 	self assert: (aCollection allSatisfy: [ :each | each isNumber ]) 
 		description: 'data: should receive only a collection of numbers'.
@@ -135,17 +137,17 @@ RSKernelDensity >> data: aCollection [
 	self computeCurveStep.
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSKernelDensity >> defaultErrorMargin [
 	^ 0.0001.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKernelDensity >> defaultKernel [
 	^ RSKernelGaussianFunction new.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSKernelDensity >> densityCurve [
 	| curvePoints xi yi maxData minData epsilon step minXDomain maxXDomain maxY |
 	maxData := data max.
@@ -193,36 +195,36 @@ RSKernelDensity >> densityCurve [
 	^ curvePoints.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKernelDensity >> densityCurveSample: aCollection [
 	^ aCollection collect: [ :value | (self kde: value) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSKernelDensity >> errorMargin [
 	^ errorMargin.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSKernelDensity >> errorMargin: floatCloseToZero [
 	"The error margin will be use to calculate when the curve will be truncated, 
 	how close to zero is needed to stop the iteration"
 	errorMargin := floatCloseToZero.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKernelDensity >> evaluateKernel: aNumber [
 	^ kernel evaluate: aNumber.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSKernelDensity >> initialize [
 	super initialize.
 	self errorMargin: self defaultErrorMargin.
 	self kernel: self defaultKernel.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKernelDensity >> kde: aNumber [
 	| sum h |
 	sum := 0.
@@ -235,12 +237,12 @@ RSKernelDensity >> kde: aNumber [
 	^ sum / ((data size) * h)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKernelDensity >> kernel [
 	^ kernel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSKernelDensity >> kernel: anRSKernelFunction [
 	self assert: (anRSKernelFunction isKindOf: RSKernelFunction) 
 		description: 'Error: The argument passed to kernel is not an RSKernelFunction.'.

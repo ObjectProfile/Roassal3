@@ -4,21 +4,23 @@ This class is used to modify the popup behavior in Roassal3-UML
 When classes in canvas are too small it will try to show the the entire class scaled to fit in the canvas. if not it will display the name in a box
 "
 Class {
-	#name : #RSAdaptativePopup,
-	#superclass : #RSObject,
+	#name : 'RSAdaptativePopup',
+	#superclass : 'RSObject',
 	#instVars : [
 		'smallBuilder',
 		'bigBuilder'
 	],
-	#category : #'Roassal3-UML-Rendering'
+	#category : 'Roassal3-UML-Rendering',
+	#package : 'Roassal3-UML',
+	#tag : 'Rendering'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAdaptativePopup >> bigBuilder: aRSBuilder [
 	bigBuilder := aRSBuilder
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAdaptativePopup >> bigShapeFor: aRSShape [
 	| popup |
 	popup := bigBuilder shapeFor: aRSShape model.
@@ -26,24 +28,24 @@ RSAdaptativePopup >> bigShapeFor: aRSShape [
 	^ popup
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSAdaptativePopup >> isShapeWillVisibleInCanvas: aRSShape [
 	^ aRSShape canvas camera scale > 0.4
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAdaptativePopup >> shapeFor: aRSShape [
 	^ (self isShapeWillVisibleInCanvas: aRSShape)
 		ifTrue: [ self smallShapeFor: aRSShape ]
 		ifFalse: [ self bigShapeFor: aRSShape ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAdaptativePopup >> smallBuilder: aRSSimplePopupBuilder [
 	smallBuilder := aRSSimplePopupBuilder
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAdaptativePopup >> smallShapeFor: aRSShape [
 	^ smallBuilder shapeFor: aRSShape model
 ]

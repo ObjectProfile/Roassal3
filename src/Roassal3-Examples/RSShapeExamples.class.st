@@ -2,12 +2,14 @@
 I use the RSShapeBuilder
 "
 Class {
-	#name : #RSShapeExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal3-Examples-Basic'
+	#name : 'RSShapeExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal3-Examples-Basic',
+	#package : 'Roassal3-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example01BasicShape [
 	<script: 'self new example01BasicShape open'>
 
@@ -27,7 +29,7 @@ RSShapeExamples >> example01BasicShape [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSShapeExamples >> example02BasicEdge [
 	<script: 'self new example02BasicEdge open'>
 
@@ -55,7 +57,7 @@ RSShapeExamples >> example02BasicEdge [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSShapeExamples >> example04LineDashes [
 	<script: 'self new example04LineDashes open'>
 
@@ -80,7 +82,7 @@ RSShapeExamples >> example04LineDashes [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSShapeExamples >> example05CapStyles [
 	<script: 'self new example05CapStyles open'>
 
@@ -113,7 +115,7 @@ RSShapeExamples >> example05CapStyles [
 	^ canvas
 ]
 
-{ #category : #normalizer }
+{ #category : 'normalizer' }
 RSShapeExamples >> example07NormalizeColor [
 
 	<script: 'self new example07NormalizeColor open'>
@@ -148,7 +150,7 @@ RSShapeExamples >> example07NormalizeColor [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example08Labels [
 	<script: 'self new example08Labels open'>
 	| canvas shapes random |
@@ -176,7 +178,7 @@ RSShapeExamples >> example08Labels [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSShapeExamples >> example09Polyline [
 	<script: 'self new example09Polyline open'>
 	| canvas box box1 line box2 |
@@ -204,7 +206,7 @@ RSShapeExamples >> example09Polyline [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example10Donut [
 	<script: 'self new example10Donut open'>
 	| data radius color canvas border |
@@ -233,7 +235,7 @@ RSShapeExamples >> example10Donut [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example11ClassTree [
 	<script: 'self new example11ClassTree open setLabel: ''Collection withAllSubclasses'''>
 	| canvas shapes |
@@ -276,7 +278,7 @@ RSShapeExamples >> example11ClassTree [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example12Polygons [
 	<script: 'self new example12Polygons open setLabel: ''Polygon shapes'''>
 	| canvas color border |
@@ -306,7 +308,7 @@ RSShapeExamples >> example12Polygons [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example13Arrow [
 	<script: 'self new example13Arrow open setLabel: ''You can do it'''>
 	| canvas polygon labels paint |
@@ -347,7 +349,7 @@ RSShapeExamples >> example13Arrow [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example14Marker [
 	<script: 'self new example14Marker open'>
 	| canvas  shapes line arrow |
@@ -379,7 +381,7 @@ RSShapeExamples >> example14Marker [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example16Bezier [
 	<script: 'self new example16Bezier open'>
 	| canvas box1 box2 line |
@@ -416,7 +418,7 @@ RSShapeExamples >> example16Bezier [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example17Labeled [
 	<script: 'self new example17Labeled open'>
 	| canvas e1 e2 s line label |
@@ -447,7 +449,7 @@ RSShapeExamples >> example17Labeled [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example19Bitmap [
 
 	<script: 'self new example19Bitmap open'>
@@ -470,7 +472,7 @@ RSShapeExamples >> example19Bitmap [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example20Highlightable [
 	<script: 'self new example20Highlightable open'>
 	| canvas shapes labeled |
@@ -491,7 +493,7 @@ RSShapeExamples >> example20Highlightable [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example21MenuActivableOnElement [
 	<script: 'self new example21MenuActivableOnElement open'>
 	| canvas boxes |
@@ -516,7 +518,7 @@ RSShapeExamples >> example21MenuActivableOnElement [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSShapeExamples >> example22ScaleEvents [
 	<script: 'self new example22ScaleEvents open setLabel: ''Horizontal Tree'''>
 	"Zooming preserve the size of the red arrow"
@@ -556,7 +558,7 @@ RSShapeExamples >> example22ScaleEvents [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example24Highlightable [
 	<script: 'self new example24Highlightable open'>
 	| canvas shapes interaction |
@@ -588,7 +590,7 @@ RSShapeExamples >> example24Highlightable [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example26AnimatedPopup [
 	<script: 'self new example26AnimatedPopup open'>
 	| canvas interaction s box |
@@ -615,7 +617,7 @@ RSShapeExamples >> example26AnimatedPopup [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example27MultilineLabelBasic [
 
 	<script: 'self new example27MultilineLabelBasic open'>
@@ -644,7 +646,7 @@ qui s''alimentent de ta lumière"'.
 	^ canvas zoomToFit
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example28MultilineLabel [
 
 	<script: 'self new example28MultilineLabel open'>
@@ -680,7 +682,7 @@ RSShapeExamples >> example28MultilineLabel [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSShapeExamples >> example29AntAnimation [
 
 	<script:
@@ -731,7 +733,7 @@ RSShapeExamples >> example29AntAnimation [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example30EdgesToChildren [
 	<script: 'self new example30EdgesToChildren open'>
 
@@ -777,7 +779,7 @@ RSShapeExamples >> example30EdgesToChildren [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example31BasicGrapher [
 	<script: 'self new example31BasicGrapher open'>
 	| classes canvas line shapes color |
@@ -819,7 +821,7 @@ RSShapeExamples >> example31BasicGrapher [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example32RSLabeledOnComposite [
 	<script: 'self new example32RSLabeledOnComposite open'>
 	| canvas shapes labeled |
@@ -853,7 +855,7 @@ RSShapeExamples >> example32RSLabeledOnComposite [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example33ColorScaling [
 	<script: 'self new example33ColorScaling open'>
 	| c classes scale numberOfMethods |
@@ -881,7 +883,7 @@ RSShapeExamples >> example33ColorScaling [
 	^ c
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example34MorphicPopup [
 	<script: 'self new example34MorphicPopup open'>
 	| c |
@@ -898,7 +900,7 @@ RSShapeExamples >> example34MorphicPopup [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSShapeExamples >> example35Lines [
 	<script: 'self new example35Lines open'>
 	| c circle box dragMeLabel |
@@ -941,7 +943,7 @@ RSShapeExamples >> example35Lines [
 	^ c
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example36ShapePosition [
 
 	<script: 'self new example36ShapePosition open'>
@@ -984,7 +986,7 @@ RSShapeExamples >> example36ShapePosition [
 	^ c
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example37PunchCard [
 	<script: 'self new example37PunchCard open'>
 	| card |
@@ -996,7 +998,7 @@ RSShapeExamples >> example37PunchCard [
 	^ card build
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example38Transformable [
 	<script: 'self new example38Transformable open'>
 	| c |
@@ -1049,7 +1051,7 @@ RSShapeExamples >> example38Transformable [
 	^ c
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example39RoassalPackages [
 	<noTest>
 	<script: 'self new example39RoassalPackages open'>
@@ -1087,7 +1089,7 @@ RSShapeExamples >> example39RoassalPackages [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSShapeExamples >> example40LabelingLine [
 
 	<script: 'self new example40LabelingLine open'>
@@ -1123,7 +1125,7 @@ RSShapeExamples >> example40LabelingLine [
 	^ c
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example41Butterfly [
 
 	<script: 'self new example41Butterfly open'>
@@ -1195,7 +1197,7 @@ RSShapeExamples >> example41Butterfly [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example42DirectedBezier [
 	<script: 'self new example42DirectedBezier open'>
 	| c shapes |
@@ -1222,7 +1224,7 @@ RSShapeExamples >> example42DirectedBezier [
 	^ c
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example43KeepLabelSize [
 	<script: 'self new example43KeepLabelSize open
 		setLabel: #''Use the wheel'' '>
@@ -1249,7 +1251,7 @@ RSShapeExamples >> example43KeepLabelSize [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example44Donna [
 	<script: 'self new example44Donna open'>
 	| text canvas horizontal vertical groups count |
@@ -1326,7 +1328,7 @@ E di pensier
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example45CompositeDragResize [
 	<script: 'self new example45CompositeDragResize open'>
 	| c nodes |
@@ -1351,7 +1353,7 @@ RSShapeExamples >> example45CompositeDragResize [
 	^ c
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example46Popups [
 	<script: 'self new example46Popups open'>
 	| c shapes color |
@@ -1386,7 +1388,7 @@ RSShapeExamples >> example46Popups [
 	^ c
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example47CompositeClipChildren [
 
 	<script: 'self new example47CompositeClipChildren open'>
@@ -1431,7 +1433,7 @@ RSShapeExamples >> example47CompositeClipChildren [
 	^ c
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSShapeExamples >> example48GhostDraggable [
 
 	<script: 'self new example48GhostDraggable open'>
@@ -1455,7 +1457,7 @@ RSShapeExamples >> example48GhostDraggable [
 	^ c @ RSCanvasController simple
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSShapeExamples >> order [
 	^ 20
 ]

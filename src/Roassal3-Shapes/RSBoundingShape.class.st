@@ -19,7 +19,7 @@ Class {
 		'connectedLines',
 		'shouldUpdateLines'
 	],
-	#category : #'Roassal3-Shapes-Bounding'
+	#category : 'Roassal3-Shapes-Bounding'
 }
 
 { #category : #testing }

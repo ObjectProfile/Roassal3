@@ -11,12 +11,14 @@ view @ RSDraggableView.
 
 "
 Class {
-	#name : #RSInteraction,
-	#superclass : #RSObject,
-	#category : #'Roassal3-Interaction-Core'
+	#name : 'RSInteraction',
+	#superclass : 'RSObject',
+	#category : 'Roassal3-Interaction-Core',
+	#package : 'Roassal3-Interaction',
+	#tag : 'Core'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSInteraction class >> canvasExample [
 	| canvas |
 	canvas := RSCanvas new.
@@ -50,7 +52,7 @@ RSInteraction class >> canvasExample [
 	^ canvas
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSInteraction class >> onShape: aShape [
 	| inst |
 	inst := self new.
@@ -58,7 +60,7 @@ RSInteraction class >> onShape: aShape [
 	^ inst
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSInteraction >> onShape: aShape [
 	self subclassResponsibility
 ]

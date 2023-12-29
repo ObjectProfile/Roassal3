@@ -31,7 +31,7 @@ Class {
 		'points',
 		'radius'
 	],
-	#category : #'Roassal3-Shapes-Bounding'
+	#category : 'Roassal3-Shapes-Bounding'
 }
 
 { #category : #utilities }

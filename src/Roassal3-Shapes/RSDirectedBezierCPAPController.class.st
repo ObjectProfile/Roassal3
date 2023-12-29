@@ -6,7 +6,7 @@ This directed bezier uses 3 control points
 Class {
 	#name : #RSDirectedBezierCPAPController,
 	#superclass : #RSAbstractCPAPController,
-	#category : #'Roassal3-Shapes-ControlPoints'
+	#category : 'Roassal3-Shapes-ControlPoints'
 }
 
 { #category : #hooks }

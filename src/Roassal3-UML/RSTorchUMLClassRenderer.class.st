@@ -15,16 +15,18 @@ builder canvas
 -=-=-=-=-=-=-=-=-=
 "
 Class {
-	#name : #RSTorchUMLClassRenderer,
-	#superclass : #RSAbstractUMLClassRenderer,
+	#name : 'RSTorchUMLClassRenderer',
+	#superclass : 'RSAbstractUMLClassRenderer',
 	#instVars : [
 		'currentTitleWidth',
 		'titleBoxColor'
 	],
-	#category : #'Roassal3-UML-Rendering'
+	#category : 'Roassal3-UML-Rendering',
+	#package : 'Roassal3-UML',
+	#tag : 'Rendering'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSTorchUMLClassRenderer >> applyMLayoutOn: shapes [
 	RSFlowLayout new
 		gapSize: 2;
@@ -32,12 +34,12 @@ RSTorchUMLClassRenderer >> applyMLayoutOn: shapes [
 		on: shapes
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 RSTorchUMLClassRenderer >> applyVLayoutOn: shapes [
 	self applyMLayoutOn: shapes
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSTorchUMLClassRenderer >> classBoxShapeFor: aClass [
 	^ RSBox new
 		noPaint;
@@ -45,24 +47,24 @@ RSTorchUMLClassRenderer >> classBoxShapeFor: aClass [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSTorchUMLClassRenderer >> classNameBoxFor: aClass [
 	^ RSBox new
 		color: self titleBoxColor;
 		yourself
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : 'accessing - shapes' }
 RSTorchUMLClassRenderer >> currentMaxWidth [
 	^ currentTitleWidth max: self minMethodsWidth
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSTorchUMLClassRenderer >> defaultClassBoxPadding [
 	^ 10@0
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSTorchUMLClassRenderer >> defaultLayout [
 	^ super defaultLayout tree
 		verticalGap: 50;
@@ -70,12 +72,12 @@ RSTorchUMLClassRenderer >> defaultLayout [
 		yourself
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSTorchUMLClassRenderer >> defaultTitleBoxColor [
 	^ Color colorFrom: 'AFD2EE'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSTorchUMLClassRenderer >> methodFor: aMethod [
 	^ RSBox new
 		width: 20;
@@ -84,7 +86,7 @@ RSTorchUMLClassRenderer >> methodFor: aMethod [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSTorchUMLClassRenderer >> methodsFor: aClass [
 	^ (super methodsFor: aClass)
 		padding: ( Margin
@@ -95,12 +97,12 @@ RSTorchUMLClassRenderer >> methodsFor: aClass [
 		yourself
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : 'accessing - shapes' }
 RSTorchUMLClassRenderer >> minMethodsWidth [
 	^ 200
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSTorchUMLClassRenderer >> shapeFor: aClass [
 	| shapes box title vars methods boxTitle |
 	title := self titleFor: aClass.
@@ -126,17 +128,17 @@ RSTorchUMLClassRenderer >> shapeFor: aClass [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTorchUMLClassRenderer >> titleBoxColor [
 	^ titleBoxColor ifNil: [ titleBoxColor := self defaultTitleBoxColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSTorchUMLClassRenderer >> titleBoxColor: aColor [
 	titleBoxColor := aColor
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSTorchUMLClassRenderer >> titleFor: aClass [
 	| s |
 	s := super titleFor: aClass.
@@ -144,7 +146,7 @@ RSTorchUMLClassRenderer >> titleFor: aClass [
 	^ s
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSTorchUMLClassRenderer >> varFor: model [
 	^ RSShapeFactory triangle
 		model: model;

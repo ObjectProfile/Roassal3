@@ -1,49 +1,57 @@
-"
-This trait defines methods to get information of a roassal shape like the gap, the width and height.
-It applies this properties for a vertical tree layout.
-Check similarities with `RSTWalkBasedRegularHorizontalTreeLayout`
-"
 Trait {
-	#name : #RSTWalkBasedRegularVerticalTreeLayout,
-	#traits : 'RSTGapsHolder',
-	#classTraits : 'RSTGapsHolder classTrait',
-	#category : #'Roassal3-Layouts-Traits'
+	#name : 'RSTWalkBasedRegularVerticalTreeLayout',
+	#category : 'Roassal3-Layouts-Core',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Core'
 }
 
-{ #category : #positioning }
-RSTWalkBasedRegularVerticalTreeLayout >> breadthGapAmong: aShapeParent and: aShape [
+{ #category : 'positioning' }
+RSTWalkBasedRegularVerticalTreeLayout >> breadthGapAmong: aShape and: anotherShape [
 
-	^ self
-		  horizontalGapAmong: aShapeParent
-		  and: aShape
-		  default: RSAbstractGraphLayout horizontalGap
+	^ self horizontalGapAmong: aShape and: anotherShape
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSTWalkBasedRegularVerticalTreeLayout >> breadthMeasureOf: aShape [
 
 	^ aShape width
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSTWalkBasedRegularVerticalTreeLayout >> depthGapAmong: aShapeParent and: aShape [
 
-	^ self
-		  verticalGapAmong: aShapeParent
-		  and: aShape
-		  default: RSAbstractGraphLayout verticalGap
+	^ self verticalGapAmongParent: aShapeParent andChild: aShape
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 RSTWalkBasedRegularVerticalTreeLayout >> depthMeasureOf: aShape [
 
 	^ aShape height
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
+RSTWalkBasedRegularVerticalTreeLayout >> horizontalGapAmong: aShapeParent and: aShape [
+
+	self explicitRequirement
+]
+
+{ #category : 'positioning' }
 RSTWalkBasedRegularVerticalTreeLayout >> positionOfShape: aShape atDepth: depth atBreadth: breadth [
 
 	| shift |
 	shift := aShape extent / 2.
+
 	^ breadth @ depth + shift
+]
+
+{ #category : 'positioning' }
+RSTWalkBasedRegularVerticalTreeLayout >> updateDepthBreakingIndexOfParent: aShape at: position amongChild: aChild at: childPosition [
+
+	^ (position x > childPosition x) asBit
+]
+
+{ #category : 'positioning' }
+RSTWalkBasedRegularVerticalTreeLayout >> verticalGapAmongParent: aShapeParent andChild: aShape [
+
+	self explicitRequirement
 ]

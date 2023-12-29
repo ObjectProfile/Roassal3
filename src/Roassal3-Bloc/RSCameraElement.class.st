@@ -1,13 +1,15 @@
 Class {
-	#name : #RSCameraElement,
-	#superclass : #BlElement,
+	#name : 'RSCameraElement',
+	#superclass : 'BlElement',
 	#instVars : [
 		'roassalCanvas'
 	],
-	#category : #'Roassal3-Bloc-Core'
+	#category : 'Roassal3-Bloc-Core',
+	#package : 'Roassal3-Bloc',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSCameraElement class >> newWithCanvas: aRSCanvas [
 
 	^ self basicNew
@@ -15,7 +17,7 @@ RSCameraElement class >> newWithCanvas: aRSCanvas [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCameraElement >> initializeWithCanvas: aRSCanvas [
 
 	self initialize.
@@ -31,20 +33,20 @@ RSCameraElement >> initializeWithCanvas: aRSCanvas [
 		updateFromCanvasCamera.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCameraElement >> roassalShape [
 
 	^ roassalCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCameraElement >> updateFromCanvasCamera [
 	| matrix |
 	matrix := roassalCanvas camera originMatrix asBlMatrix.
 	self transformation: (BlElementAbsoluteTransformation matrix: matrix)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCameraElement >> updateFromRoassalShape [
 	"The difference with the inherited implementation is to update the camera instead of a shape."
 	

@@ -17,8 +17,8 @@ If you want to disable the animation interaction use `RSControlConfiguration >> 
 Also you can configure the action event to activate the drag and drop: `left`, `right`, `middle` or `all`
 "
 Class {
-	#name : #RSDraggableCanvasInteraction,
-	#superclass : #RSAbstractControlCanvasInteraction,
+	#name : 'RSDraggableCanvasInteraction',
+	#superclass : 'RSAbstractControlCanvasInteraction',
 	#instVars : [
 		'mouseEvent',
 		'isMoving',
@@ -26,31 +26,33 @@ Class {
 		'hasDraggableAnimation',
 		'hasLimits'
 	],
-	#category : #'Roassal3-Interaction-Controls'
+	#category : 'Roassal3-Interaction-Controls',
+	#package : 'Roassal3-Interaction',
+	#tag : 'Controls'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDraggableCanvasInteraction class >> left [
 	^ self new left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDraggableCanvasInteraction class >> middle [
 	^ self new middle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDraggableCanvasInteraction class >> right [
 	^ self new right
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 RSDraggableCanvasInteraction >> all [
 	"Any mouse button can be used to drag and drop the view"
 	self mouseEvent: RSMouseDragStart.
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSDraggableCanvasInteraction >> checkCamera: aCanvas [
 	| camera p correct anime |
 	self hasDraggableAnimation
@@ -70,27 +72,27 @@ RSDraggableCanvasInteraction >> checkCamera: aCanvas [
 		onStepDo: [ :t | camera translateTo: t. aCanvas signalUpdate ]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSDraggableCanvasInteraction >> hasDraggableAnimation [
 	^ hasDraggableAnimation
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSDraggableCanvasInteraction >> hasDraggableAnimation: aBoolean [
 	hasDraggableAnimation := aBoolean
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSDraggableCanvasInteraction >> hasLimits [
 	^ hasLimits
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSDraggableCanvasInteraction >> hasLimits: aBoolean [
 	hasLimits := aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDraggableCanvasInteraction >> initialize [
 	super initialize.
 	self
@@ -100,22 +102,22 @@ RSDraggableCanvasInteraction >> initialize [
 	isMoving := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDraggableCanvasInteraction >> key [
 	^ #draggableAnimation
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 RSDraggableCanvasInteraction >> left [
 	self mouseEvent: RSMouseLeftDragStart
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 RSDraggableCanvasInteraction >> middle [
 	self mouseEvent: RSMouseMiddleDragStart
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSDraggableCanvasInteraction >> mouseDragging: evt [
 	| camera p correct |
 	isMoving ifFalse: [ ^ self ].
@@ -140,7 +142,7 @@ RSDraggableCanvasInteraction >> mouseDragging: evt [
 	evt signalUpdate
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSDraggableCanvasInteraction >> mouseEnd: evt [
 	| threshold aCanvas camera delta p correct anime |
 	isMoving := false.
@@ -178,24 +180,24 @@ RSDraggableCanvasInteraction >> mouseEnd: evt [
 		for: self
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 RSDraggableCanvasInteraction >> mouseEvent [
 	^ mouseEvent
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 RSDraggableCanvasInteraction >> mouseEvent: aRSMouseDragEvent [
 	mouseEvent := aRSMouseDragEvent
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSDraggableCanvasInteraction >> mouseStart: evt [
 	self removeRectanglesFor: evt canvas.
 	isMoving := evt shiftKeyPressed not.
 	lastStep := nil
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 RSDraggableCanvasInteraction >> newAnimation [
 	^ RSTransitionAnimation new
 		easing: RSEasingInterpolator cubicIn;
@@ -204,12 +206,12 @@ RSDraggableCanvasInteraction >> newAnimation [
 		yourself
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSDraggableCanvasInteraction >> noLimits [
 	self hasLimits: false
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDraggableCanvasInteraction >> onShape: aCanvas [
 	aCanvas 
 		when: self mouseEvent send: #mouseStart: to: self;
@@ -217,17 +219,17 @@ RSDraggableCanvasInteraction >> onShape: aCanvas [
 		when: RSMouseDragEnd send: #mouseEnd: to: self.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSDraggableCanvasInteraction >> renderLegendOn: lb [
 	lb text: 'Mouse click' description: 'To move the view''s camera'
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 RSDraggableCanvasInteraction >> right [
 	self mouseEvent: RSMouseRightDragStart
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSDraggableCanvasInteraction >> withLimits [
 	self hasLimits: true
 ]

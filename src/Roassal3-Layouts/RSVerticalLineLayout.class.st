@@ -2,12 +2,14 @@
 A RSVerticalLineLayout locates all the elements vertically.
 "
 Class {
-	#name : #RSVerticalLineLayout,
-	#superclass : #RSAbstractLineLayout,
-	#category : #'Roassal3-Layouts-Line'
+	#name : 'RSVerticalLineLayout',
+	#superclass : 'RSAbstractLineLayout',
+	#category : 'Roassal3-Layouts-Line',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Line'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSVerticalLineLayout class >> example1 [
 	| c |
 	c := self canvasExample.
@@ -16,7 +18,7 @@ RSVerticalLineLayout class >> example1 [
 	^ c open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSVerticalLineLayout class >> example2 [
 	| c |
 	c := self canvasExample.
@@ -27,23 +29,23 @@ RSVerticalLineLayout class >> example2 [
 	^ c open
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSVerticalLineLayout >> alignCenter [
 	"Make the element centered"
 	self alignment: #center
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSVerticalLineLayout >> alignLeft [
 	self alignment: #left
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSVerticalLineLayout >> alignRight [
 	self alignment: #right
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSVerticalLineLayout >> deltaFor: anRSShape [
 	| delta |
 	delta := 0.
@@ -52,12 +54,12 @@ RSVerticalLineLayout >> deltaFor: anRSShape [
 	^delta @ 0
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSVerticalLineLayout >> movePointer: pointer accordingToFigure: anRSShape [
 	^ pointer x @ (pointer y + anRSShape height + self verticalGap)
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSVerticalLineLayout >> positionOriginalPointer: aCollectionOfShapes [
 	| maxWidth delta |
 	delta := 0.

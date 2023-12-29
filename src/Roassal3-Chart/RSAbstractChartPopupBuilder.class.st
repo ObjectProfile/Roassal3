@@ -2,25 +2,27 @@
 Abstract class to descripbe how to create a popup for a given position
 "
 Class {
-	#name : #RSAbstractChartPopupBuilder,
-	#superclass : #RSObject,
+	#name : 'RSAbstractChartPopupBuilder',
+	#superclass : 'RSObject',
 	#instVars : [
 		'position'
 	],
-	#category : #'Roassal3-Chart-Popup'
+	#category : 'Roassal3-Chart-Popup',
+	#package : 'Roassal3-Chart',
+	#tag : 'Popup'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartPopupBuilder >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractChartPopupBuilder >> position: aPoint [
 	position := aPoint
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSAbstractChartPopupBuilder >> shapeFor: aRSChart [
 	^ self subclassResponsibility
 ]

@@ -1,16 +1,17 @@
 Class {
-	#name : #RSCircleTest,
-	#superclass : #RSTest,
-	#category : #'Roassal3-Shapes-Tests'
+	#name : 'RSCircleTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal3-Shapes-Tests',
+	#package : 'Roassal3-Shapes-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCircleTest >> testBasic [
 
 	self assert: (RSCircle new extent) equals: 10 @ 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSCircleTest >> testCenter [
 	| center circle |
 	center := 100 asPoint.

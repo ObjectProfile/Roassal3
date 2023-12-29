@@ -42,17 +42,19 @@ violinPlot open.
 ```
 "
 Class {
-	#name : #RSViolinPlot,
-	#superclass : #RSAbstractBandPlot,
+	#name : 'RSViolinPlot',
+	#superclass : 'RSAbstractBandPlot',
 	#instVars : [
 		'models',
 		'model',
 		'dataBlock'
 	],
-	#category : #'Roassal3-Chart-Core'
+	#category : 'Roassal3-Chart-Core',
+	#package : 'Roassal3-Chart',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSViolinPlot class >> data: aCollection [
 	| boxPlot |
 	boxPlot := self new.
@@ -60,7 +62,7 @@ RSViolinPlot class >> data: aCollection [
 	^ boxPlot
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> example01BasicViolinPlot [
 	| boxPlot1   data1  |
 	data1 := { 12. 12. 13. 14. 15. 24. }.
@@ -70,7 +72,7 @@ RSViolinPlot class >> example01BasicViolinPlot [
 	^ boxPlot1 open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> example02MultipleVionlinsArrayOfArrays [
 
 	| boxPlot1 |
@@ -80,7 +82,7 @@ RSViolinPlot class >> example02MultipleVionlinsArrayOfArrays [
 	^ boxPlot1 open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> example03HorizontalViolinPlot [
 	| violinPlot   data1  |
 	data1 := { 12. 12. 13. 14. 15. 24. }.
@@ -91,7 +93,7 @@ RSViolinPlot class >> example03HorizontalViolinPlot [
 	^ violinPlot open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> example03HorizontalVionlins [
 	
 	| violinPlot |
@@ -102,7 +104,7 @@ RSViolinPlot class >> example03HorizontalVionlins [
 	^ violinPlot open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> example03HorizontalVionlinsShowBands [
 	
 	| violinPlot |
@@ -114,7 +116,7 @@ RSViolinPlot class >> example03HorizontalVionlinsShowBands [
 	^ violinPlot open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> example08Positions [
 	| boxPlot1 data1 |
 	data1 := { { 1. 2. 3. 4. 5. } .
@@ -127,7 +129,7 @@ RSViolinPlot class >> example08Positions [
 	^ boxPlot1 open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> exampleDays [
 	| chart p1 p2 p3 y1 y2 y3 |
 
@@ -151,7 +153,7 @@ RSViolinPlot class >> exampleDays [
 	^ chart open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> exampleDaysHorizontal [
 	| chart p1 p2 p3 y1 y2 y3 |
 
@@ -175,7 +177,7 @@ RSViolinPlot class >> exampleDaysHorizontal [
 	^ chart open.
 ]
 
-{ #category : #'examples - styling' }
+{ #category : 'examples - styling' }
 RSViolinPlot class >> exampleMedianLineStyle [
 
 	| violinPlot2 data2 |
@@ -188,7 +190,7 @@ RSViolinPlot class >> exampleMedianLineStyle [
 	^ violinPlot2 open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> exampleModel [
 	| violinPlot |
 	violinPlot := self new.
@@ -197,7 +199,7 @@ RSViolinPlot class >> exampleModel [
 	^ violinPlot open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> exampleModels [
 	| violinPlot accessor |
 	accessor := [ :cls| cls methods collect: [ :met | met linesOfCode ] ].
@@ -208,7 +210,7 @@ RSViolinPlot class >> exampleModels [
 	^ violinPlot open
 ]
 
-{ #category : #'examples - styling' }
+{ #category : 'examples - styling' }
 RSViolinPlot class >> exampleStyle [
 
 	| violinPlot2 data2 paint |
@@ -224,7 +226,7 @@ RSViolinPlot class >> exampleStyle [
 	^ violinPlot2 open
 ]
 
-{ #category : #'examples - styling' }
+{ #category : 'examples - styling' }
 RSViolinPlot class >> exampleStyleBorder [
 
 	| violinPlot2 data2 |
@@ -237,7 +239,7 @@ RSViolinPlot class >> exampleStyleBorder [
 	^ violinPlot2 open
 ]
 
-{ #category : #'examples - styling' }
+{ #category : 'examples - styling' }
 RSViolinPlot class >> exampleStyleBorderColorOfEachViolin [
 
 	| violinPlot1 data1 |
@@ -251,7 +253,7 @@ RSViolinPlot class >> exampleStyleBorderColorOfEachViolin [
 	^ violinPlot1 open
 ]
 
-{ #category : #'examples - styling' }
+{ #category : 'examples - styling' }
 RSViolinPlot class >> exampleStyleBorderOfEachViolin [
 
 	| violinPlot2 data2 |
@@ -266,7 +268,7 @@ RSViolinPlot class >> exampleStyleBorderOfEachViolin [
 	^ violinPlot2 open
 ]
 
-{ #category : #'examples - styling' }
+{ #category : 'examples - styling' }
 RSViolinPlot class >> exampleStyleBordersColor [
 
 	| violinPlot1 data1 |
@@ -279,7 +281,7 @@ RSViolinPlot class >> exampleStyleBordersColor [
 	^ violinPlot1 open
 ]
 
-{ #category : #'examples - styling' }
+{ #category : 'examples - styling' }
 RSViolinPlot class >> exampleStyleBordersColors [
 
 	| violinPlot1 data1 |
@@ -292,7 +294,7 @@ RSViolinPlot class >> exampleStyleBordersColors [
 	^ violinPlot1 open
 ]
 
-{ #category : #'examples - styling' }
+{ #category : 'examples - styling' }
 RSViolinPlot class >> exampleStyleColor [
 	| violinPlot data |
 	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }.}.
@@ -302,7 +304,7 @@ RSViolinPlot class >> exampleStyleColor [
 	^ violinPlot open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> exampleViolinPlotClusters [
 	| violinPlotA violinPlotB data aRSClusterChart |
 	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
@@ -320,7 +322,7 @@ RSViolinPlot class >> exampleViolinPlotClusters [
 	^ aRSClusterChart open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> exampleViolinPlotColors [
 	| violinPlot data |
 	data := {{-5. 12. 12. 13. 14. 14. 15. 24. }. {-5. 12. 12. 13. 14. 14. 15. 24. }.}.
@@ -333,7 +335,7 @@ RSViolinPlot class >> exampleViolinPlotColors [
 	^ violinPlot open.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSViolinPlot class >> exampleViolinPlotWithOutliers [
 	| violinPlot data |
 	data := {-5. 12. 12. 13. 14. 14. 15. 24. }.
@@ -342,7 +344,7 @@ RSViolinPlot class >> exampleViolinPlotWithOutliers [
 	^ violinPlot open.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSViolinPlot class >> model: aModel [
 	| boxPlot |
 	boxPlot := self new.
@@ -350,7 +352,7 @@ RSViolinPlot class >> model: aModel [
 	^ boxPlot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSViolinPlot class >> models: aCollectionOfModels [
 	| boxPlot |
 	boxPlot := self new.
@@ -358,54 +360,54 @@ RSViolinPlot class >> models: aCollectionOfModels [
 	^ boxPlot
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> bandwidth: aNumber [
 	self kernelBandwidth: aNumber.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSViolinPlot >> borderColor [
 	^ self bordersColor first.
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 RSViolinPlot >> borderColor: aColor [
 	self bordersColor: aColor.
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 RSViolinPlot >> borderColors: aCollectionOfColors [
 	self bordersColors: aCollectionOfColors.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSViolinPlot >> borders [
 	^ bandPlotShapes collect: [ :violin | violin border ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSViolinPlot >> bordersColor [
 	^ self borders collect: [ :border | border color ]
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 RSViolinPlot >> bordersColor: aColor [
 	self borders do: [ :border | border color: aColor].
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 RSViolinPlot >> bordersColors: aCollectionOfColors [
 	| borders |
 	borders := self borders.
 	aCollectionOfColors doWithIndex: [ :aColor :idx | (borders at: idx) color: aColor].
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> boxes [
 	^ RSGroup new addAll: (bandPlotShapes collect: [ :violin | violin box ]); yourself.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> buildChart [
 	chart add: self.
 	chart
@@ -414,33 +416,33 @@ RSViolinPlot >> buildChart [
 	^ chart
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSViolinPlot >> canHandleCluster [
 	^ true
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> colors: collectionOfColors [
 	bandPlotShapes doWithIndex: [ :violinShape :idx | violinShape color: (collectionOfColors at: idx) ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSViolinPlot >> computeDefualtXTicks [
 	self horizontalTick ticks ifNil: [ self xTickLabels: (1 to: self numberOfViolins) ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSViolinPlot >> computeState [
 	self computeXValues.
 	self computeYValues.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> computeXValues [
 	xValues := (1 to: self numberOfViolins).
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSViolinPlot >> computeYValues [
 	| yMax yMin |
 	yMax := (bandPlotShapes collect: [ :violinShape | violinShape maxDataValue ]) max.
@@ -448,7 +450,7 @@ RSViolinPlot >> computeYValues [
 	yValues := {yMin. yMax.}.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSViolinPlot >> createViolinShapeFor: anObject dataset: dataset [
 	self assert: dataset notEmpty description: 'dataset can not be empty'.
 	^ (RSViolinPlotShape data: dataset)
@@ -456,7 +458,7 @@ RSViolinPlot >> createViolinShapeFor: anObject dataset: dataset [
 		yourself.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSViolinPlot >> createViolinShapesWithDataSet: collectionOfDatasets [
 	| groupOfModels newViolinShapes |
 	groupOfModels := models.
@@ -468,12 +470,12 @@ RSViolinPlot >> createViolinShapesWithDataSet: collectionOfDatasets [
 	self violinShapes: newViolinShapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSViolinPlot >> createdShapes [
 	^ { bandPlotShapes }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSViolinPlot >> data [
 	| collectionOfDatasets |
 	collectionOfDatasets := bandPlotShapes collect: [ :violin | violin data ].
@@ -481,7 +483,7 @@ RSViolinPlot >> data [
 	^ collectionOfDatasets.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSViolinPlot >> data: dataset [
 	
 	"dataset could be:
@@ -496,19 +498,19 @@ RSViolinPlot >> data: dataset [
 	self computeState
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSViolinPlot >> datasetsFromModels: data [
 	models ifNil: [ ^ data ].
 	^ models collect: [:anOjbect | data rsValue: anOjbect ].
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSViolinPlot >> defaultShape [ 
 	^ RSPolygon new
 		noPaint.
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSViolinPlot >> extractDatasetsFrom: data [
 	| result datasets |
 	datasets := self datasetsFromModels: data.
@@ -520,55 +522,55 @@ RSViolinPlot >> extractDatasetsFrom: data [
 	^ result
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSViolinPlot >> initialize [
 	super initialize.
 	bandPlotShapes := OrderedCollection new.
 	horizontal := false.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> kernelBandwidth: aNumber [
 	bandPlotShapes do: [ :violin | violin kernelBandwidth: aNumber ].
 	self computeState.
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 RSViolinPlot >> medianLine: aRSLineModel [
 	bandPlotShapes do: [ :bs | bs medianLine: aRSLineModel ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSViolinPlot >> medianLines [
 	^ RSGroup new addAll: (bandPlotShapes collect: [ :violin | violin medianLine ]); yourself.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> model [
 	^ model
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> model: aModel [
 	model := aModel.
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> models [
 	^ models
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> models: aCollectionOfModels [
 	models := aCollectionOfModels
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> numberOfViolins [
 	^ bandPlotShapes size
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> renderIn: canvas [
 	super renderIn: canvas.
 	offset ifNil: [ offset := 1 ].
@@ -584,12 +586,12 @@ RSViolinPlot >> renderIn: canvas [
 		violinPlotShape renderIn: canvas ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> violinShapes [
 	^ bandPlotShapes
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSViolinPlot >> violinShapes: collectionOfRSViolinPlotShapes [
 	bandPlotShapes := collectionOfRSViolinPlotShapes
 	

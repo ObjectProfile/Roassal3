@@ -8,7 +8,7 @@ Class {
 		'startOffset',
 		'endOffset'
 	],
-	#category : #'Roassal3-Shapes-ControlPoints'
+	#category : 'Roassal3-Shapes-ControlPoints'
 }
 
 { #category : #hooks }

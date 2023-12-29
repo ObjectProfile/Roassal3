@@ -4,46 +4,48 @@ Elements of each column are centered along the same vertical line. And elements 
 I have vertical and horizontal alignments. The alignment uses class `RSLocation` in the selected rectangle
 "
 Class {
-	#name : #RSGridLayout,
-	#superclass : #RSAbstractGridLayout,
+	#name : 'RSGridLayout',
+	#superclass : 'RSAbstractGridLayout',
 	#instVars : [
 		'verticalAlignment',
 		'horizontalAlignment'
 	],
-	#category : #'Roassal3-Layouts-Grid'
+	#category : 'Roassal3-Layouts-Grid',
+	#package : 'Roassal3-Layouts',
+	#tag : 'Grid'
 }
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSGridLayout >> alignBottom [
 	self verticalAlignment: #bottom
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSGridLayout >> alignCenter [
 	self horizontalAlignment: #center
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSGridLayout >> alignLeft [
 	self horizontalAlignment: #left
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSGridLayout >> alignMiddle [
 	self verticalAlignment: #middle
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSGridLayout >> alignRight [
 	self horizontalAlignment: #right
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RSGridLayout >> alignTop [
 	self verticalAlignment: #top
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 RSGridLayout >> doExecute: shapes [
 	| lineItemSize pointer columnCount rowCount maxHeight columnsWidths rowHeights location hgap vgap |
 	lineItemSize := self lineItemsCountBlock rsValue: shapes.
@@ -98,31 +100,31 @@ RSGridLayout >> doExecute: shapes [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGridLayout >> horizontalAlignment [
 
 	^ horizontalAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGridLayout >> horizontalAlignment: anObject [
 
 	horizontalAlignment := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSGridLayout >> initialize [
 	super initialize.
 	self alignMiddle; alignCenter.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGridLayout >> verticalAlignment [
 
 	^ verticalAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSGridLayout >> verticalAlignment: anObject [
 
 	verticalAlignment := anObject

@@ -1,14 +1,16 @@
 Class {
-	#name : #RSCanvasElement,
-	#superclass : #BlElement,
+	#name : 'RSCanvasElement',
+	#superclass : 'BlElement',
 	#instVars : [
 		'roassalCanvas',
 		'elementListener'
 	],
-	#category : #'Roassal3-Bloc-Core'
+	#category : 'Roassal3-Bloc-Core',
+	#package : 'Roassal3-Bloc',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSCanvasElement class >> newWithCanvas: aRSCanvas [
 
 	^ self basicNew
@@ -16,7 +18,7 @@ RSCanvasElement class >> newWithCanvas: aRSCanvas [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSCanvasElement >> initializeWithCanvas: aRSCanvas [
 
 	self initialize.
@@ -45,7 +47,7 @@ RSCanvasElement >> initializeWithCanvas: aRSCanvas [
 
 ]
 
-{ #category : #'refreshing - private' }
+{ #category : 'refreshing - private' }
 RSCanvasElement >> newCameraElement [
 	"Answer a BlElement that has as children the representation of the regular RSShapes of a RSCanvas. 
 	These are the regular shapes, that must be translated and scaled according to the camera."
@@ -55,14 +57,14 @@ RSCanvasElement >> newCameraElement [
 		yourself
 ]
 
-{ #category : #'refreshing - private' }
+{ #category : 'refreshing - private' }
 RSCanvasElement >> newFixedShapeElements [
 	"Answer a collection of BlElement instances that represent the #fixedShapes. The fixedShapes of a RSCanvas are shapes that are not affected by camera transformations. They are useful for toolbar buttons or legends, for example."
 
 	^ roassalCanvas fixedShapes collect: [ :each | each asBlElement ]
 ]
 
-{ #category : #'refreshing - private' }
+{ #category : 'refreshing - private' }
 RSCanvasElement >> newInfiniteCanvasAnimation [
 	"Answer a new Bloc animation that infinitely runs any available Roassal animation (in the canvas)."
 
@@ -74,20 +76,20 @@ RSCanvasElement >> newInfiniteCanvasAnimation [
 		yourself.
 ]
 
-{ #category : #'refreshing - private' }
+{ #category : 'refreshing - private' }
 RSCanvasElement >> newRegularShapeElements [
 	"Answer a collection of BlElement instances that represent the regular RSShapes of a RSCanvas. These are the regular shapes, that must be translated and scaled according to the camera."
 
 	^ roassalCanvas shapes collect: [ :each | each asBlElement ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSCanvasElement >> roassalShape [
 
 	^ roassalCanvas
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 RSCanvasElement >> signalUpdate [
 	"Request a redraw on the canvas. 
 	
@@ -115,7 +117,7 @@ RSCanvasElement >> signalUpdate [
 
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 RSCanvasElement >> syncSignalUpdateFirstTime [
 
 	| cameraElement fixedElements |
@@ -147,7 +149,7 @@ RSCanvasElement >> syncSignalUpdateFirstTime [
 		for: self
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 RSCanvasElement >> syncSignalUpdateSecondTimeAndLater [
 
 	self updateFromRoassalShape
