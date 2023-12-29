@@ -1,0 +1,57 @@
+"
+I put interactions on the shapes and a label for updating
+"
+Class {
+	#name : #RSShowProgressLabelDecorator,
+	#superclass : #RSAbstractPieDecorator,
+	#instVars : [
+		'labelShape',
+		'progressLabel',
+		'highlight'
+	],
+	#category : #'Roassal-Pie-Decorators'
+}
+
+{ #category : #initialization }
+RSShowProgressLabelDecorator >> initialize [
+	super initialize.
+	labelShape := RSLabel new.
+	highlight := RSHighlightable new.
+	highlight
+		highlightColor: [ :shape | shape color adjustBrightness: 0.08 ];
+		when: RSHighlightEvent do: [ :evt | self updateLabel: evt shape ] for: self;
+		when: RSUnHighlightEvent do: [ :evt | self updateLabel: nil ] for: self
+]
+
+{ #category : #accessing }
+RSShowProgressLabelDecorator >> labelShape [
+	^ labelShape
+]
+
+{ #category : #updating }
+RSShowProgressLabelDecorator >> progressFor: aShape [
+	^ ((builder values at: aShape index) * 100 / builder totalSum) rounded
+]
+
+{ #category : #accessing }
+RSShowProgressLabelDecorator >> progressLabel [
+	^ progressLabel
+]
+
+{ #category : #rendering }
+RSShowProgressLabelDecorator >> render [
+	| canvas |
+	progressLabel := self labelShape copy.
+	progressLabel text: ''.
+	canvas := builder container.
+	canvas add: progressLabel.
+	builder shapes @ highlight
+]
+
+{ #category : #updating }
+RSShowProgressLabelDecorator >> updateLabel: aShape [
+	aShape ifNil: [ ^ progressLabel text: '' ].
+	progressLabel
+		color: aShape color;
+		text: (self progressFor: aShape) asString, '%'
+]

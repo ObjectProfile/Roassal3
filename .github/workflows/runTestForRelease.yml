@@ -20,7 +20,7 @@ jobs:
       matrix:
         smalltalk: [ pharo12 ]
         group: [ Tests ]
-        tests: [ "Roassal3,Release" ]
+        tests: [ "Roassal,Release" ]
         os: [ ubuntu-latest ]
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
@@ -44,8 +44,8 @@ jobs:
         id: tests
         uses: akevalion/PharoTestsAction@v1
         with:
-          removes-repo: 'Roassal3, Numeric'
-          baseline: 'Roassal3'
+          removes-repo: 'Roassal, Numeric'
+          baseline: 'Roassal'
           group: ${{matrix.group}}
           tests: ${{matrix.tests}}
           pharo: ${{matrix.smalltalk}}
