@@ -150,6 +150,20 @@ RSBoundingShape >> defaultExtent [
 ]
 
 { #category : 'accessing' }
+RSBoundingShape >> encompassingRectangle [
+	"This is to replace the #explicitRequirement and be faster."
+
+	^ super encompassingRectangle
+]
+
+{ #category : 'accessing' }
+RSBoundingShape >> extent [
+	"This is to replace the #explicitRequirement and be faster."
+
+	^ super extent
+]
+
+{ #category : 'accessing' }
 RSBoundingShape >> extent: aPoint [
 	| oldExtent extent delta |
 	
@@ -218,6 +232,13 @@ RSBoundingShape >> hasEdges [
 RSBoundingShape >> hasLines [
 	"Return true if the shape has any outgoing or incoming line"
 	^ connectedLines isNotNil
+]
+
+{ #category : 'accessing' }
+RSBoundingShape >> height [
+	"This is to replace the #explicitRequirement and be faster."
+
+	^ super height
 ]
 
 { #category : 'accessing' }
@@ -659,6 +680,13 @@ RSBoundingShape >> updateLinesOFF [
 { #category : 'lines' }
 RSBoundingShape >> updateLinesON [
 	shouldUpdateLines := true
+]
+
+{ #category : 'accessing' }
+RSBoundingShape >> width [
+	"This is to replace the #explicitRequirement and be faster."
+
+	^ super width
 ]
 
 { #category : 'accessing' }
