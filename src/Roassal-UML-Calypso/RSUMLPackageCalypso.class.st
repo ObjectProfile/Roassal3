@@ -63,7 +63,7 @@ RSUMLPackageCalypso >> packages: aCollection [
 
 { #category : #initialization }
 RSUMLPackageCalypso >> setUpModelFromContext [
-	(context canUnderstand: #isPackageTagSelected) ifTrue: [ 
+	(context class canUnderstand: #isPackageTagSelected) ifTrue: [ 
 		self packages: (context isPackageTagSelected
 			ifTrue: [ context selectedClassGroups ]
 			ifFalse: [ context selectedPackages ])
