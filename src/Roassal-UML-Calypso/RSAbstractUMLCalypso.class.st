@@ -2,17 +2,15 @@
 Base class for a calypso tool with uml over classes
 "
 Class {
-	#name : 'RSAbstractUMLCalypso',
-	#superclass : 'ClyBrowserToolMorph',
+	#name : #RSAbstractUMLCalypso,
+	#superclass : #ClyBrowserToolMorph,
 	#instVars : [
 		'classesToShow'
 	],
-	#category : 'Roassal-UML-Calypso-Core',
-	#package : 'Roassal-UML-Calypso',
-	#tag : 'Core'
+	#category : 'Roassal-UML-Calypso-Core'
 }
 
-{ #category : 'building' }
+{ #category : #building }
 RSAbstractUMLCalypso >> addClassInteractions: builder [
 
 	builder canvas nodes
@@ -34,7 +32,7 @@ RSAbstractUMLCalypso >> addClassInteractions: builder [
 		for: self
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSAbstractUMLCalypso >> applyTheme: builder [
 	| theme renderer |
 	theme := self theme.
@@ -47,7 +45,7 @@ RSAbstractUMLCalypso >> applyTheme: builder [
 	builder modelDescriptor methodsLimit: theme methodsLimitUML
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSAbstractUMLCalypso >> build [
 
 	| canvas morph |
@@ -61,7 +59,7 @@ RSAbstractUMLCalypso >> build [
 	self addMorph: morph fullFrame: LayoutFrame identity
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSAbstractUMLCalypso >> buildUmlCanvas [
 	| builder |
 	builder := self umlBuilder.
@@ -73,7 +71,7 @@ RSAbstractUMLCalypso >> buildUmlCanvas [
 	^ builder canvas
 ]
 
-{ #category : 'public - hooks' }
+{ #category : #'public - hooks' }
 RSAbstractUMLCalypso >> canvasController [
 	| controls |
 	controls := RSCanvasController new.
@@ -83,27 +81,27 @@ RSAbstractUMLCalypso >> canvasController [
 	^ controls
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSAbstractUMLCalypso >> classesToShow [
 	^ classesToShow ifNil: [ classesToShow := self limitedClasses: self computeClasses ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSAbstractUMLCalypso >> classesToShow: aCollection [
 	classesToShow := aCollection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSAbstractUMLCalypso >> computeClasses [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSAbstractUMLCalypso >> defaultIconName [
 	^#hierarchy
 ]
 
-{ #category : 'private - utilities' }
+{ #category : #'private - utilities' }
 RSAbstractUMLCalypso >> limitedClasses: aCollection [
 	| limit |
 	limit := 100.
@@ -112,7 +110,7 @@ RSAbstractUMLCalypso >> limitedClasses: aCollection [
 		ifFalse: [ aCollection copyFrom: 1 to: limit ]
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSAbstractUMLCalypso >> umlBuilder [
 	| builder |
 	builder := RSUMLClassBuilder new.

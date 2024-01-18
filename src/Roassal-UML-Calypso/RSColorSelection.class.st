@@ -2,14 +2,12 @@
 Highlight the target class from the canvas to a darker color in one second
 "
 Class {
-	#name : 'RSColorSelection',
-	#superclass : 'RSInitialSelection',
-	#category : 'Roassal-UML-Calypso-Utilities',
-	#package : 'Roassal-UML-Calypso',
-	#tag : 'Utilities'
+	#name : #RSColorSelection,
+	#superclass : #RSInitialSelection,
+	#category : 'Roassal-UML-Calypso-Utilities'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSColorSelection >> on: aCanvas [
 	| shape c1 c2 |
 	shape := aCanvas shapeFromModel: self targetClass.

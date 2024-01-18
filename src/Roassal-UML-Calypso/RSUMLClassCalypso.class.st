@@ -7,40 +7,38 @@ UMLClass builder for calypso is a basic calypso tab.
 - Customize, use `createCanvasUMLWithTool:` to create a canvas for each class, if you want. By default a class uses this tool to create the uml builder
 "
 Class {
-	#name : 'RSUMLClassCalypso',
-	#superclass : 'RSAbstractUMLCalypso',
+	#name : #RSUMLClassCalypso,
+	#superclass : #RSAbstractUMLCalypso,
 	#instVars : [
 		'targetClass'
 	],
-	#category : 'Roassal-UML-Calypso-Core',
-	#package : 'Roassal-UML-Calypso',
-	#tag : 'Core'
+	#category : 'Roassal-UML-Calypso-Core'
 }
 
-{ #category : 'activation' }
+{ #category : #activation }
 RSUMLClassCalypso class >> classUmlTapActivation [
 	<classAnnotation>
 	^ ClyTabActivationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSUMLClassCalypso class >> shouldBeActivatedInContext: aBrowserContext [
 	^ RSUMLCalypsoSettings useCalypsoUML
 		and: [ aBrowserContext isClassSelected
 			and: [ aBrowserContext lastSelectedClass shouldUseUMLClassTab ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLClassCalypso class >> tabOrder [
 	^ 200
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLClassCalypso >> activationPriority [
 	^ -200
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSUMLClassCalypso >> buildUmlCanvas [
 	| canvas |
 	canvas := self targetClass buildUMLCanvasWithBrowserTool: self.
@@ -51,35 +49,35 @@ RSUMLClassCalypso >> buildUmlCanvas [
 	^ canvas
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLClassCalypso >> computeClasses [
 	| clazzes |
 	clazzes := self targetClass withAllSuperAndSubclasses.
 	^ clazzes copyWithoutAll: { Object. ProtoObject }
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSUMLClassCalypso >> defaultTitle [
 	^'UML-Class'
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSUMLClassCalypso >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
 	^ self targetClass = anotherBrowserTool targetClass
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSUMLClassCalypso >> setUpModelFromContext [
 	self targetClass: context lastSelectedClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLClassCalypso >> targetClass [
 	^ targetClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLClassCalypso >> targetClass: aClass [
 	targetClass := aClass
 ]

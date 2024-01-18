@@ -2,14 +2,12 @@
 Specific renderer for calypso
 "
 Class {
-	#name : 'RSUMLCalypsoRenderer',
-	#superclass : 'RSBasicUMLClassRenderer',
-	#category : 'Roassal-UML-Calypso-Utilities',
-	#package : 'Roassal-UML-Calypso',
-	#tag : 'Utilities'
+	#name : #RSUMLCalypsoRenderer,
+	#superclass : #RSBasicUMLClassRenderer,
+	#category : 'Roassal-UML-Calypso-Utilities'
 }
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSUMLCalypsoRenderer >> classBoxShapeFor: aClass [
 	| box alpha |
 	box := super classBoxShapeFor: aClass.
@@ -23,7 +21,7 @@ RSUMLCalypsoRenderer >> classBoxShapeFor: aClass [
 	^ box
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 RSUMLCalypsoRenderer >> methodFor: method [
 	| label icon com |
 	label := super methodFor: method.

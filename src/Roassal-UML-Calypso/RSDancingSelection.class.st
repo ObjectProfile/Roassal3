@@ -2,14 +2,12 @@
 When the uml is open, this class will move the target class of the canvas, in one second
 "
 Class {
-	#name : 'RSDancingSelection',
-	#superclass : 'RSInitialSelection',
-	#category : 'Roassal-UML-Calypso-Utilities',
-	#package : 'Roassal-UML-Calypso',
-	#tag : 'Utilities'
+	#name : #RSDancingSelection,
+	#superclass : #RSInitialSelection,
+	#category : 'Roassal-UML-Calypso-Utilities'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 RSDancingSelection >> on: aCanvas [
 	| shape p d|
 	shape := aCanvas shapeFromModel: self targetClass.

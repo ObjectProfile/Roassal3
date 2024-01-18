@@ -2,8 +2,8 @@
 This class visualize dependencies of instances of BaselineOf
 "
 Class {
-	#name : 'RSBaselineCalypso',
-	#superclass : 'RSUMLClassCalypso',
+	#name : #RSBaselineCalypso,
+	#superclass : #RSUMLClassCalypso,
 	#instVars : [
 		'lineBorder',
 		'notLoadedPopup',
@@ -12,19 +12,17 @@ Class {
 		'highMenu',
 		'nodeSizeOption'
 	],
-	#category : 'Roassal-UML-Calypso-Core',
-	#package : 'Roassal-UML-Calypso',
-	#tag : 'Core'
+	#category : 'Roassal-UML-Calypso-Core'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 RSBaselineCalypso class >> shouldBeActivatedInContext: aBrowserContext [
 	^ RSUMLCalypsoSettings useCalypsoUML
 		and: [ aBrowserContext isClassSelected
 			and: [ aBrowserContext lastSelectedClass inheritsFrom: BaselineOf ] ]
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSBaselineCalypso >> addEdgesOn: canvas [
 	| arrow |
 	arrow := (RSShapeFactory arrow size: 10; color: Color red translucent) asMarker.
@@ -38,7 +36,7 @@ RSBaselineCalypso >> addEdgesOn: canvas [
 		connectToAll: [:name | self dependenciesOf: name ]
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSBaselineCalypso >> applyControlsOn: canvas [
 	| controller |
 	controller := RSCanvasController new.
@@ -48,7 +46,7 @@ RSBaselineCalypso >> applyControlsOn: canvas [
 	canvas @ controller
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSBaselineCalypso >> applyLayoutOn: canvas [
 	| interaction layout |
 	interaction := RSForceLayoutSteppingInteraction new.
@@ -73,7 +71,7 @@ RSBaselineCalypso >> applyLayoutOn: canvas [
 			canvas nodes @ RSDraggable ]
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSBaselineCalypso >> applyTheme: canvas [
 	| theme |
 	theme := Smalltalk ui theme.
@@ -82,12 +80,12 @@ RSBaselineCalypso >> applyTheme: canvas [
 	canvas edges do: [ :ed | ed color: theme textColor ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBaselineCalypso >> border [
 	^ lineBorder ifNil: [ lineBorder := RSBorder new color: Color black; yourself ]
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSBaselineCalypso >> buildLegendOn: canvas [
 	| b miniGraph interaction arrow |
 	miniGraph := RSComposite new.
@@ -128,7 +126,7 @@ RSBaselineCalypso >> buildLegendOn: canvas [
 	b build
 ]
 
-{ #category : 'building - menus' }
+{ #category : #'building - menus' }
 RSBaselineCalypso >> buildMenuMorphSize: evt [
 	| menu options |
 	menu := MenuMorph new.
@@ -150,7 +148,7 @@ RSBaselineCalypso >> buildMenuMorphSize: evt [
 	menu popUpInWorld
 ]
 
-{ #category : 'building - menus' }
+{ #category : #'building - menus' }
 RSBaselineCalypso >> buildMenuOn: canvas [
 
 	| menus |
@@ -174,7 +172,7 @@ RSBaselineCalypso >> buildMenuOn: canvas [
 	canvas addAllShapes: menus
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSBaselineCalypso >> buildUmlCanvas [
 	| canvas allProjects |
 	canvas := RSCanvas new.
@@ -197,7 +195,7 @@ RSBaselineCalypso >> buildUmlCanvas [
 	^ canvas
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBaselineCalypso >> collectAllProjects [
 	| projects |
 	projects := Dictionary new.
@@ -205,7 +203,7 @@ RSBaselineCalypso >> collectAllProjects [
 	^ projects
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBaselineCalypso >> collectAllProjectsIn: projects class: clazz level: level [
 	| version |
 	version := nil.
@@ -223,17 +221,17 @@ RSBaselineCalypso >> collectAllProjectsIn: projects class: clazz level: level [
 		]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSBaselineCalypso >> defaultIconName [
 	^ #objects
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 RSBaselineCalypso >> defaultTitle [
 	^'Baselines-Graph'
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSBaselineCalypso >> dependenciesOf: name [
 	^ Smalltalk globals at: name
 		ifPresent: [ :cls |
@@ -242,7 +240,7 @@ RSBaselineCalypso >> dependenciesOf: name [
 		ifAbsent: [ #() ]
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSBaselineCalypso >> highlightable [
 	^ high ifNil: [
 		high := RSHighlightable new withOutgoingEdges.
@@ -250,7 +248,7 @@ RSBaselineCalypso >> highlightable [
 		high ]
 ]
 
-{ #category : 'building - menus' }
+{ #category : #'building - menus' }
 RSBaselineCalypso >> highlightableMenu [
 	^ highMenu ifNil: [
 		highMenu := RSHighlightable new.
@@ -264,19 +262,19 @@ RSBaselineCalypso >> highlightableMenu [
 		highMenu ]
 ]
 
-{ #category : 'building - menus' }
+{ #category : #'building - menus' }
 RSBaselineCalypso >> layoutMenu: menus [
 	RSVerticalLineLayout on: menus.
 	menus translateBy: 10@10.
 	menus do: [ :lb | lb propertyAt: #opos put: lb position ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBaselineCalypso >> loadedPopup [
 	^ loadedPopup ifNil: [ loadedPopup := RSPopup new ]
 ]
 
-{ #category : 'building - menus' }
+{ #category : #'building - menus' }
 RSBaselineCalypso >> menuAnimationFor: shape to: delta [
 	| pos |
 	pos := shape propertyAt: #opos.
@@ -287,7 +285,7 @@ RSBaselineCalypso >> menuAnimationFor: shape to: delta [
 		on: shape set: #position:
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSBaselineCalypso >> notLoadedPopup [
 	^ notLoadedPopup ifNil: [ notLoadedPopup :=
 		RSPopup text: [ :name | name, String crlf, '--Not loaded--' ].
@@ -296,19 +294,19 @@ RSBaselineCalypso >> notLoadedPopup [
 		notLoadedPopup ]
 ]
 
-{ #category : 'building - menus' }
+{ #category : #'building - menus' }
 RSBaselineCalypso >> resizeLevel: evt [
 	nodeSizeOption := 3.
 	self resizeNodes: evt key: #level
 ]
 
-{ #category : 'building - menus' }
+{ #category : #'building - menus' }
 RSBaselineCalypso >> resizeLinesOfCode: evt [
 	nodeSizeOption := 1.
 	self resizeNodes: evt key: #linesOfCode
 ]
 
-{ #category : 'building - menus' }
+{ #category : #'building - menus' }
 RSBaselineCalypso >> resizeNodes: evt key: propertyKey [
 	| minSize|
 	minSize := 15.
@@ -318,13 +316,13 @@ RSBaselineCalypso >> resizeNodes: evt key: propertyKey [
 	evt signalUpdate
 ]
 
-{ #category : 'building - menus' }
+{ #category : #'building - menus' }
 RSBaselineCalypso >> resizePackagesSize: evt [
 	nodeSizeOption := 2.
 	self resizeNodes: evt key: #packagesSize
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSBaselineCalypso >> setLevels: node in: set level: level [
 	node ifNil: [ ^ self ].
 	(set includes: node) ifTrue: [ ^ self ].
@@ -334,7 +332,7 @@ RSBaselineCalypso >> setLevels: node in: set level: level [
 		self setLevels: shape in: set level: level + 10 ]
 ]
 
-{ #category : 'building' }
+{ #category : #building }
 RSBaselineCalypso >> shapeFor: assoc [
 	| shape minSize |
 	minSize := 15.
@@ -379,7 +377,7 @@ RSBaselineCalypso >> shapeFor: assoc [
 	^ shape
 ]
 
-{ #category : 'building - menus' }
+{ #category : #'building - menus' }
 RSBaselineCalypso >> showHideNames: evt [
 	| label textColor |
 	label := evt canvas nodes first propertyAt: #RSLabeled.

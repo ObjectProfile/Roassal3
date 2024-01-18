@@ -2,8 +2,8 @@
 Settings for UML use within Calypso
 "
 Class {
-	#name : 'RSUMLCalypsoSettings',
-	#superclass : 'Object',
+	#name : #RSUMLCalypsoSettings,
+	#superclass : #Object,
 	#classInstVars : [
 		'initialSelectionClass',
 		'darkThemeUMLClassColor',
@@ -12,64 +12,62 @@ Class {
 		'useCalypsoUML',
 		'useAnimationInCalypsoBaseline'
 	],
-	#category : 'Roassal-UML-Calypso-Settings',
-	#package : 'Roassal-UML-Calypso',
-	#tag : 'Settings'
+	#category : 'Roassal-UML-Calypso-Settings'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> darkThemeUMLClassColor [
 	^ darkThemeUMLClassColor ifNil: [ self defaultDarkThemeColorUMLClass ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> darkThemeUMLClassColor: aColor [
 	darkThemeUMLClassColor := aColor
 ]
 
-{ #category : 'accessing - defaults' }
+{ #category : #'accessing - defaults' }
 RSUMLCalypsoSettings class >> defaultDarkThemeColorUMLClass [
 
 	^Color colorFrom: '2C3E50'
 ]
 
-{ #category : 'accessing - defaults' }
+{ #category : #'accessing - defaults' }
 RSUMLCalypsoSettings class >> defaultLightThemeColorUMLClass [
 
 	^Color colorFrom: 'ffffce'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> initialSelectionClass [
 	^ initialSelectionClass ifNil: [ RSDancingSelection ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> initialSelectionClass: aClass [
 	initialSelectionClass := aClass
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> lightThemeUMLClassColor [
 	^ lightThemeUMLClassColor ifNil: [ self defaultLightThemeColorUMLClass ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> lightThemeUMLClassColor: aColor [
 	lightThemeUMLClassColor := aColor
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> methodsLimitUML [
 	^ methodsLimitUML ifNil: [ methodsLimitUML := 30 ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> methodsLimitUML: aNumber [
 	methodsLimitUML := aNumber
 ]
 
-{ #category : 'settings' }
+{ #category : #settings }
 RSUMLCalypsoSettings class >> settingsForCalypsoUMLAnimationInBaseline: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #useAnimationInCalypsoBaseline)
@@ -80,7 +78,7 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLAnimationInBaseline: aBuilder
 		target: self
 ]
 
-{ #category : 'settings' }
+{ #category : #settings }
 RSUMLCalypsoSettings class >> settingsForCalypsoUMLColorsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #CalypsoUMLColors)
@@ -99,7 +97,7 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLColorsOn: aBuilder [
 				default: self defaultDarkThemeColorUMLClass	 ]
 ]
 
-{ #category : 'settings' }
+{ #category : #settings }
 RSUMLCalypsoSettings class >> settingsForCalypsoUMLInitialSelectionOn: aBuilder [
 	<systemsettings>
 	(aBuilder pickOne: #initialSelectionClass)
@@ -111,7 +109,7 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLInitialSelectionOn: aBuilder 
 		default: RSDancingSelection
 ]
 
-{ #category : 'settings' }
+{ #category : #settings }
 RSUMLCalypsoSettings class >> settingsForCalypsoUMLOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #CalypsoUMLValues)
@@ -126,7 +124,7 @@ RSUMLCalypsoSettings class >> settingsForCalypsoUMLOn: aBuilder [
 				range: ( 0 to: 200). ]
 ]
 
-{ #category : 'settings' }
+{ #category : #settings }
 RSUMLCalypsoSettings class >> settingsGroupOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #useCalypsoUML)
@@ -137,22 +135,22 @@ RSUMLCalypsoSettings class >> settingsGroupOn: aBuilder [
 		description: 'Settings related to the UML within Calypso browser'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> useAnimationInCalypsoBaseline [
 	^ useAnimationInCalypsoBaseline ifNil: [ ^ true ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> useAnimationInCalypsoBaseline: aBoolean [
 	useAnimationInCalypsoBaseline := aBoolean
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> useCalypsoUML [
 	^ useCalypsoUML ifNil: [ ^ true ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 RSUMLCalypsoSettings class >> useCalypsoUML: aBoolean [
 	useCalypsoUML := aBoolean
 ]
